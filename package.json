@@ -1,0 +1,46 @@
+{
+  "name": "rangiroa-nature",
+  "version": "1.0.0",
+  "description": "AI wildlife identification app for Rangiroa",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "ios": "expo start --ios",
+    "android": "expo start --android",
+    "lint": "expo lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:35645/git/laure-tvt/Rangiroa-nature"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@expo/vector-icons": "^14.1.0",
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@supabase/supabase-js": "^2.106.2",
+    "@tanstack/react-query": "^5.100.14",
+    "expo": "~53.0.0",
+    "expo-blur": "~14.1.5",
+    "expo-camera": "~16.1.10",
+    "expo-constants": "^17.0.8",
+    "expo-font": "~13.3.1",
+    "expo-haptics": "~14.1.4",
+    "expo-image-picker": "~16.1.4",
+    "expo-linear-gradient": "~14.1.5",
+    "expo-linking": "^7.0.5",
+    "expo-location": "~18.1.5",
+    "expo-router": "^4.0.20",
+    "expo-status-bar": "^2.2.3",
+    "nativewind": "^4.2.4",
+    "react": "^19.2.6",
+    "react-native": "^0.85.3",
+    "react-native-gesture-handler": "^2.24.0",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "^5.4.0",
+    "react-native-screens": "^4.10.0",
+    "react-native-url-polyfill": "^2.0.0",
+    "tailwindcss": "^3.4.17"
+  }
+}

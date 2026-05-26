@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "Rangiroa Explorer",
+    "slug": "rangiroa-explorer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "rangiroa-explorer",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rangiróaexplorer.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Pour identifier la faune et la flore de Rangiroa",
+        "NSPhotoLibraryUsageDescription": "Pour sélectionner une photo à identifier",
+        "NSLocationWhenInUseUsageDescription": "Pour afficher votre position sur la carte"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#0c4a6e"
+      },
+      "package": "com.rangiróaexplorer.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Autoriser Rangiroa Explorer à accéder à la caméra"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Autoriser Rangiroa Explorer à accéder à votre position"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Autoriser Rangiroa Explorer à accéder à vos photos"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

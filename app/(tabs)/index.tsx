@@ -1,15 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
   Animated,
   Text,
   Platform,
+  TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { UrlTile } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { BlurView } from 'expo-blur';
+import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  downloadTiles,
+  isTileCacheReady,
+  localTileTemplate,
+} from '@/services/tileCache';
 
 const RANGIROA = {
   latitude:      -14.9754,
@@ -153,17 +161,25 @@ const compassStyles = StyleSheet.create({
 });
 
 // ── Main screen ────────────────────────────────────────────────────
+type CacheState = 'checking' | 'uncached' | 'downloading' | 'cached';
+
+const ZOOM_MIN = 10;
+const ZOOM_MAX = 14;
+
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const [locationGranted, setLocationGranted] = useState(false);
+  const [cacheState, setCacheState] = useState<CacheState>('checking');
+  const [dlDone,  setDlDone]  = useState(0);
+  const [dlTotal, setDlTotal] = useState(1);
 
-  const prevHeading  = useRef(0);
-  const accumulated  = useRef(0);
-  const compassAnim  = useRef(new Animated.Value(0)).current;
+  const prevHeading = useRef(0);
+  const accumulated = useRef(0);
+  const compassAnim = useRef(new Animated.Value(0)).current;
 
+  // Location & heading
   useEffect(() => {
     let sub: Location.LocationSubscription | null = null;
-
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') return;
@@ -173,9 +189,8 @@ export default function HomeScreen() {
         const heading = h.trueHeading >= 0 ? h.trueHeading : h.magHeading;
         if (heading < 0) return;
 
-        // Shortest-path delta to avoid spinning the long way round 359→0
         let delta = heading - prevHeading.current;
-        if (delta > 180)  delta -= 360;
+        if (delta >  180) delta -= 360;
         if (delta < -180) delta += 360;
 
         accumulated.current -= delta;
@@ -184,21 +199,39 @@ export default function HomeScreen() {
         Animated.spring(compassAnim, {
           toValue: accumulated.current,
           useNativeDriver: true,
-          damping: 22,
-          stiffness: 160,
-          mass: 0.8,
+          damping: 22, stiffness: 160, mass: 0.8,
         }).start();
       });
     })();
-
     return () => { sub?.remove(); };
   }, []);
+
+  // Check tile cache on mount
+  useEffect(() => {
+    isTileCacheReady().then((ready) =>
+      setCacheState(ready ? 'cached' : 'uncached'),
+    );
+  }, []);
+
+  const handleDownload = useCallback(async () => {
+    setCacheState('downloading');
+    setDlDone(0);
+    setDlTotal(1);
+    await downloadTiles((done, total) => {
+      setDlDone(done);
+      setDlTotal(total);
+    });
+    setCacheState('cached');
+  }, []);
+
+  const tilesCached = cacheState === 'cached';
+  const pct = dlTotal > 0 ? Math.round((dlDone / dlTotal) * 100) : 0;
 
   return (
     <View style={styles.root}>
       <MapView
         style={StyleSheet.absoluteFillObject}
-        mapType="satellite"
+        mapType={tilesCached ? 'none' : 'satellite'}
         initialRegion={RANGIROA}
         showsUserLocation={locationGranted}
         showsMyLocationButton={false}
@@ -208,9 +241,48 @@ export default function HomeScreen() {
         pitchEnabled={false}
         zoomEnabled
         scrollEnabled
-      />
+      >
+        {tilesCached && (
+          <UrlTile
+            urlTemplate={localTileTemplate()}
+            minimumZ={ZOOM_MIN}
+            maximumZ={ZOOM_MAX}
+            flipY={false}
+            zIndex={1}
+          />
+        )}
+      </MapView>
 
-      {/* Compass — above tab bar, bottom-right */}
+      {/* Offline download card */}
+      {(cacheState === 'uncached' || cacheState === 'downloading') && (
+        <View style={[styles.offlineCard, { bottom: insets.bottom + 106 }]}>
+          <BlurView
+            intensity={Platform.OS === 'ios' ? 65 : 0}
+            tint="dark"
+            style={StyleSheet.absoluteFill}
+          />
+          <View style={[StyleSheet.absoluteFill, styles.offlineCardBg]} />
+
+          {cacheState === 'uncached' ? (
+            <TouchableOpacity style={styles.dlRow} onPress={handleDownload} activeOpacity={0.8}>
+              <Ionicons name="cloud-download-outline" size={16} color="white" />
+              <Text style={styles.dlLabel}>Télécharger hors-ligne</Text>
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.dlRow}>
+              <ActivityIndicator size="small" color="white" style={{ marginRight: 8 }} />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.dlLabel}>Téléchargement… {pct}%</Text>
+                <View style={styles.progressBg}>
+                  <View style={[styles.progressFill, { width: `${pct}%` }]} />
+                </View>
+              </View>
+            </View>
+          )}
+        </View>
+      )}
+
+      {/* Compass — bottom-right above tab bar */}
       <View style={[styles.compassPos, { bottom: insets.bottom + 96 }]}>
         <Compass rotAnim={compassAnim} />
       </View>
@@ -220,8 +292,32 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  compassPos: {
+  compassPos: { position: 'absolute', right: 20 },
+
+  offlineCard: {
     position: 'absolute',
-    right: 20,
+    left: 20,
+    right: 104, // stop before the compass
+    borderRadius: 16,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.30, shadowRadius: 12, elevation: 8,
   },
+  offlineCardBg: {
+    borderRadius: 16,
+    backgroundColor: Platform.OS === 'android' ? 'rgba(10,20,30,0.85)' : 'rgba(10,20,30,0.35)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.12)',
+  },
+  dlRow: {
+    flexDirection: 'row', alignItems: 'center',
+    paddingHorizontal: 14, paddingVertical: 12, gap: 8,
+  },
+  dlLabel: { color: 'white', fontSize: 13, fontWeight: '600', flex: 1 },
+  progressBg: {
+    height: 3, backgroundColor: 'rgba(255,255,255,0.20)',
+    borderRadius: 2, marginTop: 5, overflow: 'hidden',
+  },
+  progressFill: { height: '100%', backgroundColor: '#22d3ee', borderRadius: 2 },
 });

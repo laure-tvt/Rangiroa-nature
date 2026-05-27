@@ -11,7 +11,7 @@ export default function NotFoundScreen() {
         Page introuvable
       </Text>
       <Text className="text-slate-500 text-sm text-center mb-8">
-        Cette page n'existe pas dans Rangiroa Explorer.
+        Cette page n'existe pas dans Rangiroa.
       </Text>
       <Button label="Retour à l'accueil" onPress={() => router.replace('/')} />
     </SafeAreaView>

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Rangiroa Explorer",
+    "name": "Rangiroa",
     "slug": "rangiroa-explorer",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -35,19 +35,19 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Autoriser Rangiroa Explorer à accéder à la caméra"
+          "cameraPermission": "Autoriser Rangiroa à accéder à la caméra"
         }
       ],
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Autoriser Rangiroa Explorer à accéder à votre position"
+          "locationWhenInUsePermission": "Autoriser Rangiroa à accéder à votre position"
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "Autoriser Rangiroa Explorer à accéder à vos photos"
+          "photosPermission": "Autoriser Rangiroa à accéder à vos photos"
         }
       ]
     ],

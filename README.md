@@ -1,4 +1,4 @@
-# Rangiroa Explorer 🌊
+# Rangiroa 🌊
 
 Application mobile iOS pour identifier la faune et la flore de l'atoll de Rangiroa.
 

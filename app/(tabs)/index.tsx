@@ -59,7 +59,7 @@ export default function HomeScreen() {
               <View className="flex-row items-center justify-between mb-6">
                 <View>
                   <Text className="text-white/70 text-sm">Bienvenue sur</Text>
-                  <Text className="text-white text-2xl font-bold">Rangiroa Explorer</Text>
+                  <Text className="text-white text-2xl font-bold">Rangiroa</Text>
                 </View>
                 <TouchableOpacity
                   className="w-10 h-10 rounded-full bg-white/20 items-center justify-center"

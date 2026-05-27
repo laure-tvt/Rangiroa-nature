@@ -42,26 +42,28 @@ export default function TabsLayout() {
         tabBarInactiveTintColor: '#94a3b8',
         tabBarStyle: {
           position: 'absolute',
-          backgroundColor: Platform.OS === 'ios' ? 'transparent' : 'rgba(255,255,255,0.94)',
+          // Solid white — BlurView with tint="light" absorbs strong background colors
+          backgroundColor: 'rgba(255,255,255,0.96)',
           borderTopWidth: 0,
           height: 84,
           paddingBottom: 20,
           paddingTop: 10,
           elevation: 0,
           shadowColor: '#000',
-          shadowOffset: { width: 0, height: -1 },
-          shadowOpacity: 0.08,
-          shadowRadius: 12,
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.10,
+          shadowRadius: 16,
         },
         tabBarLabelStyle: {
           fontSize: 10,
           fontWeight: '600',
           marginTop: 0,
         },
-        tabBarBackground: () =>
-          Platform.OS === 'ios' ? (
-            <BlurView intensity={80} tint="light" style={{ flex: 1 }} />
-          ) : null,
+        tabBarBackground: () => (
+          <View style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.96)' }}>
+            <BlurView intensity={50} tint="extraLight" style={StyleSheet.absoluteFill} />
+          </View>
+        ),
       }}
     >
       {TABS.map((tab) => (

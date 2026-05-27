@@ -1,186 +1,201 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
-  useColorScheme,
+  StyleSheet,
   ScrollView,
+  Animated,
   Dimensions,
+  Platform,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { RANGIROA_COORDS, CATEGORY_ICONS, CATEGORY_LABELS } from '@/constants';
+import { BlurView } from 'expo-blur';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { CATEGORY_ICONS, CATEGORY_LABELS } from '@/constants';
 import { SpeciesCategory } from '@/types';
-import { Badge } from '@/components/ui/Badge';
+import MapIllustration from '../../src/components/MapIllustration';
 
-const { width } = Dimensions.get('window');
+const { width: W } = Dimensions.get('window');
+const CARD_W = W * 0.72;
 
-const FILTER_CATEGORIES: SpeciesCategory[] = [
-  'fish', 'coral', 'mammal', 'bird', 'invertebrate',
+const CATEGORIES: { key: SpeciesCategory | null; label: string; icon: string }[] = [
+  { key: null,          label: 'Tout',     icon: '🗺️' },
+  { key: 'fish',        label: 'Poissons', icon: '🐠' },
+  { key: 'mammal',      label: 'Mammifères',icon: '🐬' },
+  { key: 'coral',       label: 'Coraux',   icon: '🪸' },
+  { key: 'bird',        label: 'Oiseaux',  icon: '🦅' },
+  { key: 'invertebrate',label: 'Inverté.', icon: '🦑' },
 ];
 
-const MOCK_SPOTS = [
-  {
-    id: '1',
-    name: 'Passe de Tiputa',
-    description: 'Spot de plongée réputé, dauphins fréquents',
-    category: 'mammal' as SpeciesCategory,
-    species: ['Dauphin souffleur', 'Requin gris'],
-    depth: '20-40m',
-  },
-  {
-    id: '2',
-    name: 'Passe d\'Avatoru',
-    description: 'Idéal pour observer les requins et raies',
-    category: 'fish' as SpeciesCategory,
-    species: ['Requin de récif', 'Raie manta'],
-    depth: '15-30m',
-  },
-  {
-    id: '3',
-    name: 'Lagon intérieur',
-    description: 'Eaux calmes, idéal pour les coraux',
-    category: 'coral' as SpeciesCategory,
-    species: ['Corail cerveau', 'Corail étoile'],
-    depth: '5-15m',
-  },
-  {
-    id: '4',
-    name: 'Motu Nuhi Nuhi',
-    description: 'Nidification des oiseaux marins',
-    category: 'bird' as SpeciesCategory,
-    species: ['Frégate', 'Sterne huppée'],
-    depth: 'Surface',
-  },
+const SPOTS = [
+  { id: '1', name: 'Passe de Tiputa',   emoji: '🤿', cat: 'mammal'      as SpeciesCategory, depth: '20–40 m', color: '#1e3a5f', species: ['Dauphin souffleur', 'Requin gris'], desc: 'Spot de plongée mondial réputé, courants puissants' },
+  { id: '2', name: "Passe d'Avatoru",   emoji: '🦈', cat: 'fish'        as SpeciesCategory, depth: '15–30 m', color: '#0e4668', species: ['Requin de récif', 'Raie manta'],    desc: 'Idéal pour observer les requins en dérive' },
+  { id: '3', name: 'Lagon intérieur',   emoji: '🪸', cat: 'coral'       as SpeciesCategory, depth: '5–15 m',  color: '#134e4a', species: ['Corail cerveau', 'Corail étoile'],  desc: 'Eaux calmes, idéal pour le snorkeling' },
+  { id: '4', name: 'Motu Nuhi Nuhi',    emoji: '🦅', cat: 'bird'        as SpeciesCategory, depth: 'Surface', color: '#365314', species: ['Frégate', 'Sterne huppée'],          desc: 'Site de nidification des oiseaux marins' },
+  { id: '5', name: 'Jardin de corail',  emoji: '🐠', cat: 'fish'        as SpeciesCategory, depth: '3–10 m',  color: '#7c2d12', species: ['Poisson-coffre', 'Poisson-perroquet'], desc: 'Récif peu profond pour débutants' },
 ];
 
 export default function MapScreen() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const [activeFilter, setActiveFilter] = useState<SpeciesCategory | null>(null);
+  const insets = useSafeAreaInsets();
+  const [filter, setFilter] = useState<SpeciesCategory | null>(null);
+  const [active, setActive] = useState<string | null>(null);
 
-  const filtered = activeFilter
-    ? MOCK_SPOTS.filter((s) => s.category === activeFilter)
-    : MOCK_SPOTS;
+  const filtered = filter ? SPOTS.filter((s) => s.cat === filter) : SPOTS;
+
+  // Card press scale
+  const scaleAnims = useRef<Record<string, Animated.Value>>({}).current;
+  const getScale = (id: string) => {
+    if (!scaleAnims[id]) scaleAnims[id] = new Animated.Value(1);
+    return scaleAnims[id];
+  };
+  const pressIn  = (id: string) => Animated.spring(getScale(id), { toValue: 0.96, useNativeDriver: true, damping: 15, stiffness: 200 }).start();
+  const pressOut = (id: string) => Animated.spring(getScale(id), { toValue: 1,    useNativeDriver: true, damping: 15, stiffness: 200 }).start();
 
   return (
-    <View className={`flex-1 ${isDark ? 'bg-slate-900' : 'bg-slate-50'}`}>
-      <LinearGradient
-        colors={isDark ? ['#064e3b', '#0f172a'] : ['#10b981', '#a7f3d0']}
-        style={{ height: 120 }}
-      >
-        <SafeAreaView edges={['top']} className="px-5 pt-2">
-          <Text className="text-white text-2xl font-bold">Carte</Text>
-          <Text className="text-white/70 text-sm">
-            {RANGIROA_COORDS.latitude.toFixed(4)}°S, {Math.abs(RANGIROA_COORDS.longitude).toFixed(4)}°O · Rangiroa
-          </Text>
-        </SafeAreaView>
-      </LinearGradient>
-
-      {/* Map placeholder */}
-      <View
-        className={`mx-5 -mt-4 rounded-2xl overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-lagoon-100'}`}
-        style={{ height: 200 }}
-      >
-        <View className="flex-1 items-center justify-center gap-3">
-          <View className={`w-16 h-16 rounded-full items-center justify-center ${isDark ? 'bg-slate-700' : 'bg-lagoon-200'}`}>
-            <Ionicons name="map" size={32} color="#10b981" />
-          </View>
-          <View className="items-center gap-1">
-            <Text className={`font-semibold ${isDark ? 'text-slate-300' : 'text-lagoon-800'}`}>
-              Carte interactive
-            </Text>
-            <Text className={`text-xs text-center px-8 ${isDark ? 'text-slate-500' : 'text-lagoon-600'}`}>
-              La carte MapLibre sera intégrée ici
-            </Text>
-          </View>
-        </View>
-        {/* Coordinate badge */}
-        <View className="absolute bottom-3 right-3">
-          <Badge
-            label="📍 Atoll de Rangiroa"
-            color={isDark ? '#1e293b' : 'white'}
-            textColor={isDark ? '#94a3b8' : '#475569'}
-          />
-        </View>
+    <View style={styles.root}>
+      {/* Full-screen illustrated map */}
+      <View style={StyleSheet.absoluteFill} pointerEvents="none">
+        <MapIllustration />
       </View>
 
-      {/* Filters */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        className="mt-4 px-5"
-        style={{ maxHeight: 44 }}
-      >
-        <View className="flex-row gap-2">
-          <TouchableOpacity
-            onPress={() => setActiveFilter(null)}
-            className={`px-4 py-2 rounded-full ${!activeFilter
-              ? 'bg-lagoon-500'
-              : isDark ? 'bg-slate-800' : 'bg-white'
-            }`}
-          >
-            <Text className={`text-sm font-medium ${!activeFilter ? 'text-white' : isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-              Tous
-            </Text>
-          </TouchableOpacity>
-          {FILTER_CATEGORIES.map((cat) => (
-            <TouchableOpacity
-              key={cat}
-              onPress={() => setActiveFilter(activeFilter === cat ? null : cat)}
-              className={`px-4 py-2 rounded-full flex-row items-center gap-1.5 ${
-                activeFilter === cat
-                  ? 'bg-lagoon-500'
-                  : isDark ? 'bg-slate-800' : 'bg-white'
-              }`}
-            >
-              <Text>{CATEGORY_ICONS[cat]}</Text>
-              <Text className={`text-sm font-medium ${activeFilter === cat ? 'text-white' : isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                {CATEGORY_LABELS[cat]}
-              </Text>
-            </TouchableOpacity>
-          ))}
+      {/* Safe area top: filters */}
+      <View style={[styles.topBar, { paddingTop: insets.top + 8 }]}>
+        <BlurView intensity={Platform.OS === 'ios' ? 60 : 0} tint="light" style={StyleSheet.absoluteFill} />
+        <View style={styles.topContent}>
+          <View>
+            <Text style={styles.topTitle}>Carte</Text>
+            <Text style={styles.topSub}>14.97°S · 147.65°O · Rangiroa</Text>
+          </View>
+          <View style={styles.coordBadge}>
+            <Ionicons name="location" size={14} color="#0891b2" />
+          </View>
         </View>
-      </ScrollView>
 
-      {/* Spots list */}
-      <Text className={`px-5 mt-4 mb-3 font-bold text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>
-        Points d'intérêt ({filtered.length})
-      </Text>
-      <ScrollView className="px-5" showsVerticalScrollIndicator={false}>
-        {filtered.map((spot) => (
-          <TouchableOpacity
-            key={spot.id}
-            className={`rounded-2xl p-4 mb-3 flex-row items-start gap-4 ${isDark ? 'bg-slate-800' : 'bg-white'}`}
-            style={{ shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 8, elevation: 2 }}
-            activeOpacity={0.8}
-          >
-            <View className="w-12 h-12 rounded-xl bg-lagoon-100 items-center justify-center">
-              <Text className="text-2xl">{CATEGORY_ICONS[spot.category]}</Text>
-            </View>
-            <View className="flex-1 gap-1">
-              <View className="flex-row items-center justify-between">
-                <Text className={`font-bold text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                  {spot.name}
-                </Text>
-                <Badge label={spot.depth} color="#d1fae5" textColor="#065f46" />
-              </View>
-              <Text className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                {spot.description}
-              </Text>
-              <View className="flex-row flex-wrap gap-1 mt-1">
-                {spot.species.map((s) => (
-                  <Text key={s} className={`text-xs ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                    · {s}
-                  </Text>
-                ))}
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
-        <View className="h-8" />
-      </ScrollView>
+        {/* Filter pills */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterList}
+        >
+          {CATEGORIES.map((cat) => {
+            const isActive = filter === cat.key;
+            return (
+              <TouchableOpacity
+                key={String(cat.key)}
+                onPress={() => setFilter(cat.key)}
+                style={[styles.filterPill, isActive && styles.filterPillActive]}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.filterEmoji}>{cat.icon}</Text>
+                <Text style={[styles.filterText, isActive && styles.filterTextActive]}>{cat.label}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+
+      {/* Bottom horizontal cards */}
+      <View style={[styles.bottomBar, { paddingBottom: insets.bottom + 88 }]}>
+        <Text style={styles.spotsLabel}>
+          {filtered.length} site{filtered.length !== 1 ? 's' : ''} d'intérêt
+        </Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.cardList}
+          decelerationRate="fast"
+          snapToInterval={CARD_W + 12}
+          snapToAlignment="start"
+        >
+          {filtered.map((spot) => (
+            <Animated.View key={spot.id} style={[styles.card, { transform: [{ scale: getScale(spot.id) }] }]}>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => setActive(active === spot.id ? null : spot.id)}
+                onPressIn={() => pressIn(spot.id)}
+                onPressOut={() => pressOut(spot.id)}
+              >
+                <LinearGradient
+                  colors={[spot.color, spot.color + 'cc']}
+                  start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+                  style={styles.cardGrad}
+                >
+                  {/* Header */}
+                  <View style={styles.cardHeader}>
+                    <View style={styles.cardIconBg}>
+                      <Text style={styles.cardEmoji}>{spot.emoji}</Text>
+                    </View>
+                    <View style={styles.depthBadge}>
+                      <Ionicons name="water-outline" size={10} color="rgba(255,255,255,0.9)" />
+                      <Text style={styles.depthText}>{spot.depth}</Text>
+                    </View>
+                  </View>
+
+                  {/* Info */}
+                  <Text style={styles.cardName}>{spot.name}</Text>
+                  <Text style={styles.cardDesc} numberOfLines={2}>{spot.desc}</Text>
+
+                  {/* Species chips */}
+                  <View style={styles.speciesRow}>
+                    {spot.species.map((s) => (
+                      <View key={s} style={styles.speciesChip}>
+                        <Text style={styles.speciesText}>{s}</Text>
+                      </View>
+                    ))}
+                  </View>
+                </LinearGradient>
+              </TouchableOpacity>
+            </Animated.View>
+          ))}
+          <View style={{ width: 16 }} />
+        </ScrollView>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: { flex: 1, backgroundColor: '#5ba8c4' },
+
+  topBar: {
+    position: 'absolute', top: 0, left: 0, right: 0,
+    overflow: 'hidden',
+    backgroundColor: Platform.OS === 'android' ? 'rgba(255,255,255,0.90)' : 'transparent',
+    borderBottomLeftRadius: 0, borderBottomRightRadius: 0,
+  },
+  topContent: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingBottom: 8 },
+  topTitle: { fontSize: 22, fontWeight: '800', color: '#0f172a' },
+  topSub:   { fontSize: 11, color: '#64748b', marginTop: 1 },
+  coordBadge: { width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(8,145,178,0.12)', alignItems: 'center', justifyContent: 'center' },
+
+  filterList: { paddingHorizontal: 16, paddingBottom: 12, gap: 8 },
+  filterPill: {
+    flexDirection: 'row', alignItems: 'center', gap: 5,
+    paddingHorizontal: 14, paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.75)',
+    borderWidth: 1, borderColor: 'rgba(0,0,0,0.07)',
+  },
+  filterPillActive: { backgroundColor: '#0891b2', borderColor: '#0891b2' },
+  filterEmoji: { fontSize: 14 },
+  filterText: { fontSize: 13, fontWeight: '600', color: '#334155' },
+  filterTextActive: { color: 'white' },
+
+  bottomBar: { position: 'absolute', bottom: 0, left: 0, right: 0 },
+  spotsLabel: { color: 'white', fontSize: 13, fontWeight: '700', marginLeft: 20, marginBottom: 10, textShadowColor: 'rgba(0,0,0,0.4)', textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 4 },
+  cardList: { paddingLeft: 16, gap: 12 },
+  card: { width: CARD_W },
+  cardGrad: { borderRadius: 20, padding: 16, gap: 8, shadowColor: '#000', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.25, shadowRadius: 16, elevation: 10 },
+  cardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  cardIconBg: { width: 44, height: 44, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.18)', alignItems: 'center', justifyContent: 'center' },
+  cardEmoji: { fontSize: 24 },
+  depthBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(255,255,255,0.18)', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 10 },
+  depthText: { color: 'rgba(255,255,255,0.90)', fontSize: 11, fontWeight: '700' },
+  cardName: { fontSize: 17, fontWeight: '800', color: 'white', letterSpacing: -0.2 },
+  cardDesc: { fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 18 },
+  speciesRow: { flexDirection: 'row', gap: 6, flexWrap: 'wrap' },
+  speciesChip: { backgroundColor: 'rgba(255,255,255,0.18)', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
+  speciesText: { color: 'rgba(255,255,255,0.85)', fontSize: 11, fontWeight: '600' },
+});

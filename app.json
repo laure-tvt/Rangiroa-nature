@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "Rangiroa Nature",
+    "slug": "rangiroa-nature",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "rangiroa-nature",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B6E6E"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rangiroa.nature",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Rangiroa Nature utilise la caméra pour identifier les espèces.",
+        "NSPhotoLibraryUsageDescription": "Rangiroa Nature accède à vos photos pour identifier les espèces.",
+        "NSLocationWhenInUseUsageDescription": "Rangiroa Nature utilise votre localisation pour afficher les espèces proches.",
+        "NSLocationAlwaysUsageDescription": "Rangiroa Nature utilise votre localisation pour afficher les espèces proches."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B6E6E"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-camera",
+      "expo-image-picker",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Rangiroa Nature utilise votre localisation pour afficher les espèces proches."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

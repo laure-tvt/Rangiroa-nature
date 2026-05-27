@@ -1,19 +1,10 @@
-import React, { useEffect } from 'react';
-import { TouchableOpacity, Text, StyleSheet, ViewStyle } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSequence,
-  withTiming,
-  withDelay,
-  withRepeat,
-  Easing,
-} from 'react-native-reanimated';
+import React, { useEffect, useRef, useCallback } from 'react';
+import { Animated, TouchableOpacity, Text, StyleSheet, Easing } from 'react-native';
 
 export type POI = {
   id: number;
-  x: string;   // e.g. '20%'
-  y: string;   // e.g. '35%'
+  x: string;
+  y: string;
   icon: string;
   label: string;
   category: string;
@@ -28,48 +19,41 @@ type Props = {
 };
 
 export default function POIMarker({ poi, onPress, containerWidth, containerHeight }: Props) {
-  const bounce     = useSharedValue(0);
-  const pulsScale  = useSharedValue(1);
+  const bounce    = useRef(new Animated.Value(0)).current;
+  const pulsScale = useRef(new Animated.Value(1)).current;
 
-  // Micro-bounce idle toutes les ~3 s avec décalage aléatoire par marker
   useEffect(() => {
     const initialDelay = (poi.id * 400) % 3000;
-    bounce.value = withDelay(
-      initialDelay,
-      withRepeat(
-        withSequence(
-          withTiming(-7, { duration: 280, easing: Easing.inOut(Easing.sin) }),
-          withTiming(0,  { duration: 280, easing: Easing.inOut(Easing.sin) }),
-          withDelay(2400, withTiming(0, { duration: 0 })),
-        ),
-        -1,
-        false,
-      ),
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bounce, { toValue: -7, duration: 280, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+        Animated.timing(bounce, { toValue: 0,  duration: 280, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+        Animated.delay(2400),
+      ]),
     );
+    const timer = setTimeout(() => loop.start(), initialDelay);
+    return () => { clearTimeout(timer); loop.stop(); };
   }, [bounce, poi.id]);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateY: bounce.value },
-      { scale: pulsScale.value },
-    ],
-  }));
-
-  const handlePress = () => {
-    // Pulse rapide au tap
-    pulsScale.value = withSequence(
-      withTiming(1.35, { duration: 120, easing: Easing.out(Easing.quad) }),
-      withTiming(1,    { duration: 120, easing: Easing.in(Easing.quad) }),
-    );
+  const handlePress = useCallback(() => {
+    Animated.sequence([
+      Animated.timing(pulsScale, { toValue: 1.35, duration: 120, easing: Easing.out(Easing.quad), useNativeDriver: true }),
+      Animated.timing(pulsScale, { toValue: 1,    duration: 120, easing: Easing.in(Easing.quad),  useNativeDriver: true }),
+    ]).start();
     onPress(poi);
-  };
+  }, [pulsScale, onPress, poi]);
 
-  // Convertit '20%' → valeur en pixels
   const left = (parseFloat(poi.x) / 100) * containerWidth  - 22;
   const top  = (parseFloat(poi.y) / 100) * containerHeight - 22;
 
   return (
-    <Animated.View style={[styles.wrapper, { left, top }, animatedStyle]}>
+    <Animated.View
+      style={[
+        styles.wrapper,
+        { left, top },
+        { transform: [{ translateY: bounce }, { scale: pulsScale }] },
+      ]}
+    >
       <TouchableOpacity onPress={handlePress} activeOpacity={0.85} style={styles.badge}>
         <Text style={styles.emoji}>{poi.icon}</Text>
       </TouchableOpacity>

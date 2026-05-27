@@ -7,8 +7,8 @@ import {
   useWindowDimensions,
   Platform,
   StatusBar,
+  Animated,
 } from 'react-native';
-import Animated from 'react-native-reanimated';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';

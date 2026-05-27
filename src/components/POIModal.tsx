@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,16 +6,9 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   Dimensions,
-  Platform,
-} from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  withSpring,
+  Animated,
   Easing,
-  runOnJS,
-} from 'react-native-reanimated';
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { BlurView } from 'expo-blur';
@@ -52,41 +45,29 @@ type Props = {
 };
 
 export default function POIModal({ poi, onClose }: Props) {
-  const translateY = useSharedValue(SHEET_H);
-  const bgOpacity  = useSharedValue(0);
-
-  const sheetStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }],
-  }));
-
-  const backdropStyle = useAnimatedStyle(() => ({
-    opacity: bgOpacity.value,
-  }));
+  const translateY = useRef(new Animated.Value(SHEET_H)).current;
+  const bgOpacity  = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    bgOpacity.value  = withTiming(1, { duration: 300 });
-    translateY.value = withSpring(0, { damping: 22, stiffness: 200 });
+    Animated.parallel([
+      Animated.timing(bgOpacity, { toValue: 1, duration: 300, useNativeDriver: true }),
+      Animated.spring(translateY, { toValue: 0, damping: 22, stiffness: 200, useNativeDriver: true }),
+    ]).start();
   }, []);
 
   const handleClose = () => {
-    bgOpacity.value  = withTiming(0, { duration: 250 });
-    translateY.value = withTiming(SHEET_H, { duration: 300, easing: Easing.in(Easing.cubic) }, (done) => {
-      if (done) runOnJS(onClose)();
-    });
+    Animated.parallel([
+      Animated.timing(bgOpacity,  { toValue: 0, duration: 250, useNativeDriver: true }),
+      Animated.timing(translateY, { toValue: SHEET_H, duration: 300, easing: Easing.in(Easing.cubic), useNativeDriver: true }),
+    ]).start(({ finished }) => { if (finished) onClose(); });
   };
 
   const meta = CATEGORY_META[poi.category] ?? { label: poi.category, color: '#64748b' };
   const desc = DESCRIPTIONS[poi.label] ?? `Découvrez ${poi.label}, un lieu incontournable de l'atoll de Rangiroa.`;
 
-  // Couleur de fond de l'image placeholder selon catégorie
   const imgColors: Record<string, string> = {
-    diving:     '#0891b2',
-    hotel:      '#7c3aed',
-    pension:    '#059669',
-    airport:    '#6b7280',
-    wildlife:   '#d97706',
-    village:    '#dc2626',
-    snorkeling: '#0284c7',
+    diving: '#0891b2', hotel: '#7c3aed', pension: '#059669',
+    airport: '#6b7280', wildlife: '#d97706', village: '#dc2626', snorkeling: '#0284c7',
   };
   const bgColor = imgColors[poi.category] ?? '#0891b2';
 
@@ -94,15 +75,14 @@ export default function POIModal({ poi, onClose }: Props) {
     <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
       {/* Backdrop */}
       <TouchableWithoutFeedback onPress={handleClose}>
-        <Animated.View style={[StyleSheet.absoluteFill, styles.backdrop, backdropStyle]} />
+        <Animated.View style={[StyleSheet.absoluteFill, styles.backdrop, { opacity: bgOpacity }]} />
       </TouchableWithoutFeedback>
 
       {/* Bottom sheet */}
-      <Animated.View style={[styles.sheet, sheetStyle]}>
+      <Animated.View style={[styles.sheet, { transform: [{ translateY }] }]}>
         {/* Image placeholder */}
         <View style={[styles.imgPlaceholder, { backgroundColor: bgColor }]}>
           <Text style={styles.imgEmoji}>{poi.icon}</Text>
-          {/* Bouton fermer */}
           <TouchableOpacity style={styles.closeBtn} onPress={handleClose}>
             <BlurView intensity={60} tint="dark" style={styles.closeBtnInner}>
               <Ionicons name="close" size={20} color="white" />
@@ -112,7 +92,6 @@ export default function POIModal({ poi, onClose }: Props) {
 
         {/* Contenu */}
         <View style={styles.content}>
-          {/* Badge catégorie */}
           <View style={[styles.badge, { backgroundColor: meta.color + '22' }]}>
             <Text style={[styles.badgeText, { color: meta.color }]}>{meta.label}</Text>
           </View>
@@ -120,7 +99,6 @@ export default function POIModal({ poi, onClose }: Props) {
           <Text style={styles.title}>{poi.label}</Text>
           <Text style={styles.desc}>{desc}</Text>
 
-          {/* Actions */}
           <View style={styles.actions}>
             <TouchableOpacity
               style={[styles.actionBtn, styles.actionPrimary]}
@@ -154,7 +132,7 @@ const styles = StyleSheet.create({
   },
   sheet: {
     position: 'absolute',
-    bottom: 84,   // au-dessus de la tab bar
+    bottom: 84,
     left: 0,
     right: 0,
     height: SHEET_H,

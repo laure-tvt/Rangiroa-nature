@@ -36,7 +36,7 @@ export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
 
-  const { data: allSpecies, isLoading } = useSpecies();
+  const { data: allSpecies, isLoading, error } = useSpecies();
   const { data: searchResults } = useSpeciesSearch(searchQuery);
 
   const displayedSpecies = searchQuery.length >= 2 ? searchResults : allSpecies;
@@ -199,6 +199,11 @@ export default function HomeScreen() {
               </Text>
               {isLoading ? (
                 <ActivityIndicator size="large" color="#0ea5e9" className="py-8" />
+              ) : error ? (
+                <View className="bg-red-100 rounded-2xl p-4 mb-8">
+                  <Text className="text-red-700 font-bold mb-1">Erreur de connexion</Text>
+                  <Text className="text-red-600 text-xs">{String(error)}</Text>
+                </View>
               ) : (
                 <View className="mb-8">
                   {allSpecies?.map((species) => (

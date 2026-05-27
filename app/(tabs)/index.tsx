@@ -1,118 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
+  useWindowDimensions,
   Platform,
+  StatusBar,
 } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Animated from 'react-native-reanimated';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// TODO: Charger les marqueurs dynamiquement depuis Supabase (hôtels, pensions, activités)
-const MARKERS = [
-  { id: 'pass-tiputa',      name: 'Passe de Tiputa',    emoji: '🌊', lat: -14.9833, lng: -147.6167 },
-  { id: 'pass-avatoru',     name: "Passe d'Avatoru",    emoji: '🌊', lat: -14.9667, lng: -147.6833 },
-  { id: 'village-avatoru',  name: "Village d'Avatoru",  emoji: '🏘️', lat: -14.9600, lng: -147.6900 },
-  { id: 'village-tiputa',   name: 'Village de Tiputa',  emoji: '🏘️', lat: -14.9900, lng: -147.6100 },
-  { id: 'airport',          name: 'Aéroport de Rangiroa', emoji: '✈️', lat: -14.9542, lng: -147.6608 },
+import MapIllustration from '../../src/components/MapIllustration';
+import POIMarker, { POI } from '../../src/components/POIMarker';
+import POIModal from '../../src/components/POIModal';
+import { useDiveAnimation } from '../../src/hooks/useDiveAnimation';
+
+const POIS: POI[] = [
+  { id: 1, x: '20%', y: '35%', icon: '🤿', label: 'Passe Tiputa',     category: 'diving'     },
+  { id: 2, x: '75%', y: '40%', icon: '🤿', label: 'Passe Avatoru',    category: 'diving'     },
+  { id: 3, x: '72%', y: '38%', icon: '🏨', label: 'Kia Ora Resort',   category: 'hotel'      },
+  { id: 4, x: '68%', y: '42%', icon: '🛖', label: 'Pension Herenui',  category: 'pension'    },
+  { id: 5, x: '22%', y: '30%', icon: '✈️', label: 'Aéroport',         category: 'airport'    },
+  { id: 6, x: '60%', y: '55%', icon: '🐬', label: 'Spot Dauphins',    category: 'wildlife'   },
+  { id: 7, x: '40%', y: '45%', icon: '🦈', label: 'Spot Requins',     category: 'wildlife'   },
+  { id: 8, x: '50%', y: '35%', icon: '🌺', label: 'Village Avatoru',  category: 'village'    },
+  { id: 9, x: '30%', y: '60%', icon: '🪸', label: 'Jardin de Corail', category: 'snorkeling' },
 ];
 
 export default function HomeScreen() {
-  const [search, setSearch] = useState('');
+  const { width, height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const { animatedMapStyle, triggerDive, resetDive } = useDiveAnimation();
+  const [selectedPOI, setSelectedPOI] = useState<POI | null>(null);
+
+  const handlePOIPress = useCallback((poi: POI) => {
+    triggerDive(() => {
+      setSelectedPOI(poi);
+    });
+  }, [triggerDive]);
+
+  const handleModalClose = useCallback(() => {
+    setSelectedPOI(null);
+    resetDive();
+  }, [resetDive]);
 
   return (
     <View style={styles.container}>
-      {/* ── Carte plein écran ── */}
-      <MapView
-        style={StyleSheet.absoluteFillObject}
-        mapType="hybrid"
-        initialRegion={{
-          latitude: -14.9754,
-          longitude: -147.6508,
-          latitudeDelta: 0.5,
-          longitudeDelta: 0.8,
-        }}
-        showsUserLocation
-        showsCompass={false}
-        showsScale={false}
-        rotateEnabled={false}
-      >
-        {MARKERS.map((m) => (
-          <Marker
-            key={m.id}
-            coordinate={{ latitude: m.lat, longitude: m.lng }}
-            title={m.name}
-          >
-            {/* Marqueur personnalisé */}
-            <View style={styles.pin}>
-              <Text style={styles.pinEmoji}>{m.emoji}</Text>
-            </View>
+      <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
 
-            {/* Popup au tap */}
-            <Callout tooltip>
-              <View style={styles.callout}>
-                <Text style={styles.calloutText}>{m.name}</Text>
-              </View>
-            </Callout>
-          </Marker>
+      {/* Full-screen animated map + markers */}
+      <Animated.View style={[StyleSheet.absoluteFill, animatedMapStyle]}>
+        <MapIllustration />
+
+        {POIS.map((poi) => (
+          <POIMarker
+            key={poi.id}
+            poi={poi}
+            onPress={handlePOIPress}
+            containerWidth={width}
+            containerHeight={height}
+          />
         ))}
+      </Animated.View>
 
-        {/* TODO: Filtres par catégorie (hébergement, activités, restaurants, spots snorkeling) */}
-        {/* TODO: Clustering des marqueurs quand zoom out */}
-        {/* TODO: Fiche détail au tap sur un marqueur (nom, photo, contact, lien réservation) */}
-      </MapView>
-
-      {/* ── Header flottant ── */}
-      <SafeAreaView edges={['top']} style={styles.topOverlay} pointerEvents="box-none">
-        <BlurView intensity={55} tint="light" style={styles.header}>
-          <View style={styles.headerRow}>
-            <View style={styles.logoRow}>
-              <Text style={styles.logoEmoji}>🐬</Text>
-              <Text style={styles.logoLabel}>Rangiroa Nature</Text>
-            </View>
-            <TouchableOpacity
-              onPress={() => router.push('/(tabs)/profile')}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            >
-              <Ionicons name="person-circle-outline" size={34} color="#0c4a6e" />
-            </TouchableOpacity>
+      {/* Floating header */}
+      <View style={[styles.header, { paddingTop: insets.top + 6 }]}>
+        {Platform.OS === 'ios' ? (
+          <BlurView intensity={65} tint="light" style={StyleSheet.absoluteFill} />
+        ) : (
+          <View style={[StyleSheet.absoluteFill, styles.headerBgAndroid]} />
+        )}
+        <View style={styles.headerContent}>
+          <View>
+            <Text style={styles.headerTitle}>Rangiroa</Text>
+            <Text style={styles.headerSub}>Polynésie Française</Text>
           </View>
-        </BlurView>
-
-        {/* ── Barre de recherche ── */}
-        <View style={styles.searchWrap} pointerEvents="auto">
-          <View style={styles.searchBar}>
-            <Ionicons name="search-outline" size={17} color="#64748b" />
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Rechercher une espèce, un lieu…"
-              placeholderTextColor="#94a3b8"
-              value={search}
-              onChangeText={setSearch}
-              returnKeyType="search"
-            />
-            {search.length > 0 && (
-              <TouchableOpacity onPress={() => setSearch('')}>
-                <Ionicons name="close-circle" size={17} color="#94a3b8" />
-              </TouchableOpacity>
-            )}
-          </View>
+          <TouchableOpacity
+            style={styles.profileBtn}
+            onPress={() => router.push('/(tabs)/profile')}
+          >
+            <Ionicons name="person-circle-outline" size={32} color="#0891b2" />
+          </TouchableOpacity>
         </View>
-      </SafeAreaView>
 
-      {/* ── Bouton Scanner flottant ── */}
+        {/* Search bar */}
+        <TouchableOpacity style={styles.searchBar} activeOpacity={0.8}>
+          <Ionicons name="search" size={16} color="#94a3b8" />
+          <Text style={styles.searchPlaceholder}>Rechercher un lieu…</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Scanner FAB */}
       <TouchableOpacity
-        style={styles.scannerBtn}
-        onPress={() => router.push('/(tabs)/scanner')}
+        style={[styles.fab, { bottom: 84 + 18 }]}
         activeOpacity={0.85}
+        onPress={() => router.push('/(tabs)/scanner')}
       >
-        <Ionicons name="camera" size={26} color="white" />
+        <Ionicons name="camera" size={20} color="white" />
+        <Text style={styles.fabText}>Identifier</Text>
       </TouchableOpacity>
+
+      {/* POI bottom-sheet modal */}
+      {selectedPOI && (
+        <POIModal poi={selectedPOI} onClose={handleModalClose} />
+      )}
     </View>
   );
 }
@@ -120,115 +115,81 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#a8d8ea',
   },
-  /* ── Top overlay ── */
-  topOverlay: {
+  header: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-  },
-  /* ── Header ── */
-  header: {
-    marginHorizontal: 14,
-    marginTop: 8,
-    borderRadius: 18,
     overflow: 'hidden',
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
   },
-  headerRow: {
+  headerBgAndroid: {
+    backgroundColor: 'rgba(255,255,255,0.92)',
+  },
+  headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 13,
+    paddingHorizontal: 20,
+    paddingBottom: 8,
   },
-  logoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  logoEmoji: {
+  headerTitle: {
     fontSize: 22,
+    fontWeight: '800',
+    color: '#0f172a',
+    letterSpacing: -0.5,
   },
-  logoLabel: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: '#0c4a6e',
-    letterSpacing: 0.2,
+  headerSub: {
+    fontSize: 11,
+    color: '#64748b',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
-  /* ── Recherche ── */
-  searchWrap: {
-    paddingHorizontal: 14,
-    marginTop: 8,
+  profileBtn: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.92)',
-    borderRadius: 14,
+    gap: 8,
+    marginHorizontal: 16,
+    marginBottom: 12,
     paddingHorizontal: 14,
-    paddingVertical: Platform.OS === 'ios' ? 13 : 10,
-    gap: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.13,
-    shadowRadius: 8,
-    elevation: 4,
+    paddingVertical: 10,
+    backgroundColor: 'rgba(255,255,255,0.82)',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.06)',
   },
-  searchInput: {
-    flex: 1,
-    fontSize: 15,
-    color: '#1e293b',
-    padding: 0,
+  searchPlaceholder: {
+    fontSize: 14,
+    color: '#94a3b8',
   },
-  /* ── Marqueurs ── */
-  pin: {
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  pinEmoji: {
-    fontSize: 18,
-  },
-  callout: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 4,
-    minWidth: 130,
-    alignItems: 'center',
-  },
-  calloutText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#0c4a6e',
-    textAlign: 'center',
-  },
-  /* ── Bouton Scanner ── */
-  scannerBtn: {
+  fab: {
     position: 'absolute',
-    bottom: 100,
     alignSelf: 'center',
-    backgroundColor: '#0891b2',
-    width: 62,
-    height: 62,
-    borderRadius: 31,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    gap: 8,
+    paddingHorizontal: 22,
+    paddingVertical: 13,
+    backgroundColor: '#0891b2',
+    borderRadius: 30,
     shadowColor: '#0891b2',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.45,
-    shadowRadius: 14,
+    shadowRadius: 12,
     elevation: 10,
+  },
+  fabText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 15,
   },
 });

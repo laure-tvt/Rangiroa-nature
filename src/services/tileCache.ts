@@ -11,7 +11,8 @@ const BOUNDS = {
   maxLon: -147.35,
 };
 
-const TILE_DIR = `${FileSystem.cacheDirectory}rangiroa-tiles/`;
+const BASE_DIR = FileSystem.cacheDirectory ?? FileSystem.documentDirectory ?? '';
+const TILE_DIR = `${BASE_DIR}rangiroa-tiles/`;
 
 // ArcGIS World Imagery — free for display (note: URL order is z/y/x)
 const arcgisUrl = (z: number, y: number, x: number) =>
@@ -45,16 +46,22 @@ function collectTiles(): { z: number; x: number; y: number }[] {
 }
 
 export async function isTileCacheReady(): Promise<boolean> {
-  const z = 12;
-  const cx = lon2x(-147.65, z);
-  const cy = lat2y(-14.975, z);
-  const info = await FileSystem.getInfoAsync(`${TILE_DIR}${z}/${cx}/${cy}.png`);
-  return info.exists;
+  try {
+    if (!BASE_DIR) return false;
+    const z = 12;
+    const cx = lon2x(-147.65, z);
+    const cy = lat2y(-14.975, z);
+    const info = await FileSystem.getInfoAsync(`${TILE_DIR}${z}/${cx}/${cy}.png`);
+    return info.exists;
+  } catch {
+    return false;
+  }
 }
 
 export async function downloadTiles(
   onProgress: (done: number, total: number) => void,
 ): Promise<void> {
+  if (!BASE_DIR) return;
   await FileSystem.makeDirectoryAsync(TILE_DIR, { intermediates: true });
 
   const tiles = collectTiles();

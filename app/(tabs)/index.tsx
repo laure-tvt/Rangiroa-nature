@@ -19,16 +19,18 @@ import POIMarker, { POI } from '../../src/components/POIMarker';
 import POIModal from '../../src/components/POIModal';
 import { useDiveAnimation } from '../../src/hooks/useDiveAnimation';
 
+// Positions géographiques réelles (zone NW de Rangiroa, lon -147.80→-147.55, lat -14.90→-15.20)
+// x = (lon + 147.80) / 0.25 — y = (-14.90 - lat) / 0.30
 const POIS: POI[] = [
-  { id: 1, x: '20%', y: '35%', icon: '🤿', label: 'Passe Tiputa',     category: 'diving'     },
-  { id: 2, x: '75%', y: '40%', icon: '🤿', label: 'Passe Avatoru',    category: 'diving'     },
-  { id: 3, x: '72%', y: '38%', icon: '🏨', label: 'Kia Ora Resort',   category: 'hotel'      },
-  { id: 4, x: '68%', y: '42%', icon: '🛖', label: 'Pension Herenui',  category: 'pension'    },
-  { id: 5, x: '22%', y: '30%', icon: '✈️', label: 'Aéroport',         category: 'airport'    },
-  { id: 6, x: '60%', y: '55%', icon: '🐬', label: 'Spot Dauphins',    category: 'wildlife'   },
-  { id: 7, x: '40%', y: '45%', icon: '🦈', label: 'Spot Requins',     category: 'wildlife'   },
-  { id: 8, x: '50%', y: '35%', icon: '🌺', label: 'Village Avatoru',  category: 'village'    },
-  { id: 9, x: '30%', y: '60%', icon: '🪸', label: 'Jardin de Corail', category: 'snorkeling' },
+  { id: 1, x: '73%', y: '22%', icon: '🤿', label: 'Passe Tiputa',     category: 'diving'     },
+  { id: 2, x: '46%', y: '20%', icon: '🤿', label: 'Passe Avatoru',    category: 'diving'     },
+  { id: 3, x: '62%', y: '33%', icon: '🏨', label: 'Kia Ora Resort',   category: 'hotel'      },
+  { id: 4, x: '42%', y: '34%', icon: '🛖', label: 'Pension Herenui',  category: 'pension'    },
+  { id: 5, x: '29%', y: '17%', icon: '✈️', label: 'Aéroport',         category: 'airport'    },
+  { id: 6, x: '55%', y: '52%', icon: '🐬', label: 'Spot Dauphins',    category: 'wildlife'   },
+  { id: 7, x: '67%', y: '43%', icon: '🦈', label: 'Spot Requins',     category: 'wildlife'   },
+  { id: 8, x: '35%', y: '22%', icon: '🌺', label: 'Village Avatoru',  category: 'village'    },
+  { id: 9, x: '13%', y: '63%', icon: '🪸', label: 'Jardin de Corail', category: 'snorkeling' },
 ];
 
 export default function HomeScreen() {

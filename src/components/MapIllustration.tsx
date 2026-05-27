@@ -1,203 +1,212 @@
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import Svg, {
-  Rect,
-  Path,
-  Ellipse,
-  Circle,
-  Text,
-  G,
-  Polygon,
-  Defs,
-  RadialGradient,
-  Stop,
+  Rect, Path, Circle, Text, G, Polygon, Defs, LinearGradient, Stop, Line,
 } from 'react-native-svg';
 
 const C = {
-  ocean:      '#a8d8ea',
-  oceanDark:  '#7ab8d4',
-  lagoon:     '#b8ecec',
-  lagoonInner:'#d0f8f8',
-  land:       '#f5e6c8',
-  landShade:  '#ddc898',
-  reef:       '#7bc8c8',
-  wave:       '#ffffff',
-  text:       '#3d2b1f',
-  accent:     '#e8a87c',
-  compass:    '#8b6b14',
+  ocean:     '#1e6a8a',
+  oceanMid:  '#2d8aaa',
+  lagoon:    '#35b8b4',
+  lagoonMid: '#50ceca',
+  lagoonLight:'#78e0dc',
+  land:      '#dfc878',
+  landEdge:  '#b09040',
+  reef:      '#30a8a4',
+  compass:   '#7a5e10',
+  text:      '#1e2a38',
 };
 
-const VW = 390;
-const VH = 320;
-
-/** Boussole vintage en bas à droite */
-function Compass() {
+function Compass({ x, y }: { x: number; y: number }) {
   return (
-    <G transform="translate(355,285)">
-      <Circle r={22} fill="rgba(255,255,255,0.75)" stroke={C.compass} strokeWidth={1} />
-      {/* N */}
-      <Polygon points="0,-17 -4,-5 4,-5" fill={C.compass} />
-      {/* S */}
-      <Polygon points="0,17 -4,5 4,5" fill={C.compass} fillOpacity={0.45} />
-      {/* E */}
-      <Polygon points="17,0 5,-4 5,4" fill={C.compass} fillOpacity={0.45} />
-      {/* W */}
-      <Polygon points="-17,0 -5,-4 -5,4" fill={C.compass} fillOpacity={0.45} />
+    <G transform={`translate(${x},${y})`}>
+      <Circle r={26} fill="rgba(255,255,255,0.82)" stroke={C.compass} strokeWidth={1.5} />
+      <Polygon points="0,-18 -4,-6 4,-6" fill={C.compass} />
+      <Polygon points="0,18 -4,6 4,6" fill={C.compass} fillOpacity={0.4} />
+      <Polygon points="18,0 6,-4 6,4" fill={C.compass} fillOpacity={0.4} />
+      <Polygon points="-18,0 -6,-4 -6,4" fill={C.compass} fillOpacity={0.4} />
       <Circle r={3} fill={C.compass} />
-      <Text x={0} y={-21} textAnchor="middle" fill={C.compass} fontSize={8} fontWeight="bold">N</Text>
+      <Text x={0} y={-22} textAnchor="middle" fill={C.compass} fontSize={9} fontWeight="bold">N</Text>
+      <Text x={0} y={28} textAnchor="middle" fill={C.compass} fontSize={7} fillOpacity={0.65}>S</Text>
+      <Text x={24} y={4} textAnchor="middle" fill={C.compass} fontSize={7} fillOpacity={0.65}>E</Text>
+      <Text x={-24} y={4} textAnchor="middle" fill={C.compass} fontSize={7} fillOpacity={0.65}>O</Text>
     </G>
   );
 }
 
-/** Vagues décoratives SVG */
-function Waves() {
-  const waveLines = [
-    { y: 50,  opacity: 0.22 },
-    { y: 68,  opacity: 0.15 },
-    { y: 240, opacity: 0.20 },
-    { y: 258, opacity: 0.13 },
-  ];
-  return (
-    <>
-      {waveLines.map((w, i) => (
-        <Path
-          key={i}
-          d={`M 0,${w.y} C 50,${w.y - 5} 100,${w.y + 5} 150,${w.y} C 200,${w.y - 5} 250,${w.y + 5} 300,${w.y} C 340,${w.y - 4} 370,${w.y + 4} 390,${w.y}`}
-          stroke={C.wave}
-          strokeWidth={1}
-          strokeOpacity={w.opacity}
-          fill="none"
-        />
-      ))}
-      {/* Vagues latérales */}
-      <Path d="M 8,100 C 13,110 8,120 13,130 C 8,140 13,150 8,160" stroke={C.wave} strokeWidth={1} strokeOpacity={0.18} fill="none" />
-      <Path d="M 382,100 C 377,110 382,120 377,130 C 382,140 377,150 382,160" stroke={C.wave} strokeWidth={1} strokeOpacity={0.18} fill="none" />
-    </>
-  );
-}
-
 export default function MapIllustration() {
-  const { width, height } = useWindowDimensions();
+  const { width: W, height: H } = useWindowDimensions();
+
+  // Rim (récif/terre) — band crossing the screen horizontally
+  // Outer (ocean-side) edge curves from y≈37% at left to y≈16% in middle then y≈22% at right
+  // Inner (lagoon-side) edge is roughly at rimS across the full width
+  const rimS = H * 0.31;   // lagoon-side edge of rim
+
+  // Pass positions (Passe Avatoru west side, Passe Tiputa east side)
+  // Geographic: Avatoru at ~46%, Tiputa at ~72% of the visible east-west range
+  const avW = W * 0.43;    // Avatoru pass west boundary
+  const avE = W * 0.50;    // Avatoru pass east boundary
+  const tiW = W * 0.70;    // Tiputa pass west boundary
+  const tiE = W * 0.77;    // Tiputa pass east boundary
+  const passTop = H * 0.11; // passes connect up into the ocean section
+
+  // Rim outer-edge path (ocean side), curves gently
+  const rimOuterPath = `
+    M 0,${H * 0.38}
+    C ${W * 0.04},${H * 0.29} ${W * 0.07},${H * 0.23} ${W * 0.17},${H * 0.19}
+    C ${W * 0.28},${H * 0.16} ${W * 0.38},${H * 0.16} ${avW},${H * 0.17}
+    L ${avW},${H * 0.17}
+    M ${avE},${H * 0.17}
+    C ${W * 0.56},${H * 0.16} ${W * 0.63},${H * 0.16} ${tiW},${H * 0.18}
+    M ${tiE},${H * 0.18}
+    C ${W * 0.84},${H * 0.19} ${W * 0.93},${H * 0.21} ${W},${H * 0.22}
+  `;
 
   return (
     <Svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${VW} ${VH}`}
-      preserveAspectRatio="xMidYMid slice"
+      width={W}
+      height={H}
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="none"
     >
       <Defs>
-        {/* Dégradé radial pour le lagon */}
-        <RadialGradient id="lagoonGrad" cx="50%" cy="50%" rx="50%" ry="50%">
-          <Stop offset="0%"   stopColor={C.lagoonInner} stopOpacity={1} />
-          <Stop offset="100%" stopColor={C.lagoon}      stopOpacity={1} />
-        </RadialGradient>
-        {/* Dégradé radial pour l'océan */}
-        <RadialGradient id="oceanGrad" cx="50%" cy="50%" rx="70%" ry="70%">
-          <Stop offset="0%"   stopColor={C.ocean}     stopOpacity={1} />
-          <Stop offset="100%" stopColor={C.oceanDark} stopOpacity={1} />
-        </RadialGradient>
+        <LinearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0%"   stopColor="#1a5c7a" />
+          <Stop offset="100%" stopColor="#3498be" />
+        </LinearGradient>
+        <LinearGradient id="lagoonGrad" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0%"   stopColor="#2aacaa" />
+          <Stop offset="50%"  stopColor="#48c8c4" />
+          <Stop offset="100%" stopColor="#7adcd8" />
+        </LinearGradient>
+        <LinearGradient id="passGrad" x1="0" y1="0" x2="0" y2="1">
+          <Stop offset="0%"   stopColor="#3498be" />
+          <Stop offset="100%" stopColor="#2aacaa" />
+        </LinearGradient>
       </Defs>
 
-      {/* ── Fond océan ── */}
-      <Rect x={0} y={0} width={VW} height={VH} fill="url(#oceanGrad)" />
+      {/* ── Ocean background ── */}
+      <Rect x={0} y={0} width={W} height={H} fill="url(#oceanGrad)" />
 
-      {/* ── Vagues décoratives ── */}
-      <Waves />
+      {/* Ocean wave lines */}
+      {([H*0.05, H*0.09, H*0.13] as number[]).map((wy, i) => (
+        <Path
+          key={i}
+          d={`M 0,${wy} C ${W*0.25},${wy-5} ${W*0.60},${wy+5} ${W},${wy}`}
+          stroke="rgba(255,255,255,0.30)"
+          strokeWidth={1.5}
+          fill="none"
+        />
+      ))}
 
-      {/* ── Titre ── */}
+      {/* ── Lagoon ── */}
+      <Rect x={0} y={rimS} width={W} height={H - rimS} fill="url(#lagoonGrad)" />
+
+      {/* ── Rim / récif (land strip) ── */}
+      {/*
+        Drawn as a filled path.
+        Outer (north/ocean) edge: curves from bottom-left, rises, runs E–W,
+        then drops slightly to the right.
+        Inner (south/lagoon) edge: roughly constant at rimS.
+        The pass rects will be drawn ON TOP to cut holes through it.
+      */}
+      <Path
+        d={`
+          M 0,${H * 0.38}
+          C ${W * 0.04},${H * 0.29} ${W * 0.07},${H * 0.23} ${W * 0.17},${H * 0.19}
+          C ${W * 0.30},${H * 0.16} ${W * 0.56},${H * 0.16} ${W * 0.72},${H * 0.18}
+          C ${W * 0.85},${H * 0.19} ${W * 0.93},${H * 0.21} ${W},${H * 0.22}
+          L ${W},${rimS}
+          C ${W * 0.85},${rimS} ${W * 0.56},${rimS} ${W * 0.30},${rimS}
+          C ${W * 0.12},${rimS} ${W * 0.05},${rimS + H * 0.02} 0,${H * 0.38}
+          Z
+        `}
+        fill={C.land}
+        stroke={C.landEdge}
+        strokeWidth={1}
+      />
+
+      {/* Reef edge stripe on lagoon side */}
+      <Path
+        d={`
+          M 0,${H * 0.38}
+          C ${W * 0.05},${rimS + H * 0.015} ${W * 0.12},${rimS}
+            ${W * 0.30},${rimS}
+          C ${W * 0.56},${rimS} ${W * 0.85},${rimS} ${W},${rimS}
+        `}
+        stroke={C.reef}
+        strokeWidth={3.5}
+        strokeOpacity={0.6}
+        fill="none"
+      />
+
+      {/* ── Passe Avatoru (water channel) ── */}
+      <Rect
+        x={avW} y={passTop}
+        width={avE - avW} height={rimS - passTop}
+        fill="url(#passGrad)"
+      />
+      <Line x1={avW} y1={passTop} x2={avW} y2={rimS} stroke={C.landEdge} strokeWidth={1} strokeOpacity={0.5} />
+      <Line x1={avE} y1={passTop} x2={avE} y2={rimS} stroke={C.landEdge} strokeWidth={1} strokeOpacity={0.5} />
+
+      {/* ── Passe Tiputa (water channel) ── */}
+      <Rect
+        x={tiW} y={passTop}
+        width={tiE - tiW} height={rimS - passTop}
+        fill="url(#passGrad)"
+      />
+      <Line x1={tiW} y1={passTop} x2={tiW} y2={rimS} stroke={C.landEdge} strokeWidth={1} strokeOpacity={0.5} />
+      <Line x1={tiE} y1={passTop} x2={tiE} y2={rimS} stroke={C.landEdge} strokeWidth={1} strokeOpacity={0.5} />
+
+      {/* ── Coral / lagoon decoration ── */}
+      {([
+        { cx: W*0.22, cy: H*0.42, r: 14 },
+        { cx: W*0.45, cy: H*0.56, r: 10 },
+        { cx: W*0.60, cy: H*0.48, r: 11 },
+        { cx: W*0.78, cy: H*0.60, r: 9  },
+        { cx: W*0.12, cy: H*0.63, r: 8  },
+        { cx: W*0.55, cy: H*0.74, r: 13 },
+        { cx: W*0.85, cy: H*0.75, r: 7  },
+      ] as { cx: number; cy: number; r: number }[]).map((d, i) => (
+        <Circle key={i} cx={d.cx} cy={d.cy} r={d.r} fill={C.reef} fillOpacity={0.18} />
+      ))}
+
+      {/* Fish silhouettes in lagoon */}
+      <Path d={`M ${W*0.35},${H*0.46} C ${W*0.37},${H*0.455} ${W*0.39},${H*0.458} ${W*0.38},${H*0.46} C ${W*0.39},${H*0.462} ${W*0.37},${H*0.465} ${W*0.35},${H*0.46} Z`}
+        fill={C.reef} fillOpacity={0.45} />
+      <Path d={`M ${W*0.63},${H*0.54} C ${W*0.65},${H*0.535} ${W*0.67},${H*0.538} ${W*0.66},${H*0.54} C ${W*0.67},${H*0.542} ${W*0.65},${H*0.545} ${W*0.63},${H*0.54} Z`}
+        fill={C.reef} fillOpacity={0.40} />
+
+      {/* ── Title (top-left, in ocean area) ── */}
       <Text
-        x={VW / 2} y={30}
-        textAnchor="middle"
-        fill={C.text}
-        fontSize={28}
-        fontWeight="bold"
-        fontStyle="italic"
-        opacity={0.9}
+        x={W * 0.07} y={H * 0.068}
+        fill="white" fontSize={Math.min(W * 0.06, 26)}
+        fontWeight="bold" fontStyle="italic" fillOpacity={0.92}
       >
         Rangiroa
       </Text>
       <Text
-        x={VW / 2} y={48}
-        textAnchor="middle"
-        fill={C.text}
-        fontSize={11}
-        opacity={0.6}
-        letterSpacing={1.5}
+        x={W * 0.07} y={H * 0.095}
+        fill="white" fontSize={Math.min(W * 0.025, 11)}
+        fillOpacity={0.65} letterSpacing={1.8}
       >
         POLYNÉSIE FRANÇAISE
       </Text>
 
-      {/* ── Atoll — couche externe (terre/récif) ── */}
-      {/* Forme légèrement irrégulière style croquis */}
-      <Path
-        d={[
-          'M 22,162',
-          'C 20,95  85,55  195,54',
-          'C 306,53  372,95  371,162',
-          'C 370,230  305,272  195,272',
-          'C 85,272  24,230  22,162 Z',
-        ].join(' ')}
-        fill={C.land}
-        stroke={C.landShade}
-        strokeWidth={2}
-      />
+      {/* Pass micro-labels */}
+      <Text x={(avW + avE) / 2} y={H * 0.145} textAnchor="middle" fill="white" fontSize={8} fillOpacity={0.75}>Avatoru</Text>
+      <Text x={(tiW + tiE) / 2} y={H * 0.145} textAnchor="middle" fill="white" fontSize={8} fillOpacity={0.75}>Tiputa</Text>
 
-      {/* ── Lagon (enlève le centre) ── */}
-      <Path
-        d={[
-          'M 62,162',
-          'C 62,108  120,74  195,74',
-          'C 270,74  328,108  328,162',
-          'C 328,216  270,250  195,250',
-          'C 120,250  62,216  62,162 Z',
-        ].join(' ')}
-        fill="url(#lagoonGrad)"
-      />
+      {/* ── Compass ── */}
+      <Compass x={W * 0.88} y={H * 0.86} />
 
-      {/* Contour récif intérieur */}
-      <Path
-        d={[
-          'M 62,162',
-          'C 62,108  120,74  195,74',
-          'C 270,74  328,108  328,162',
-          'C 328,216  270,250  195,250',
-          'C 120,250  62,216  62,162 Z',
-        ].join(' ')}
-        fill="none"
-        stroke={C.reef}
-        strokeWidth={2.5}
-        strokeOpacity={0.55}
-      />
-
-      {/* ── Passes (ouvertures dans l'anneau) ── */}
-      {/* Passe Tiputa — côté est */}
-      <Rect x={360} y={152} width={13} height={20} fill={C.lagoon} />
-      {/* Passe Avatoru — côté ouest */}
-      <Rect x={17}  y={152} width={13} height={20} fill={C.lagoon} />
-
-      {/* ── Motifs décoratifs dans le lagon ── */}
-      {/* Petits fonds coralliens */}
-      <Circle cx={150} cy={130} r={4} fill={C.reef} fillOpacity={0.35} />
-      <Circle cx={240} cy={170} r={3} fill={C.reef} fillOpacity={0.3}  />
-      <Circle cx={185} cy={200} r={3.5} fill={C.reef} fillOpacity={0.3} />
-      <Circle cx={220} cy={115} r={2.5} fill={C.reef} fillOpacity={0.3} />
-      <Circle cx={165} cy={175} r={2}   fill={C.reef} fillOpacity={0.25} />
-
-      {/* Poissons stylisés (forme simple) */}
-      <Path d="M 200,150 C 206,145 212,147 210,150 C 212,153 206,155 200,150 Z" fill={C.reef} fillOpacity={0.5} />
-      <Path d="M 170,140 C 175,136 180,138 178,140 C 180,142 175,144 170,140 Z" fill={C.reef} fillOpacity={0.4} />
-
-      {/* ── Boussole vintage ── */}
-      <Compass />
-
-      {/* ── Légende mini en bas gauche ── */}
-      <G transform="translate(14, 278)">
-        <Rect x={0} y={0} width={90} height={30} rx={5} fill="rgba(255,255,255,0.6)" />
-        <Circle cx={12} cy={10} r={4} fill={C.land} stroke={C.landShade} strokeWidth={1} />
-        <Text x={20} y={14} fill={C.text} fontSize={8}>Récif corallien</Text>
-        <Circle cx={12} cy={22} r={4} fill={C.lagoon} stroke={C.reef} strokeWidth={1} />
-        <Text x={20} y={26} fill={C.text} fontSize={8}>Lagon</Text>
+      {/* ── Legend ── */}
+      <G transform={`translate(${W * 0.04},${H * 0.91})`}>
+        <Rect x={0} y={0} width={110} height={38} rx={7} fill="rgba(255,255,255,0.55)" />
+        <Circle cx={12} cy={12} r={5} fill={C.land} stroke={C.landEdge} strokeWidth={1} />
+        <Text x={22} y={16} fill={C.text} fontSize={9}>Récif corallien</Text>
+        <Circle cx={12} cy={26} r={5} fill={C.lagoon} stroke={C.reef} strokeWidth={1} />
+        <Text x={22} y={30} fill={C.text} fontSize={9}>Lagon</Text>
       </G>
     </Svg>
   );

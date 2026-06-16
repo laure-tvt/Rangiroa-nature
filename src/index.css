@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', 'Outfit', sans-serif;
+    color: #1A1A1A;
+    background-color: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', 'Montserrat', serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-white transition-all duration-300 cursor-pointer;
+    background-color: #3D2817;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-primary:hover {
+    background-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(61, 40, 23, 0.3);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer border-2;
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-outline:hover {
+    background-color: #FFFFFF;
+    color: #3D2817;
+    transform: translateY(-2px);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #3D2817;
+    line-height: 1.25;
+  }
+
+  .gold-accent {
+    color: #D4AF37;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(61, 40, 23, 0.15);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #5C4033;
+  border-radius: 3px;
+}
+
+/* Nav link underline animation */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #D4AF37;
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Arrow bounce */
+@keyframes arrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+.arrow-bounce {
+  animation: arrowBounce 1.5s ease-in-out infinite;
+}
+
+/* Parallax overlay gradient */
+.hero-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(61, 40, 23, 0.5) 0%,
+    rgba(61, 40, 23, 0.3) 50%,
+    rgba(61, 40, 23, 0.6) 100%
+  );
+}

@@ -21,7 +21,7 @@ export default function Reservation() {
 
   const labelStyle: React.CSSProperties = {
     display: 'block', fontFamily: 'Montserrat, sans-serif', fontSize: '11px', fontWeight: 600,
-    color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px',
+    color: 'rgba(255,255,255,0.72)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px',
   }
 
   return (
@@ -42,7 +42,7 @@ export default function Reservation() {
             <p
               data-reveal
               data-delay="180"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginBottom: '32px' }}
+              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.78)', lineHeight: 1.7, marginBottom: '32px' }}
             >
               Remplissez le formulaire ou contactez-nous directement par WhatsApp. Pick-up à votre hébergement inclus.
             </p>
@@ -59,7 +59,7 @@ export default function Reservation() {
                     <c.icon size={17} style={{ color: '#6F4F28' }} />
                   </div>
                   <div>
-                    <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{c.title}</div>
+                    <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{c.title}</div>
                     <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: '#ffffff', fontWeight: 500 }}>{c.val}</div>
                   </div>
                 </div>
@@ -84,7 +84,7 @@ export default function Reservation() {
                 <div key={t.l} className="flex justify-between items-center py-1.5">
                   <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.6)' }}>{t.l}</span>
                   <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 700, color: '#ffffff' }}>
-                    {t.p}{t.e ? <span style={{ color: 'rgba(255,255,255,0.35)', fontWeight: 400 }}> · {t.e}</span> : ''}
+                    {t.p}{t.e ? <span style={{ color: 'rgba(255,255,255,0.68)', fontWeight: 400 }}> · {t.e}</span> : ''}
                   </span>
                 </div>
               ))}
@@ -98,7 +98,7 @@ export default function Reservation() {
                 <div className="text-center py-10">
                   <CheckCircle size={52} className="mx-auto mb-4" style={{ color: '#6F4F28' }} />
                   <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800, fontSize: '22px', color: '#ffffff', marginBottom: '10px' }}>Demande envoyée !</h3>
-                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7 }}>
+                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.78)', lineHeight: 1.7 }}>
                     Merci {form.name}. Nous vous confirmerons votre visite par WhatsApp ou email très prochainement.
                   </p>
                   <button onClick={() => setSubmitted(false)}
@@ -168,7 +168,7 @@ export default function Reservation() {
                   <button type="submit" className="btn-primary w-full justify-center py-4 text-base font-bold" style={{ borderRadius: '12px' }}>
                     Envoyer ma demande
                   </button>
-                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: 'rgba(255,255,255,0.25)', textAlign: 'center', marginTop: '8px' }}>
+                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: 'rgba(255,255,255,0.60)', textAlign: 'center', marginTop: '8px' }}>
                     Confirmation rapide par WhatsApp · Aucun paiement en ligne
                   </p>
                 </form>

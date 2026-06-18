@@ -41,7 +41,7 @@ export default function Testimonials() {
           <p
             data-reveal
             data-delay="200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.45)', marginTop: '14px', maxWidth: '460px', margin: '14px auto 0' }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.75)', marginTop: '14px', maxWidth: '460px', margin: '14px auto 0' }}
           >
             Plus de 8 500 transactions réalisées depuis 2004 en Polynésie française.
           </p>
@@ -64,7 +64,7 @@ export default function Testimonials() {
               <div style={{ borderTop: '1px solid rgba(111,79,40,0.12)', paddingTop: '16px' }}>
                 <div style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '14px', color: '#ffffff' }}>{r.name}</div>
                 <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: '#6F4F28', marginTop: '2px' }}>{r.from}</div>
-                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: 'rgba(255,255,255,0.28)', marginTop: '4px' }}>{r.type}</div>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: 'rgba(255,255,255,0.65)', marginTop: '4px' }}>{r.type}</div>
               </div>
             </div>
           ))}
@@ -74,7 +74,7 @@ export default function Testimonials() {
           <div>
             <div style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '52px', color: '#6F4F28', lineHeight: 1 }}>4.9</div>
             <div className="flex justify-center gap-0.5 mt-2">{[...Array(5)].map((_, i) => <Star key={i} />)}</div>
-            <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>Note moyenne · 1 240 avis vérifiés</div>
+            <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.68)', marginTop: '6px' }}>Note moyenne · 1 240 avis vérifiés</div>
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ export default function BoatTour() {
             <p
               data-reveal
               data-delay="180"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.45)', marginTop: '14px', maxWidth: '480px', margin: '14px auto 0' }}
+              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.75)', marginTop: '14px', maxWidth: '480px', margin: '14px auto 0' }}
             >
               La promesse d'une immersion et d'une découverte inédite de Rangiroa.
             </p>
@@ -72,7 +72,7 @@ export default function BoatTour() {
                     <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '20px', color: '#ffffff' }}>{p.title}</h3>
                   </div>
                 </div>
-                <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.75, marginBottom: '20px' }}>
+                <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.78)', lineHeight: 1.75, marginBottom: '20px' }}>
                   {p.desc}
                 </p>
                 <ul className="space-y-2.5">
@@ -105,7 +105,7 @@ export default function BoatTour() {
           <p
             data-reveal
             data-delay="160"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.7, marginBottom: '48px' }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '48px' }}
           >
             Visite commentée en français et en anglais · Durée 2h30
           </p>
@@ -124,14 +124,14 @@ export default function BoatTour() {
                 >
                   <t.icon size={22} style={{ color: '#6F4F28' }} />
                 </div>
-                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '12px' }}>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.78)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '12px' }}>
                   {t.label}
                 </div>
                 <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '30px', fontWeight: 900, color: '#6F4F28', lineHeight: 1 }}>
                   {t.price}
                 </div>
                 {t.sub && (
-                  <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
+                  <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.68)', marginTop: '6px' }}>
                     {t.sub}
                   </div>
                 )}

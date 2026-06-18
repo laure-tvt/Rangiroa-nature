@@ -18,7 +18,7 @@ export default function Footer() {
               <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '22px', color: '#6F4F28', letterSpacing: '0.06em' }}>TVT</span>
               <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 300, fontSize: '18px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.06em' }}>RANGIROA</span>
             </div>
-            <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.38)', lineHeight: 1.7, marginBottom: '20px' }}>
+            <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7, marginBottom: '20px' }}>
               Visite guidée de l'atoll de Rangiroa en 6 arrêts. Une immersion authentique dans 900 ans d'histoire polynésienne.
             </p>
             <button
@@ -40,7 +40,7 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {items.map((item) => (
                   <li key={item}>
-                    <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.38)', cursor: 'default', transition: 'color 0.2s' }}
+                    <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.70)', cursor: 'default', transition: 'color 0.2s' }}
                       className="hover:text-white">{item}</span>
                   </li>
                 ))}
@@ -52,15 +52,15 @@ export default function Footer() {
         <div className="h-px mb-8" style={{ backgroundColor: 'rgba(111,79,40,0.1)' }} />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.28)' }}>
+          <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.65)' }}>
             © {new Date().getFullYear()} Tevaiti Van Tours Rangiroa. Tous droits réservés.
           </p>
-          <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.28)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.65)', display: 'flex', alignItems: 'center', gap: '4px' }}>
             Fait avec <Heart size={11} fill="#6F4F28" style={{ color: '#6F4F28' }} /> à Rangiroa
           </p>
           <div className="flex gap-5">
             {['Mentions légales', 'Confidentialité'].map((l) => (
-              <span key={l} style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.28)', cursor: 'pointer' }}
+              <span key={l} style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.65)', cursor: 'pointer' }}
                 className="hover:text-white transition-colors">{l}</span>
             ))}
           </div>

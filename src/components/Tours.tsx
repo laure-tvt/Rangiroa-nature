@@ -56,7 +56,7 @@ export default function Tours() {
           <p
             data-reveal
             data-delay="180"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.45)', marginTop: '14px', maxWidth: '520px', margin: '14px auto 0' }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.75)', marginTop: '14px', maxWidth: '520px', margin: '14px auto 0' }}
           >
             Découverte de l'atoll en 6 arrêts soigneusement choisis pour vous faire vivre Rangiroa sous toutes ses facettes.
           </p>
@@ -84,7 +84,7 @@ export default function Tours() {
               <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '17px', color: '#ffffff', lineHeight: 1.3, marginBottom: '10px' }}>
                 {s.name}
               </h3>
-              <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.7 }}>
+              <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>
                 {s.desc}
               </p>
             </div>

@@ -41,7 +41,7 @@ export default function ValueProp() {
               </div>
               <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '28px', fontWeight: 800, color: '#6F4F28', lineHeight: 1.1 }}>{s.value}</div>
               <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 600, color: '#ffffff', marginTop: '4px' }}>{s.label}</div>
-              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '6px', lineHeight: 1.55 }}>{s.desc}</div>
+              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.72)', marginTop: '6px', lineHeight: 1.55 }}>{s.desc}</div>
             </div>
           ))}
         </div>

@@ -20,7 +20,7 @@ const reviews = [
 ]
 
 const Star = () => (
-  <svg className="w-4 h-4" fill="#C46926" viewBox="0 0 20 20">
+  <svg className="w-4 h-4" fill="#8B6B42" viewBox="0 0 20 20">
     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
   </svg>
 )
@@ -33,11 +33,11 @@ export default function Testimonials() {
         <div className="text-center mb-16">
           <div
             className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-            style={{ color: '#C46926' }}
+            style={{ color: '#8B6B42' }}
           >
-            <span className="w-8 h-px" style={{ backgroundColor: '#C46926' }} />
+            <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
             Avis clients
-            <span className="w-8 h-px" style={{ backgroundColor: '#C46926' }} />
+            <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
           </div>
           <h2
             style={{
@@ -48,7 +48,7 @@ export default function Testimonials() {
               lineHeight: 1.15,
             }}
           >
-            Ce qu'ils <span style={{ color: '#C46926' }}>disent de nous</span>
+            Ce qu'ils <span style={{ color: '#8B6B42' }}>disent de nous</span>
           </h2>
           <p className="text-white/50 max-w-xl mx-auto text-sm leading-relaxed mt-4">
             Des voyageurs du monde entier partagent leur expérience avec Tevaiti Van Tours.
@@ -74,7 +74,7 @@ export default function Testimonials() {
                 >
                   {r.name}
                 </div>
-                <div className="text-xs mt-0.5" style={{ color: '#C46926' }}>{r.from}</div>
+                <div className="text-xs mt-0.5" style={{ color: '#8B6B42' }}>{r.from}</div>
               </div>
             </div>
           ))}

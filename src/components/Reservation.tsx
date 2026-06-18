@@ -18,14 +18,14 @@ type FormState = {
 
 const inputBase: React.CSSProperties = {
   backgroundColor: 'rgba(0,0,0,0.8)',
-  borderColor: 'rgba(196,105,38,0.2)',
+  borderColor: 'rgba(139,107,66,0.2)',
   color: '#ffffff',
   fontFamily: 'Montserrat, sans-serif',
 }
 
 const inputFocused: React.CSSProperties = {
   backgroundColor: 'rgba(0,0,0,0.8)',
-  borderColor: '#C46926',
+  borderColor: '#8B6B42',
   color: '#ffffff',
   fontFamily: 'Montserrat, sans-serif',
 }
@@ -83,9 +83,9 @@ export default function Reservation() {
           <div>
             <div
               className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#C46926' }}
+              style={{ color: '#8B6B42' }}
             >
-              <span className="w-8 h-px" style={{ backgroundColor: '#C46926' }} />
+              <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
               Réservation
             </div>
             <h2 className="section-title mb-6">
@@ -124,7 +124,7 @@ export default function Reservation() {
                     className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
                     style={{ backgroundColor: '#0d0d0d' }}
                   >
-                    <item.icon size={20} style={{ color: '#C46926' }} />
+                    <item.icon size={20} style={{ color: '#8B6B42' }} />
                   </div>
                   <div>
                     <h4
@@ -142,20 +142,20 @@ export default function Reservation() {
             {/* Contact direct */}
             <div
               className="mt-10 p-5 rounded-xl"
-              style={{ border: '1.5px solid #C46926' }}
+              style={{ border: '1.5px solid #8B6B42' }}
             >
               <p className="text-sm font-semibold mb-2 text-white">
                 Préférez-vous nous contacter directement ?
               </p>
               <p className="text-sm text-white/70">
                 WhatsApp :{' '}
-                <a href="tel:+68987363213" className="font-semibold" style={{ color: '#C46926' }}>
+                <a href="tel:+68987363213" className="font-semibold" style={{ color: '#8B6B42' }}>
                   +689 87 36 32 13
                 </a>
               </p>
               <p className="text-sm text-white/70">
                 Email :{' '}
-                <a href="mailto:tevaiti.van.tours@gmail.com" className="font-semibold" style={{ color: '#C46926' }}>
+                <a href="mailto:tevaiti.van.tours@gmail.com" className="font-semibold" style={{ color: '#8B6B42' }}>
                   tevaiti.van.tours@gmail.com
                 </a>
               </p>
@@ -167,7 +167,7 @@ export default function Reservation() {
             <div className="rounded-2xl p-8" style={{ backgroundColor: '#1a1208' }}>
               {submitted ? (
                 <div className="text-center py-12">
-                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#C46926' }} />
+                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#8B6B42' }} />
                   <h3
                     className="text-2xl font-bold mb-3 text-white"
                     style={{ fontFamily: 'Cinzel, serif', fontWeight: 700 }}
@@ -181,7 +181,7 @@ export default function Reservation() {
                   <button
                     onClick={() => setSubmitted(false)}
                     className="mt-6 text-sm font-medium underline"
-                    style={{ color: '#C46926' }}
+                    style={{ color: '#8B6B42' }}
                   >
                     Faire une nouvelle demande
                   </button>

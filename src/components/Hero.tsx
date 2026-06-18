@@ -12,7 +12,7 @@ export default function Hero() {
       className="relative flex items-center justify-center overflow-hidden"
       style={{
         height: '100vh',
-        backgroundImage: `url('/hero-bg.jpg')`,
+        backgroundImage: `url('/hero-bg.webp')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -86,7 +86,7 @@ export default function Hero() {
               <div
                 style={{
                   fontFamily: 'Montserrat, sans-serif',
-                  color: '#C46926',
+                  color: '#8B6B42',
                   fontWeight: 800,
                   fontSize: '28px',
                 }}

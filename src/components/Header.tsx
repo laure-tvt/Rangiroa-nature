@@ -36,7 +36,7 @@ export default function Header() {
         <button onClick={() => handleNav('#accueil')} className="flex items-center gap-3 group">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold"
-            style={{ backgroundColor: '#C46926', color: '#000000' }}
+            style={{ backgroundColor: '#8B6B42', color: '#000000' }}
           >
             T
           </div>
@@ -47,7 +47,7 @@ export default function Header() {
             >
               Tevaiti Van Tours
             </div>
-            <div className="text-xs tracking-widest uppercase" style={{ color: '#C46926', opacity: 0.9 }}>
+            <div className="text-xs tracking-widest uppercase" style={{ color: '#8B6B42', opacity: 0.9 }}>
               Rangiroa · Visites Guidées
             </div>
           </div>

@@ -23,7 +23,7 @@
 @layer components {
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer;
-    background-color: #C46926;
+    background-color: #8B6B42;
     color: #000000;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -32,18 +32,18 @@
     background-color: #ffffff;
     color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(196, 105, 38, 0.35);
+    box-shadow: 0 8px 24px rgba(139, 107, 66, 0.35);
   }
 
   .btn-outline {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer;
-    border: 2px solid #C46926;
+    border: 2px solid #8B6B42;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
   }
   .btn-outline:hover {
-    background-color: #C46926;
+    background-color: #8B6B42;
     color: #000000;
     transform: translateY(-2px);
   }
@@ -58,19 +58,19 @@
   }
 
   .cyan-accent {
-    color: #C46926;
+    color: #8B6B42;
   }
 
   .card-navy {
     background-color: #1a1208;
-    border: 1px solid rgba(196, 105, 38, 0.12);
+    border: 1px solid rgba(139, 107, 66, 0.12);
     border-radius: 16px;
     transition: all 0.3s ease;
   }
   .card-navy:hover {
-    border-color: #C46926;
+    border-color: #8B6B42;
     transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(196, 105, 38, 0.15);
+    box-shadow: 0 16px 40px rgba(139, 107, 66, 0.15);
   }
 }
 
@@ -82,7 +82,7 @@
   background: #0d0d0d;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C46926;
+  background: #8B6B42;
   border-radius: 3px;
 }
 
@@ -97,14 +97,14 @@
   left: 0;
   width: 0;
   height: 2px;
-  background-color: #C46926;
+  background-color: #8B6B42;
   transition: width 0.3s ease;
 }
 .nav-link:hover::after {
   width: 100%;
 }
 .nav-link:hover {
-  color: #C46926;
+  color: #8B6B42;
 }
 
 /* Hero overlay */
@@ -131,7 +131,7 @@
 /* ── Text masking: image shows through the text ─────────── */
 .hero-clip-text {
   font-family: 'Montserrat', sans-serif;
-  background-image: url('/hero-bg.jpg');
+  background-image: url('/hero-bg.webp');
   background-size: cover;
   background-position: center 40%;
   background-attachment: fixed;

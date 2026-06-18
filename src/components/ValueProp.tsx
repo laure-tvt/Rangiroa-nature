@@ -1,85 +1,134 @@
-const facts = [
-  { n: '900', label: "ans d'histoire", sub: "Peuplement de l'atoll" },
-  { n: '6', label: 'arrêts essentiels', sub: 'Histoire, culture, nature' },
-  { n: '2h30', label: 'de visite privée', sub: 'Pick-up et boisson inclus' },
+import { useEffect, useRef, useState } from 'react'
+
+const phrases = [
+  'Pas un groupe de 40. Un guide. Une île.',
+  'Pas des photos Instagram. Des histoires à emporter.',
+  'Pas du temps. De la compréhension.',
 ]
 
 export default function ValueProp() {
-  return (
-    <section id="comprendre" className="py-24 px-6" style={{ backgroundColor: '#0d0d0d' }}>
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [strikeActive, setStrikeActive] = useState(false)
+  const [phrasesActive, setPhrasesActive] = useState(false)
 
-          {/* Left: bold headline */}
-          <div>
-            <div
-              className="inline-flex items-center gap-2 mb-6 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#C46926' }}
-            >
-              <span className="w-8 h-px" style={{ backgroundColor: '#C46926' }} />
-              La visite
-            </div>
-            <h2
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStrikeActive(true)
+          setTimeout(() => setPhrasesActive(true), 900)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.35 }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <section
+      id="comprendre"
+      ref={sectionRef}
+      className="py-28 px-6"
+      style={{ backgroundColor: '#0d0d0d' }}
+    >
+      <div className="max-w-4xl mx-auto text-center">
+
+        {/* Label */}
+        <div
+          className="inline-flex items-center gap-2 mb-6 text-sm font-medium tracking-widest uppercase"
+          style={{ color: '#8B6B42', fontFamily: 'Montserrat, sans-serif' }}
+        >
+          <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
+          La visite
+          <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
+        </div>
+
+        {/* Section title */}
+        <h2
+          className="mb-16"
+          style={{
+            fontFamily: 'Cinzel, serif',
+            fontSize: 'clamp(22px, 3.5vw, 42px)',
+            fontWeight: 700,
+            color: '#ffffff',
+            lineHeight: 1.25,
+            letterSpacing: '0.03em',
+          }}
+        >
+          Comprendre Rangiroa<br />
+          pour la visiter réellement
+        </h2>
+
+        {/* Big statement with strikethrough on "générique" */}
+        <div
+          className="mb-16"
+          style={{
+            fontFamily: 'Cinzel, serif',
+            fontSize: 'clamp(22px, 4.5vw, 52px)',
+            fontWeight: 700,
+            lineHeight: 1.2,
+            color: '#ffffff',
+          }}
+        >
+          Tourisme{' '}
+          <span className="relative inline-block">
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>générique</span>
+
+            {/* SVG stroke-dashoffset strikethrough */}
+            <svg
+              aria-hidden="true"
               style={{
+                position: 'absolute',
+                top: '50%',
+                left: '-3%',
+                width: '106%',
+                height: '4px',
+                transform: 'translateY(-50%)',
+                overflow: 'visible',
+              }}
+              viewBox="0 0 100 1"
+              preserveAspectRatio="none"
+            >
+              <line
+                x1="0"
+                y1="0.5"
+                x2="100"
+                y2="0.5"
+                stroke="#00ffff"
+                vectorEffect="non-scaling-stroke"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeDasharray="110"
+                strokeDashoffset={strikeActive ? 0 : 110}
+                style={{ transition: 'stroke-dashoffset 1s ease-in-out' }}
+              />
+            </svg>
+          </span>
+          .{' '}
+          <span style={{ color: '#8B6B42' }}>Rangiroa</span> mérite mieux.
+        </div>
+
+        {/* 3 contrast phrases with fade-in + slide-up */}
+        <div className="space-y-5 max-w-2xl mx-auto">
+          {phrases.map((phrase, i) => (
+            <p
+              key={i}
+              style={{
+                opacity: phrasesActive ? 1 : 0,
+                transform: phrasesActive ? 'translateY(0)' : 'translateY(20px)',
+                transition: `opacity 0.6s ease ${i * 220}ms, transform 0.6s ease ${i * 220}ms`,
+                fontSize: 'clamp(15px, 2vw, 18px)',
+                color: 'rgba(255,255,255,0.75)',
                 fontFamily: 'Montserrat, sans-serif',
-                fontSize: 'clamp(32px, 4vw, 52px)',
-                fontWeight: 800,
-                color: '#ffffff',
-                lineHeight: 1.15,
+                fontWeight: 400,
+                lineHeight: 1.65,
               }}
             >
-              Comprendre Rangiroa<br />
-              <span style={{ color: '#C46926' }}>pour la visiter</span><br />
-              vraiment.
-            </h2>
-          </div>
-
-          {/* Right: explanation + stats */}
-          <div>
-            <p
-              className="text-white/70 leading-relaxed mb-6"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '16px', fontWeight: 400 }}
-            >
-              Rangiroa n'est pas une destination ordinaire. C'est l'un des plus grands atolls
-              du monde — une bande de terre corallienne encerclant un lagon immense. Pour
-              vraiment la comprendre, il faut s'arrêter, regarder, et écouter.
+              {phrase}
             </p>
-            <p
-              className="text-white/70 leading-relaxed mb-10"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '16px', fontWeight: 400 }}
-            >
-              Tevaiti Van Tours vous propose une visite guidée en van privé climatisé, en
-              6 arrêts soigneusement choisis pour révéler l'histoire, la culture et les
-              paysages de l'atoll.
-            </p>
-
-            <div className="space-y-1">
-              {facts.map((item) => (
-                <div
-                  key={item.n}
-                  className="flex items-center gap-5 py-4"
-                  style={{ borderBottom: '1px solid rgba(196,105,38,0.15)' }}
-                >
-                  <span
-                    style={{
-                      fontFamily: 'Montserrat, sans-serif',
-                      fontSize: '36px',
-                      fontWeight: 800,
-                      color: '#C46926',
-                      minWidth: '88px',
-                      lineHeight: 1,
-                    }}
-                  >
-                    {item.n}
-                  </span>
-                  <div>
-                    <div className="text-white font-semibold text-sm">{item.label}</div>
-                    <div className="text-white/50 text-xs mt-0.5">{item.sub}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

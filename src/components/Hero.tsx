@@ -25,13 +25,13 @@ export default function Hero() {
     <section id="accueil" style={{ height: '200vh', position: 'relative' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
 
-        {/* Photo background */}
-        <img
-          src="/hero-bg.jpg"
-          alt=""
-          aria-hidden="true"
-          fetchPriority="high"
-          loading="eager"
+        {/* Video background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/hero-poster.jpg"
           style={{
             position: 'absolute', inset: 0,
             width: '100%', height: '100%',
@@ -41,8 +41,9 @@ export default function Hero() {
             pointerEvents: 'none',
             userSelect: 'none',
           }}
-          draggable={false}
-        />
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
 
         {/* Dark overlay builds on scroll */}
         <div style={{

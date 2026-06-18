@@ -76,10 +76,10 @@ export default function Tours() {
                   <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '20px', color: '#C8894A' }}>{p.num}</span>
                 </div>
                 <div>
-                  <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 700, color: 'rgba(111,79,40,0.7)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '3px' }}>
+                  <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 800, color: '#C8894A', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '3px', textShadow: '0 0 12px rgba(200,137,74,0.7)' }}>
                     Partie {p.num} · {p.stops}
                   </div>
-                  <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '20px', color: '#C8894A' }}>{p.title}</h3>
+                  <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '20px', color: '#C8894A' }}>{p.title}</h3>
                 </div>
               </div>
               <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.78)', lineHeight: 1.75, marginBottom: '20px' }}>

@@ -93,7 +93,7 @@ export default function Reservation() {
 
           {/* Right */}
           <div className="lg:col-span-3" data-reveal="right" data-delay="150">
-            <div className="rounded-2xl p-8" style={{ backgroundColor: '#111111', border: '1px solid rgba(111,79,40,0.14)' }}>
+            <div className="rounded-2xl p-8" style={{ backgroundColor: '#111111', border: '1px solid rgba(111,79,40,0.35)', boxShadow: '0 0 40px rgba(111,79,40,0.22), 0 0 80px rgba(111,79,40,0.1)' }}>
               {submitted ? (
                 <div className="text-center py-10">
                   <CheckCircle size={52} className="mx-auto mb-4" style={{ color: '#6F4F28' }} />

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Phone, Mail, CheckCircle, MessageCircle } from 'lucide-react'
+import WordReveal from './WordReveal'
 
 type FormData = { name: string; email: string; phone: string; date: string; adults: string; children: string; message: string }
 
@@ -39,13 +40,12 @@ export default function Reservation() {
             >
               Réservez<br /><span style={{ color: '#6F4F28' }}>votre visite.</span>
             </h2>
-            <p
-              data-reveal
-              data-delay="180"
+            <WordReveal
+              delay={180}
               style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.78)', lineHeight: 1.7, marginBottom: '32px' }}
             >
               Remplissez le formulaire ou contactez-nous directement par WhatsApp. Pick-up à votre hébergement inclus.
-            </p>
+            </WordReveal>
 
             <div className="space-y-5">
               {[

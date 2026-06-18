@@ -1,5 +1,6 @@
 import { ChevronRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import WordReveal from './WordReveal'
+import StackedPanels from './StackedPanels'
 
 const parts = [
   {
@@ -20,9 +21,9 @@ const parts = [
 
 export default function Tours() {
   return (
-    <section id="circuit" className="py-24 px-6" style={{ backgroundColor: '#000000' }}>
+    <section id="circuit" className="py-24" style={{ backgroundColor: '#000000' }}>
       <div id="visite" style={{ position: 'relative', top: '-80px' }} />
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-6">
 
         {/* Badge + titre */}
         <div className="text-center mb-14">
@@ -50,13 +51,12 @@ export default function Tours() {
             La visite se déroule<br />
             <span style={{ color: '#6F4F28' }}>en deux parties.</span>
           </h2>
-          <p
-            data-reveal
-            data-delay="180"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.75)', marginTop: '14px', maxWidth: '480px', margin: '14px auto 0' }}
+          <WordReveal
+            delay={180}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.75)', marginTop: '14px', maxWidth: '480px', margin: '14px auto 0', textAlign: 'center' }}
           >
             La promesse d'une immersion et d'une découverte inédite de Rangiroa.
-          </p>
+          </WordReveal>
         </div>
 
         {/* Deux parties */}
@@ -97,44 +97,10 @@ export default function Tours() {
           ))}
         </div>
 
-        {/* Boutons de navigation vers les autres pages */}
-        <div data-reveal className="text-center">
-          <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.75)', marginBottom: '28px' }}>
-            Explorez votre visite en détail
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              to="/arrets"
-              className="btn-primary px-10 py-4 text-base"
-              style={{ textDecoration: 'none' }}
-            >
-              Les 6 arrêts →
-            </Link>
-            <Link
-              to="/tarifs"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '14px 36px',
-                borderRadius: '50px',
-                border: '1px solid rgba(111,79,40,0.4)',
-                backgroundColor: 'transparent',
-                color: '#ffffff',
-                fontFamily: 'Montserrat, sans-serif',
-                fontSize: '15px',
-                fontWeight: 700,
-                textDecoration: 'none',
-                transition: 'border-color 0.2s',
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.borderColor = '#6F4F28')}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(111,79,40,0.4)')}
-            >
-              Les tarifs →
-            </Link>
-          </div>
-        </div>
-
       </div>
+
+      {/* Stacked navigation panels */}
+      <StackedPanels />
     </section>
   )
 }

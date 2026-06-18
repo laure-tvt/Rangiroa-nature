@@ -1,9 +1,10 @@
 import Header from './components/Header'
 import Hero from './components/Hero'
+import ValueProp from './components/ValueProp'
 import Tours from './components/Tours'
-import About from './components/About'
+import Testimonials from './components/Testimonials'
+import BoatTour from './components/BoatTour'
 import Reservation from './components/Reservation'
-import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -12,10 +13,11 @@ export default function App() {
       <Header />
       <main>
         <Hero />
+        <ValueProp />
         <Tours />
-        <About />
+        <Testimonials />
+        <BoatTour />
         <Reservation />
-        <Contact />
       </main>
       <Footer />
     </div>

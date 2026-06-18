@@ -73,8 +73,8 @@ export default function Reservation() {
               Réservation
             </div>
             <h2 className="section-title mb-6">
-              Planifiez votre{' '}
-              <span className="gold-accent">aventure</span>
+              Réservez votre{' '}
+              <span className="gold-accent">visite</span>
             </h2>
             <p
               className="text-gray-600 leading-relaxed mb-10"

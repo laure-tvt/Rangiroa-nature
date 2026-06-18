@@ -31,52 +31,75 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
         <div
-          className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border text-sm font-medium tracking-widest uppercase"
+          className="hero-badge inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border text-sm font-medium tracking-widest uppercase"
           style={{ borderColor: '#D4AF37', color: '#D4AF37' }}
         >
           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#D4AF37' }} />
           Polynésie Française · Rangiroa
         </div>
 
-        <h1
-          className="text-white mb-6 leading-tight"
-          style={{
-            fontFamily: 'Playfair Display, serif',
-            fontSize: 'clamp(36px, 6vw, 64px)',
-            fontWeight: '700',
-            textShadow: '0 2px 20px rgba(0,0,0,0.3)',
-          }}
-        >
-          Découvrez Rangiroa
-          <br />
-          <span style={{ color: '#D4AF37' }}>en van privé</span>
+        <h1 className="text-white mb-6" style={{ lineHeight: 1.0 }}>
+          <span
+            className="hero-line-1 block"
+            style={{
+              fontFamily: 'Playfair Display, serif',
+              fontSize: 'clamp(52px, 9vw, 108px)',
+              fontWeight: 700,
+              textShadow: '0 2px 30px rgba(0,0,0,0.4)',
+            }}
+          >
+            6 arrêts,
+          </span>
+          <span
+            className="hero-line-2 block"
+            style={{
+              fontFamily: 'Playfair Display, serif',
+              fontSize: 'clamp(52px, 9vw, 108px)',
+              fontWeight: 700,
+              color: '#D4AF37',
+              textShadow: '0 2px 30px rgba(0,0,0,0.4)',
+            }}
+          >
+            900 ans
+          </span>
+          <span
+            className="hero-line-3 block"
+            style={{
+              fontFamily: 'Playfair Display, serif',
+              fontSize: 'clamp(52px, 9vw, 108px)',
+              fontWeight: 700,
+              textShadow: '0 2px 30px rgba(0,0,0,0.4)',
+            }}
+          >
+            d'histoire.
+          </span>
         </h1>
 
         <p
-          className="text-white/90 mb-10 max-w-2xl mx-auto"
+          className="hero-subtitle text-white/85 mb-10 max-w-2xl mx-auto"
           style={{
             fontFamily: 'Inter, sans-serif',
-            fontSize: 'clamp(16px, 2.5vw, 20px)',
+            fontSize: 'clamp(15px, 2vw, 18px)',
             lineHeight: '1.7',
             textShadow: '0 1px 8px rgba(0,0,0,0.3)',
           }}
         >
-          Visite guidée privée de l'atoll en 6 arrêts incontournables.
-          Histoire, culture polynésienne et paysages époustouflants — en français et en anglais.
+          Visite guidée privée de l'atoll de Rangiroa en van climatisé.
+          2h30 d'histoire, de culture polynésienne et de paysages époustouflants.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4">
           <button onClick={scrollToTours} className="btn-outline text-base px-8 py-4">
-            Découvrir la visite
+            Découvrir le circuit
           </button>
           <button onClick={scrollToBooking} className="btn-primary text-base px-8 py-4">
             Réserver maintenant
           </button>
         </div>
 
-        <div className="flex items-center justify-center gap-8 mt-16 flex-wrap">
+        <div className="hero-stats flex items-center justify-center gap-12 mt-16 flex-wrap">
           {[
             { value: '2h30', label: 'Durée de la visite' },
             { value: '6', label: 'Arrêts incontournables' },
@@ -84,12 +107,12 @@ export default function Hero() {
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div
-                className="text-2xl font-bold"
+                className="text-3xl font-bold"
                 style={{ fontFamily: 'Playfair Display, serif', color: '#D4AF37' }}
               >
                 {stat.value}
               </div>
-              <div className="text-white/70 text-xs tracking-wide mt-1">{stat.label}</div>
+              <div className="text-white/60 text-xs tracking-widest mt-1 uppercase">{stat.label}</div>
             </div>
           ))}
         </div>

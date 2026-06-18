@@ -3,9 +3,9 @@ import { Menu, X } from 'lucide-react'
 
 const navLinks = [
   { label: 'Accueil', href: '#accueil' },
-  { label: 'Visites', href: '#visites' },
-  { label: 'À propos', href: '#apropos' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Le circuit', href: '#visites' },
+  { label: 'Avis', href: '#avis' },
+  { label: 'Réserver', href: '#reservation' },
 ]
 
 export default function Header() {
@@ -27,33 +27,23 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
-        scrolled
-          ? 'py-3 shadow-lg'
-          : 'py-5'
+        scrolled ? 'py-3 shadow-lg' : 'py-5'
       }`}
-      style={{
-        backgroundColor: scrolled ? '#3D2817' : 'transparent',
-      }}
+      style={{ backgroundColor: scrolled ? '#3D2817' : 'transparent' }}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <button
-          onClick={() => handleNav('#accueil')}
-          className="flex items-center gap-3 group"
-        >
+        <button onClick={() => handleNav('#accueil')} className="flex items-center gap-3 group">
           <div
-            className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-bold transition-all duration-300"
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-bold"
             style={{ backgroundColor: '#D4AF37' }}
           >
             T
           </div>
           <div className="text-left">
             <div
-              className="text-white font-bold leading-tight transition-all duration-300"
-              style={{
-                fontFamily: 'Playfair Display, serif',
-                fontSize: scrolled ? '16px' : '18px',
-              }}
+              className="text-white font-bold leading-tight"
+              style={{ fontFamily: 'Playfair Display, serif', fontSize: scrolled ? '16px' : '18px' }}
             >
               Tevaiti Van Tours
             </div>

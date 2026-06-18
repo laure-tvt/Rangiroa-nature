@@ -170,7 +170,7 @@ export default function Tours() {
         >
           <h3
             className="text-white text-2xl font-bold mb-2"
-            style={{ fontFamily: 'Cinzel, serif', fontWeight: 700 }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700 }}
           >
             Tarifs
           </h3>

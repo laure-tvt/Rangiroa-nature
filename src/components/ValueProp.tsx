@@ -49,7 +49,7 @@ export default function ValueProp() {
         <h2
           className="mb-16"
           style={{
-            fontFamily: 'Cinzel, serif',
+            fontFamily: 'Montserrat, sans-serif',
             fontSize: 'clamp(22px, 3.5vw, 42px)',
             fontWeight: 700,
             color: '#ffffff',
@@ -65,7 +65,7 @@ export default function ValueProp() {
         <div
           className="mb-16"
           style={{
-            fontFamily: 'Cinzel, serif',
+            fontFamily: 'Montserrat, sans-serif',
             fontSize: 'clamp(22px, 4.5vw, 52px)',
             fontWeight: 700,
             lineHeight: 1.2,

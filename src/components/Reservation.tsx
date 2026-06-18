@@ -170,7 +170,7 @@ export default function Reservation() {
                   <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#8B6B42' }} />
                   <h3
                     className="text-2xl font-bold mb-3 text-white"
-                    style={{ fontFamily: 'Cinzel, serif', fontWeight: 700 }}
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700 }}
                   >
                     Demande envoyée !
                   </h3>

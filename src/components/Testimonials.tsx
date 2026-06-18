@@ -30,7 +30,7 @@ export default function Testimonials() {
     <section id="avis" className="py-24 px-6" style={{ backgroundColor: '#0d0d0d' }}>
       <div className="max-w-7xl mx-auto">
 
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 reveal">
           <div
             className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
             style={{ color: '#8B6B42' }}
@@ -57,7 +57,7 @@ export default function Testimonials() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {reviews.map((r, i) => (
-            <div key={i} className="card-navy p-7">
+            <div key={i} className={`card-navy p-7 reveal reveal-d${i + 1}`}>
               <div className="flex gap-1 mb-4">
                 {[...Array(r.stars)].map((_, s) => <Star key={s} />)}
               </div>

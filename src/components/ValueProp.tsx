@@ -47,7 +47,7 @@ export default function ValueProp() {
 
         {/* Section title */}
         <h2
-          className="mb-16"
+          className="mb-16 reveal"
           style={{
             fontFamily: 'Montserrat, sans-serif',
             fontSize: 'clamp(22px, 3.5vw, 42px)',
@@ -63,7 +63,7 @@ export default function ValueProp() {
 
         {/* Big statement with strikethrough on "générique" */}
         <div
-          className="mb-16"
+          className="mb-16 reveal reveal-d1"
           style={{
             fontFamily: 'Montserrat, sans-serif',
             fontSize: 'clamp(22px, 4.5vw, 52px)',

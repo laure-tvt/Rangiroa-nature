@@ -19,7 +19,7 @@ export default function BoatTour() {
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.82)' }}
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
+      <div className="relative z-10 max-w-4xl mx-auto text-center reveal">
         <div
           className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-6 mx-auto"
           style={{

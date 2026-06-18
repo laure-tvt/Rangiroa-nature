@@ -62,7 +62,7 @@ export default function Tours() {
       <div className="max-w-7xl mx-auto">
 
         {/* Section header — split layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end mb-16 reveal">
           <div>
             <div
               className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
@@ -111,7 +111,7 @@ export default function Tours() {
           {stops.map((stop, i) => (
             <div
               key={i}
-              className="group relative overflow-hidden rounded-2xl cursor-default"
+              className={`group relative overflow-hidden rounded-2xl cursor-default reveal reveal-d${Math.min(i + 1, 5)}`}
               style={{ height: '280px' }}
             >
               <img

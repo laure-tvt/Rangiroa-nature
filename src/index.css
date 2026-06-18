@@ -167,3 +167,26 @@
   50%       { transform: translateY(8px); }
 }
 .hero-bounce { animation: heroBounce 1.5s ease-in-out infinite; }
+
+/* ── Scroll reveal ───────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-d1 { transition-delay: 120ms; }
+.reveal-d2 { transition-delay: 240ms; }
+.reveal-d3 { transition-delay: 360ms; }
+.reveal-d4 { transition-delay: 480ms; }
+.reveal-d5 { transition-delay: 600ms; }
+
+/* ── Clip text iOS fallback ──────────────────────────────── */
+@supports (-webkit-touch-callout: none) {
+  .clip-brand-fixed {
+    background-attachment: scroll !important;
+  }
+}

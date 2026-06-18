@@ -31,16 +31,16 @@ export default function Hero() {
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80)',
+              backgroundImage: 'url(/hero-poster.jpg)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           />
-          {/* Clip-text: the same image shows THROUGH the letters */}
+          {/* Clip-text: la vraie photo Rangiroa transparaît à travers les lettres */}
           <div
             className="clip-intro-text relative z-10 select-none"
             style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80)',
+              backgroundImage: 'url(/hero-poster.jpg)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               fontFamily: 'Playfair Display, serif',
@@ -66,10 +66,10 @@ export default function Hero() {
           muted
           playsInline
           preload="auto"
-          poster="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80"
+          poster="/hero-poster.jpg"
         >
-          <source src="/hero.mp4" type="video/mp4" />
           <source src="/hero.mov" type="video/quicktime" />
+          <source src="/hero.mov" type="video/mp4" />
         </video>
       </div>
 

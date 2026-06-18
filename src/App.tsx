@@ -5,10 +5,12 @@ import About from './components/About'
 import Reservation from './components/Reservation'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import ScrollProgress from './components/ScrollProgress'
 
 export default function App() {
   return (
     <div className="min-h-screen">
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />

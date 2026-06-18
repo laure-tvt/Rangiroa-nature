@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook } from 'lucide-react'
 
 const infos = [
@@ -27,19 +28,7 @@ const infos = [
 export default function Contact() {
   const sectionRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible')
-        })
-      },
-      { threshold: 0.1 }
-    )
-    const reveals = sectionRef.current?.querySelectorAll('.reveal')
-    reveals?.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  useScrollReveal(sectionRef)
 
   return (
     <section id="contact" ref={sectionRef} className="py-24 px-6 bg-white">
@@ -48,15 +37,15 @@ export default function Contact() {
         <div className="text-center mb-16 reveal">
           <div
             className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-            style={{ color: '#D4AF37' }}
+            style={{ color: 'var(--teal)' }}
           >
-            <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
+            <span className="w-8 h-px" style={{ backgroundColor: 'var(--teal)' }} />
             Nous contacter
-            <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
+            <span className="w-8 h-px" style={{ backgroundColor: 'var(--teal)' }} />
           </div>
           <h2 className="section-title mb-4">
             Contactez{' '}
-            <span className="gold-accent">Tevaiti Van Tours</span>
+            <span className="teal-accent">Tevaiti Van Tours</span>
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
             Notre équipe est disponible pour répondre à toutes vos questions et vous aider
@@ -76,7 +65,7 @@ export default function Contact() {
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{ backgroundColor: '#3D2817' }}
               >
-                <info.icon size={22} style={{ color: '#D4AF37' }} />
+                <info.icon size={22} style={{ color: 'var(--teal)' }} />
               </div>
               <h4
                 className="font-semibold text-sm mb-2"
@@ -126,7 +115,7 @@ export default function Contact() {
                 href="#"
                 className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-white transition-all duration-200"
                 style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#D4AF37' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--teal)' }}
                 onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)' }}
               >
                 <Instagram size={18} />
@@ -136,7 +125,7 @@ export default function Contact() {
                 href="#"
                 className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-white transition-all duration-200"
                 style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#D4AF37' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--teal)' }}
                 onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)' }}
               >
                 <Facebook size={18} />

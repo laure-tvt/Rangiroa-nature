@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { Clock, Globe, MapPin, ChevronRight } from 'lucide-react'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 
 const stops = [
   {
@@ -48,20 +49,7 @@ const prices = [
 
 export default function Tours() {
   const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible')
-        })
-      },
-      { threshold: 0.1 }
-    )
-    const reveals = sectionRef.current?.querySelectorAll('.reveal')
-    reveals?.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  useScrollReveal(sectionRef)
 
   const handleBook = () => {
     const el = document.querySelector('#reservation')
@@ -74,17 +62,14 @@ export default function Tours() {
 
         {/* Header */}
         <div className="text-center mb-16 reveal">
-          <div
-            className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-            style={{ color: '#D4AF37' }}
-          >
-            <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
+          <div className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase teal-accent">
+            <span className="teal-line" />
             Notre Circuit
-            <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
+            <span className="teal-line" />
           </div>
           <h2 className="section-title mb-4">
             Tour de l'Île —{' '}
-            <span className="gold-accent">Visite Guidée</span>
+            <span className="teal-accent">Visite Guidée</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', lineHeight: '1.7' }}>
             Une immersion unique dans l'histoire, la culture et les paysages de Rangiroa
@@ -109,7 +94,7 @@ export default function Tours() {
               <div className="absolute bottom-6 left-6">
                 <span
                   className="px-3 py-1 rounded-full text-xs font-semibold text-white mb-2 inline-block"
-                  style={{ backgroundColor: '#D4AF37' }}
+                  style={{ backgroundColor: 'var(--teal)' }}
                 >
                   Circuit exclusif
                 </span>
@@ -124,15 +109,15 @@ export default function Tours() {
               <div>
                 <div className="flex flex-wrap gap-4 mb-6">
                   <span className="flex items-center gap-2 text-sm text-gray-600">
-                    <Clock size={16} style={{ color: '#D4AF37' }} />
+                    <Clock size={16} style={{ color: 'var(--teal)' }} />
                     2h30 (pick-up + boisson inclus)
                   </span>
                   <span className="flex items-center gap-2 text-sm text-gray-600">
-                    <Globe size={16} style={{ color: '#D4AF37' }} />
+                    <Globe size={16} style={{ color: 'var(--teal)' }} />
                     Français & Anglais
                   </span>
                   <span className="flex items-center gap-2 text-sm text-gray-600">
-                    <MapPin size={16} style={{ color: '#D4AF37' }} />
+                    <MapPin size={16} style={{ color: 'var(--teal)' }} />
                     6 arrêts
                   </span>
                 </div>
@@ -148,7 +133,7 @@ export default function Tours() {
                 <div className="space-y-2 mb-6">
                   {['Pick-up à votre hôtel / pension', 'Boisson offerte', 'Guide bilingue FR/EN', 'Groupes privés uniquement'].map((item) => (
                     <div key={item} className="flex items-center gap-2 text-sm text-gray-700">
-                      <span style={{ color: '#D4AF37', fontWeight: 'bold' }}>✓</span>
+                      <span style={{ color: 'var(--teal)', fontWeight: 'bold' }}>✓</span>
                       {item}
                     </div>
                   ))}
@@ -175,20 +160,20 @@ export default function Tours() {
             {stops.map((stop, i) => (
               <div
                 key={i}
-                className="bg-white rounded-xl p-5 shadow-sm card-hover"
-                style={{ transitionDelay: `${i * 60}ms` }}
+                className="reveal bg-white rounded-xl p-5 shadow-sm stop-card"
+                style={{ transitionDelay: `${i * 80}ms` }}
               >
                 <div className="flex items-start gap-4">
                   <span
                     className="text-3xl font-bold flex-shrink-0 leading-none"
-                    style={{ fontFamily: 'Playfair Display, serif', color: '#D4AF37', opacity: 0.5 }}
+                    style={{ fontFamily: 'Playfair Display, serif', color: 'var(--teal)', opacity: 0.5 }}
                   >
                     {stop.num}
                   </span>
                   <div>
                     <span
                       className="text-xs font-medium tracking-wide uppercase mb-1 block"
-                      style={{ color: '#D4AF37' }}
+                      style={{ color: 'var(--teal)' }}
                     >
                       {stop.theme}
                     </span>
@@ -222,7 +207,7 @@ export default function Tours() {
             {prices.map((p) => (
               <div
                 key={p.label}
-                className="rounded-xl p-5"
+                className="price-card rounded-xl p-5"
                 style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
               >
                 <div className="text-white/70 text-xs uppercase tracking-widest mb-2">{p.label}</div>
@@ -233,7 +218,7 @@ export default function Tours() {
                   {p.price}
                 </div>
                 {p.sub && (
-                  <div className="text-xs mt-1" style={{ color: '#D4AF37' }}>{p.sub}</div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--teal)' }}>{p.sub}</div>
                 )}
               </div>
             ))}

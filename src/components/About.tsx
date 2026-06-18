@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import { Heart, Shield, Leaf, Award } from 'lucide-react'
 
 const values = [
@@ -31,21 +32,7 @@ const values = [
 export default function About() {
   const sectionRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-    const reveals = sectionRef.current?.querySelectorAll('.reveal')
-    reveals?.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  useScrollReveal(sectionRef)
 
   return (
     <section id="apropos" ref={sectionRef} className="py-24 px-6 bg-white">
@@ -79,7 +66,7 @@ export default function About() {
               >
                 <div
                   className="text-2xl font-bold"
-                  style={{ fontFamily: 'Playfair Display, serif', color: '#D4AF37' }}
+                  style={{ fontFamily: 'Playfair Display, serif', color: 'var(--teal)' }}
                 >
                   +200
                 </div>
@@ -92,15 +79,15 @@ export default function About() {
           <div className="reveal" style={{ transitionDelay: '200ms' }}>
             <div
               className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#D4AF37' }}
+              style={{ color: 'var(--teal)' }}
             >
-              <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
+              <span className="w-8 h-px" style={{ backgroundColor: 'var(--teal)' }} />
               Notre histoire
             </div>
 
             <h2 className="section-title mb-6">
               Une passion pour Rangiroa,{' '}
-              <span className="gold-accent">partagée avec vous</span>
+              <span className="teal-accent">partagée avec vous</span>
             </h2>
 
             <p
@@ -128,7 +115,7 @@ export default function About() {
                     className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
                     style={{ backgroundColor: '#F5F5F5' }}
                   >
-                    <value.icon size={20} style={{ color: '#D4AF37' }} />
+                    <value.icon size={20} style={{ color: 'var(--teal)' }} />
                   </div>
                   <div>
                     <h4
@@ -167,7 +154,7 @@ export default function About() {
           </blockquote>
           <div>
             <div className="text-white font-semibold text-sm">Sophie & Pierre L.</div>
-            <div className="text-xs mt-1" style={{ color: '#D4AF37' }}>Paris · Circuit Motus Secrets · Juin 2025</div>
+            <div className="text-xs mt-1" style={{ color: 'var(--teal)' }}>Paris · Circuit Motus Secrets · Juin 2025</div>
           </div>
         </div>
       </div>

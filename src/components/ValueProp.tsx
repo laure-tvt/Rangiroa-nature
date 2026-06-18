@@ -1,10 +1,10 @@
-import { TrendingUp, Shield, Clock, Award } from 'lucide-react'
+import { MapPin, Clock, Globe, Tag } from 'lucide-react'
 
 const stats = [
-  { icon: TrendingUp, value: '20 ans', label: "d'expertise locale", desc: "Une équipe implantée en Polynésie depuis 2004" },
-  { icon: Shield, value: '100%', label: 'sécurisé', desc: "Transactions vérifiées, agents certifiés" },
-  { icon: Clock, value: '48h', label: 'délai de réponse', desc: "Un conseiller vous rappelle sous 48h max" },
-  { icon: Award, value: '#1', label: 'portail immo', desc: "Premier portail immobilier de Polynésie" },
+  { icon: MapPin, value: '6', label: 'arrêts incontournables', desc: "De l'église d'Avatoru à la passe de Tiputa, chaque arrêt raconte Rangiroa." },
+  { icon: Clock, value: '2h30', label: 'de visite guidée', desc: "Pick-up à votre hébergement et boisson fraîche inclus dans la durée." },
+  { icon: Globe, value: 'FR / EN', label: 'langues disponibles', desc: "Visite commentée en français et en anglais selon vos préférences." },
+  { icon: Tag, value: 'Dès 42€', label: 'par adulte', desc: "5 000 XFP adulte · 2 500 XFP enfant (−11 ans) · Gratuit bébé (−3 ans)." },
 ]
 
 export default function ValueProp() {
@@ -13,21 +13,15 @@ export default function ValueProp() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <div data-reveal className="section-label justify-center mx-auto">
-            Pourquoi FIND Polynésie
+            Tevaiti Van Tours
           </div>
           <h2
             data-reveal
             data-delay="100"
-            style={{
-              fontFamily: 'Montserrat, sans-serif',
-              fontSize: 'clamp(26px, 3.5vw, 42px)',
-              fontWeight: 800,
-              color: '#ffffff',
-              lineHeight: 1.15,
-            }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 800, color: '#ffffff', lineHeight: 1.15 }}
           >
-            L'immobilier en Polynésie,{' '}
-            <span style={{ color: '#6F4F28' }}>simplifié.</span>
+            Une immersion authentique<br />
+            <span style={{ color: '#6F4F28' }}>au cœur de Rangiroa.</span>
           </h2>
         </div>
 

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
-  { label: 'Acheter', href: '#biens' },
-  { label: 'Louer', href: '#biens' },
-  { label: 'Vendre', href: '#contact' },
-  { label: 'Trouver un agent', href: '#agents' },
+  { label: 'Le tour',      href: '#visite' },
+  { label: 'Les 6 arrêts', href: '#arrets' },
+  { label: 'Tarifs',       href: '#tarifs' },
+  { label: 'Témoignages',  href: '#temoignages' },
 ]
 
 export default function Header() {
@@ -41,22 +41,8 @@ export default function Header() {
           onClick={() => handleNav('#accueil')}
           style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'baseline', gap: '5px' }}
         >
-          <span style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontWeight: 900,
-            fontSize: '22px',
-            letterSpacing: '0.06em',
-            color: '#6F4F28',
-            textTransform: 'uppercase',
-          }}>FIND</span>
-          <span style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontWeight: 300,
-            fontSize: '18px',
-            letterSpacing: '0.06em',
-            color: 'rgba(255,255,255,0.85)',
-            textTransform: 'uppercase',
-          }}>POLYNÉSIE</span>
+          <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '22px', letterSpacing: '0.06em', color: '#6F4F28', textTransform: 'uppercase' }}>TVT</span>
+          <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 300, fontSize: '18px', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase' }}>RANGIROA</span>
         </button>
 
         {/* Desktop Nav */}
@@ -68,13 +54,10 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Desktop CTAs */}
+        {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <button onClick={() => handleNav('#contact')} className="btn-ghost">
-            Connexion
-          </button>
           <button onClick={() => handleNav('#contact')} className="btn-primary">
-            Publier une annonce
+            Réserver
           </button>
         </div>
 
@@ -102,9 +85,8 @@ export default function Header() {
               {link.label}
             </button>
           ))}
-          <div className="flex flex-col gap-3 mt-4">
-            <button onClick={() => handleNav('#contact')} className="btn-ghost justify-center">Connexion</button>
-            <button onClick={() => handleNav('#contact')} className="btn-primary justify-center">Publier une annonce</button>
+          <div className="mt-4">
+            <button onClick={() => handleNav('#contact')} className="btn-primary w-full justify-center">Réserver</button>
           </div>
         </div>
       )}

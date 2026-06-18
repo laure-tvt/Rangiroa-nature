@@ -30,6 +30,8 @@ export default function Hero() {
           src="/hero-bg.jpg"
           alt=""
           aria-hidden="true"
+          fetchPriority="high"
+          loading="eager"
           style={{
             position: 'absolute', inset: 0,
             width: '100%', height: '100%',
@@ -85,7 +87,7 @@ export default function Hero() {
             textTransform: 'uppercase',
             textShadow: '0 1px 10px rgba(0,0,0,0.5)',
           }}>
-            Rangiroa · Polynésie française
+            Visite guidée de Rangiroa · 2h30
           </p>
         </div>
 

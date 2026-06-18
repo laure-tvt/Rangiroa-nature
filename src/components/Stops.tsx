@@ -93,11 +93,13 @@ export default function Stops() {
             >
               {/* Photo */}
               {s.img && (
-                <div style={{ height: '190px', overflow: 'hidden' }}>
+                <div style={{ height: '190px', overflow: 'hidden', flexShrink: 0 }}>
                   <img
                     src={s.img}
                     alt={s.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    loading="lazy"
+                    decoding="async"
+                    style={{ width: '100%', height: '190px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                   />
                 </div>
               )}

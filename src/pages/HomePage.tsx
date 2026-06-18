@@ -3,7 +3,6 @@ import Header from '../components/Header'
 import Hero from '../components/Hero'
 import ValueProp from '../components/ValueProp'
 import Tours from '../components/Tours'
-import Testimonials from '../components/Testimonials'
 import Reservation from '../components/Reservation'
 import Footer from '../components/Footer'
 
@@ -16,7 +15,6 @@ export default function HomePage() {
         <Hero />
         <ValueProp />
         <Tours />
-        <Testimonials />
         <Reservation />
       </main>
       <Footer />

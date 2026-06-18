@@ -6,7 +6,6 @@ const navLinks = [
   { label: 'Le tour',      href: '/', hash: '#visite' },
   { label: 'Les 6 arrêts', href: '/arrets', hash: '' },
   { label: 'Tarifs',       href: '/tarifs', hash: '' },
-  { label: 'Témoignages',  href: '/', hash: '#temoignages' },
 ]
 
 export default function Header() {

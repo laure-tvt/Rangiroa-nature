@@ -27,7 +27,7 @@ export default function Hero() {
 
         {/* Photo background — eager, high priority, no rotation */}
         <img
-          src="/hero-bg.jpg"
+          src="/hero-plage.jpg"
           alt=""
           aria-hidden="true"
           fetchPriority="high"

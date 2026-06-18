@@ -190,18 +190,12 @@
 }
 
 /* ── Cloud animations ──────────────────────────────────────────── */
-@keyframes cloudDriftLeft {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-@keyframes cloudDriftRight {
-  0%   { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-@keyframes cloudDriftLeftSlow {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+@keyframes cloudFloat {
+  0%   { transform: translateX(-20%); }
+  100% { transform: translateX(120%); }
 }
 
-.cloud-drift-left  { animation: cloudDriftLeft  linear infinite; }
-.cloud-drift-right { animation: cloudDriftRight linear infinite; }
+.cloud-float-50 { animation: cloudFloat 50s linear infinite; }
+.cloud-float-48 { animation: cloudFloat 48s linear infinite; }
+.cloud-float-55 { animation: cloudFloat 55s linear infinite; }
+.cloud-float-60 { animation: cloudFloat 60s linear infinite; }

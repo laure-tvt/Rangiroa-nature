@@ -1,142 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 
-/* ─── Colors ─────────────────────────────────────────────────── */
-const CC = 'rgba(255,252,248,0.97)'
-const CS = 'rgba(210,185,150,0.3)'
-
-/* ─── SVG Cloud shapes ───────────────────────────────────────── */
-const CloudA = () => (
-  <svg viewBox="0 0 560 170" className="w-full h-full" style={{ filter: 'drop-shadow(0 18px 28px rgba(180,140,90,0.18))' }}>
-    <ellipse cx="280" cy="152" rx="268" ry="28" fill={CS}/>
-    <ellipse cx="120" cy="118" rx="105" ry="85" fill={CC}/>
-    <ellipse cx="230" cy="90"  rx="125" ry="100" fill={CC}/>
-    <ellipse cx="355" cy="85"  rx="120" ry="97"  fill={CC}/>
-    <ellipse cx="460" cy="108" rx="98"  ry="75"  fill={CC}/>
-    <ellipse cx="520" cy="132" rx="55"  ry="40"  fill={CC}/>
-    <ellipse cx="280" cy="145" rx="268" ry="32"  fill={CC}/>
-  </svg>
-)
-
-const CloudB = () => (
-  <svg viewBox="0 0 420 140" className="w-full h-full" style={{ filter: 'drop-shadow(0 14px 22px rgba(180,140,90,0.16))' }}>
-    <ellipse cx="210" cy="122" rx="200" ry="24" fill={CS}/>
-    <ellipse cx="90"  cy="95"  rx="82"  ry="68" fill={CC}/>
-    <ellipse cx="195" cy="75"  rx="105" ry="82" fill={CC}/>
-    <ellipse cx="320" cy="88"  rx="90"  ry="70" fill={CC}/>
-    <ellipse cx="385" cy="112" rx="48"  ry="36" fill={CC}/>
-    <ellipse cx="210" cy="125" rx="200" ry="26" fill={CC}/>
-  </svg>
-)
-
-const CloudC = () => (
-  <svg viewBox="0 0 280 110" className="w-full h-full" style={{ filter: 'drop-shadow(0 10px 16px rgba(180,140,90,0.14))' }}>
-    <ellipse cx="140" cy="95"  rx="130" ry="20" fill={CS}/>
-    <ellipse cx="60"  cy="72"  rx="55"  ry="48" fill={CC}/>
-    <ellipse cx="138" cy="58"  rx="80"  ry="65" fill={CC}/>
-    <ellipse cx="220" cy="70"  rx="62"  ry="50" fill={CC}/>
-    <ellipse cx="140" cy="95"  rx="130" ry="22" fill={CC}/>
-  </svg>
-)
-
-const CloudD = () => (
-  <svg viewBox="0 0 500 90" className="w-full h-full" style={{ filter: 'drop-shadow(0 8px 14px rgba(180,140,90,0.12))' }}>
-    <ellipse cx="250" cy="76"  rx="238" ry="18" fill={CS}/>
-    <ellipse cx="80"  cy="58"  rx="72"  ry="44" fill={CC}/>
-    <ellipse cx="200" cy="44"  rx="120" ry="52" fill={CC}/>
-    <ellipse cx="350" cy="52"  rx="100" ry="45" fill={CC}/>
-    <ellipse cx="455" cy="64"  rx="58"  ry="34" fill={CC}/>
-    <ellipse cx="250" cy="76"  rx="238" ry="20" fill={CC}/>
-  </svg>
-)
-
-const CloudE = () => (
-  <svg viewBox="0 0 200 85" className="w-full h-full" style={{ filter: 'drop-shadow(0 8px 12px rgba(180,140,90,0.12))' }}>
-    <ellipse cx="100" cy="72"  rx="92"  ry="16" fill={CS}/>
-    <ellipse cx="42"  cy="55"  rx="38"  ry="35" fill={CC}/>
-    <ellipse cx="100" cy="42"  rx="58"  ry="50" fill={CC}/>
-    <ellipse cx="160" cy="52"  rx="42"  ry="34" fill={CC}/>
-    <ellipse cx="100" cy="72"  rx="92"  ry="18" fill={CC}/>
-  </svg>
-)
-
-/* ─── Cloud layer component ──────────────────────────────────── */
-interface StripCloud { x: number; y: number; width: number; type: 'A'|'B'|'C'|'D'|'E' }
-
-const SHAPES: Record<string, React.FC> = { A: CloudA, B: CloudB, C: CloudC, D: CloudD, E: CloudE }
-
-function CloudLayer({ clouds, duration, direction, parallaxY, opacity = 1 }: {
-  clouds: StripCloud[]
-  duration: number
-  direction: 'left'|'right'
-  parallaxY: number
-  opacity?: number
-}) {
-  // double the set for seamless loop
-  const doubled = [
-    ...clouds,
-    ...clouds.map(c => ({ ...c, x: c.x + 100 })),
-  ]
-
-  return (
-    <div
-      className={direction === 'left' ? 'cloud-drift-left' : 'cloud-drift-right'}
-      style={{
-        position: 'absolute',
-        inset: 0,
-        width: '200%',
-        animationDuration: `${duration}s`,
-        transform: `translateY(${parallaxY}px)`,
-        willChange: 'transform',
-        opacity,
-      }}
-    >
-      {doubled.map((c, i) => {
-        const Comp = SHAPES[c.type]
-        return (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              left: `${c.x / 2}%`,
-              top: `${c.y}%`,
-              width: `${c.width}px`,
-              height: `${Math.round(c.width * 0.35)}px`,
-            }}
-          >
-            <Comp />
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
-/* ─── Cloud definitions ────────────────────────────────────────── */
-const BG_CLOUDS: StripCloud[] = [
-  { x: 4,  y: 5,  width: 240, type: 'E' },
-  { x: 22, y: 11, width: 200, type: 'C' },
-  { x: 40, y: 4,  width: 255, type: 'E' },
-  { x: 57, y: 9,  width: 210, type: 'C' },
-  { x: 74, y: 6,  width: 230, type: 'E' },
-  { x: 88, y: 13, width: 195, type: 'C' },
-]
-
-const MID_CLOUDS: StripCloud[] = [
-  { x: 2,  y: 22, width: 380, type: 'D' },
-  { x: 24, y: 28, width: 420, type: 'B' },
-  { x: 48, y: 20, width: 360, type: 'D' },
-  { x: 70, y: 30, width: 400, type: 'B' },
-  { x: 90, y: 25, width: 350, type: 'D' },
-]
-
-const FG_CLOUDS: StripCloud[] = [
-  { x: 0,  y: 42, width: 580, type: 'A' },
-  { x: 28, y: 48, width: 540, type: 'A' },
-  { x: 56, y: 44, width: 560, type: 'A' },
-  { x: 82, y: 50, width: 500, type: 'B' },
-]
-
-/* ─── Hero ──────────────────────────────────────────────────────── */
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0)
   const vhRef = useRef(typeof window !== 'undefined' ? window.innerHeight : 700)
@@ -148,17 +11,13 @@ export default function Hero() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const progress    = Math.min(1, Math.max(0, scrollY / vhRef.current))
+  const progress = Math.min(1, Math.max(0, scrollY / vhRef.current))
 
   const titleOpacity = Math.max(0, 1 - progress * 3.2)
   const titleY       = -progress * 70
 
-  const logoOpacity  = Math.max(0, Math.min(1, (progress - 0.22) / 0.38))
-  const logoScale    = 0.68 + logoOpacity * 0.32
-
-  const py1 = -scrollY * 0.08
-  const py2 = -scrollY * 0.20
-  const py3 = -scrollY * 0.38
+  const logoOpacity = Math.max(0, Math.min(1, (progress - 0.22) / 0.38))
+  const logoScale   = 0.68 + logoOpacity * 0.32
 
   const skyDarken = progress * 0.78
 
@@ -193,15 +52,45 @@ export default function Hero() {
           pointerEvents: 'none',
         }}/>
 
-        {/* Cloud layer 1 — background */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
-          <CloudLayer clouds={BG_CLOUDS} duration={90} direction="left"  parallaxY={py1} opacity={0.72}/>
-        </div>
+        {/* Cloud 1 — background, top 15% */}
+        <img
+          src="/cloud-1.svg"
+          alt=""
+          aria-hidden="true"
+          className="cloud-float-50"
+          style={{
+            position: 'absolute',
+            top: '15%',
+            left: 0,
+            width: '45vw',
+            zIndex: 1,
+            opacity: 0.65,
+            animationDelay: '-12s',
+            pointerEvents: 'none',
+            userSelect: 'none',
+          }}
+          draggable={false}
+        />
 
-        {/* Cloud layer 2 — midground */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 2 }}>
-          <CloudLayer clouds={MID_CLOUDS} duration={58} direction="right" parallaxY={py2} opacity={0.9}/>
-        </div>
+        {/* Cloud 2 — background, top 22% */}
+        <img
+          src="/cloud-3.svg"
+          alt=""
+          aria-hidden="true"
+          className="cloud-float-48"
+          style={{
+            position: 'absolute',
+            top: '22%',
+            left: 0,
+            width: '38vw',
+            zIndex: 1,
+            opacity: 0.50,
+            animationDelay: '-28s',
+            pointerEvents: 'none',
+            userSelect: 'none',
+          }}
+          draggable={false}
+        />
 
         {/* Title — fades out on scroll */}
         <div style={{
@@ -242,10 +131,45 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Cloud layer 3 — foreground (in front of title) */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 4 }}>
-          <CloudLayer clouds={FG_CLOUDS} duration={38} direction="left"  parallaxY={py3} opacity={1}/>
-        </div>
+        {/* Cloud 3 — foreground, top 35% */}
+        <img
+          src="/cloud-2.svg"
+          alt=""
+          aria-hidden="true"
+          className="cloud-float-55"
+          style={{
+            position: 'absolute',
+            top: '35%',
+            left: 0,
+            width: '52vw',
+            zIndex: 4,
+            opacity: 0.45,
+            animationDelay: '-5s',
+            pointerEvents: 'none',
+            userSelect: 'none',
+          }}
+          draggable={false}
+        />
+
+        {/* Cloud 4 — foreground, top 55% */}
+        <img
+          src="/cloud-4.svg"
+          alt=""
+          aria-hidden="true"
+          className="cloud-float-60"
+          style={{
+            position: 'absolute',
+            top: '55%',
+            left: 0,
+            width: '32vw',
+            zIndex: 4,
+            opacity: 0.30,
+            animationDelay: '-40s',
+            pointerEvents: 'none',
+            userSelect: 'none',
+          }}
+          draggable={false}
+        />
 
         {/* Logo — appears as title fades */}
         <div style={{

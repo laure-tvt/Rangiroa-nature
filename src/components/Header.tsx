@@ -55,8 +55,9 @@ export default function Header() {
         <Link
           to="/"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: '5px' }}
+          style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}
         >
+          <img src="/logo-icon.png" alt="TVT logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
           <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '22px', letterSpacing: '0.06em', color: '#6F4F28', textTransform: 'uppercase' }}>TVT</span>
           <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 300, fontSize: '18px', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase' }}>RANGIROA</span>
         </Link>

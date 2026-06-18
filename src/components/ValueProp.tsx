@@ -9,16 +9,32 @@ const stats = [
 
 export default function ValueProp() {
   return (
-    <section className="py-20 px-6" style={{ backgroundColor: '#ffffff' }}>
+    <section className="py-20 px-6" style={{ backgroundColor: '#0D0D0D' }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <div data-reveal className="section-label justify-center mx-auto" style={{ color: '#6F4F28' }}>
-            Pourquoi choisir cette visite guidée ?
+
+          {/* Label en forme de bouton/badge */}
+          <div data-reveal className="flex justify-center mb-4">
+            <span style={{
+              display: 'inline-block',
+              padding: '8px 20px',
+              borderRadius: '999px',
+              backgroundColor: '#ffffff',
+              color: '#6F4F28',
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: '11px',
+              fontWeight: 700,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+            }}>
+              Pourquoi choisir cette visite guidée ?
+            </span>
           </div>
+
           <h2
             data-reveal
             data-delay="100"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 800, color: '#111111', lineHeight: 1.15 }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 800, color: '#ffffff', lineHeight: 1.15 }}
           >
             Une immersion authentique<br />
             <span style={{ color: '#6F4F28' }}>au cœur de Rangiroa.</span>
@@ -29,8 +45,7 @@ export default function ValueProp() {
           {stats.map((s, i) => (
             <div
               key={i}
-              className="p-7 text-center rounded-2xl"
-              style={{ backgroundColor: '#f8f5f1', border: '1px solid rgba(111,79,40,0.15)' }}
+              className="card-dark p-7 text-center"
               data-reveal="scale"
               data-delay={String(i * 120)}
             >
@@ -41,8 +56,8 @@ export default function ValueProp() {
                 <s.icon size={20} style={{ color: '#6F4F28' }} />
               </div>
               <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '28px', fontWeight: 800, color: '#6F4F28', lineHeight: 1.1 }}>{s.value}</div>
-              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 700, color: '#111111', marginTop: '4px' }}>{s.label}</div>
-              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', fontWeight: 700, color: '#444444', marginTop: '6px', lineHeight: 1.55 }}>{s.desc}</div>
+              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: '4px' }}>{s.label}</div>
+              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.72)', marginTop: '6px', lineHeight: 1.55 }}>{s.desc}</div>
             </div>
           ))}
         </div>

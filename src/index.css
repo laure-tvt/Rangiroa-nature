@@ -15,14 +15,15 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.02em;
   }
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer;
-    background-color: #6F4F28;
+    background-color: #C46926;
     color: #000000;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -31,44 +32,45 @@
     background-color: #ffffff;
     color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(111, 79, 40, 0.35);
+    box-shadow: 0 8px 24px rgba(196, 105, 38, 0.35);
   }
 
   .btn-outline {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer;
-    border: 2px solid #6F4F28;
+    border: 2px solid #C46926;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
   }
   .btn-outline:hover {
-    background-color: #6F4F28;
+    background-color: #C46926;
     color: #000000;
     transform: translateY(-2px);
   }
 
   .section-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 800;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
     color: #ffffff;
-    line-height: 1.15;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
   }
 
   .cyan-accent {
-    color: #6F4F28;
+    color: #C46926;
   }
 
   .card-navy {
     background-color: #1a1208;
-    border: 1px solid rgba(111, 79, 40, 0.12);
+    border: 1px solid rgba(196, 105, 38, 0.12);
     border-radius: 16px;
     transition: all 0.3s ease;
   }
   .card-navy:hover {
-    border-color: #6F4F28;
+    border-color: #C46926;
     transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(111, 79, 40, 0.15);
+    box-shadow: 0 16px 40px rgba(196, 105, 38, 0.15);
   }
 }
 
@@ -80,7 +82,7 @@
   background: #0d0d0d;
 }
 ::-webkit-scrollbar-thumb {
-  background: #6F4F28;
+  background: #C46926;
   border-radius: 3px;
 }
 
@@ -95,14 +97,14 @@
   left: 0;
   width: 0;
   height: 2px;
-  background-color: #6F4F28;
+  background-color: #C46926;
   transition: width 0.3s ease;
 }
 .nav-link:hover::after {
   width: 100%;
 }
 .nav-link:hover {
-  color: #6F4F28;
+  color: #C46926;
 }
 
 /* Hero overlay */

@@ -14,9 +14,9 @@ export default function ValueProp() {
           <div>
             <div
               className="inline-flex items-center gap-2 mb-6 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#6F4F28' }}
+              style={{ color: '#C46926' }}
             >
-              <span className="w-8 h-px" style={{ backgroundColor: '#6F4F28' }} />
+              <span className="w-8 h-px" style={{ backgroundColor: '#C46926' }} />
               La visite
             </div>
             <h2
@@ -29,7 +29,7 @@ export default function ValueProp() {
               }}
             >
               Comprendre Rangiroa<br />
-              <span style={{ color: '#6F4F28' }}>pour la visiter</span><br />
+              <span style={{ color: '#C46926' }}>pour la visiter</span><br />
               vraiment.
             </h2>
           </div>
@@ -58,14 +58,14 @@ export default function ValueProp() {
                 <div
                   key={item.n}
                   className="flex items-center gap-5 py-4"
-                  style={{ borderBottom: '1px solid rgba(111,79,40,0.15)' }}
+                  style={{ borderBottom: '1px solid rgba(196,105,38,0.15)' }}
                 >
                   <span
                     style={{
                       fontFamily: 'Montserrat, sans-serif',
                       fontSize: '36px',
                       fontWeight: 800,
-                      color: '#6F4F28',
+                      color: '#C46926',
                       minWidth: '88px',
                       lineHeight: 1,
                     }}

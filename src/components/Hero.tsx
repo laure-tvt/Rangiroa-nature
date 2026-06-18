@@ -86,7 +86,7 @@ export default function Hero() {
               <div
                 style={{
                   fontFamily: 'Montserrat, sans-serif',
-                  color: '#6F4F28',
+                  color: '#C46926',
                   fontWeight: 800,
                   fontSize: '28px',
                 }}

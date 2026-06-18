@@ -23,19 +23,19 @@ export default function BoatTour() {
         <div
           className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-6 mx-auto"
           style={{
-            backgroundColor: 'rgba(111,79,40,0.1)',
-            border: '1.5px solid rgba(111,79,40,0.4)',
+            backgroundColor: 'rgba(196,105,38,0.1)',
+            border: '1.5px solid rgba(196,105,38,0.4)',
           }}
         >
-          <Anchor size={26} style={{ color: '#6F4F28' }} />
+          <Anchor size={26} style={{ color: '#C46926' }} />
         </div>
 
         <div
           className="inline-block mb-5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
           style={{
-            backgroundColor: 'rgba(111,79,40,0.1)',
-            color: '#6F4F28',
-            border: '1px solid rgba(111,79,40,0.3)',
+            backgroundColor: 'rgba(196,105,38,0.1)',
+            color: '#C46926',
+            border: '1px solid rgba(196,105,38,0.3)',
           }}
         >
           Bientôt disponible

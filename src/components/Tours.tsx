@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import { Clock, Globe, MapPin, ChevronRight } from 'lucide-react'
 
 const stops = [
@@ -53,66 +52,55 @@ const prices = [
 ]
 
 export default function Tours() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
-      { threshold: 0.1 }
-    )
-    sectionRef.current?.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
-
   const handleBook = () => {
     const el = document.querySelector('#reservation')
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <section id="visites" ref={sectionRef} className="py-24 px-6" style={{ backgroundColor: '#F5F5F5' }}>
+    <section id="visites" className="py-24 px-6" style={{ backgroundColor: '#1a2b3d' }}>
       <div className="max-w-7xl mx-auto">
 
         {/* Section header — split layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end mb-16 reveal">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end mb-16">
           <div>
             <div
               className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#D4AF37' }}
+              style={{ color: '#00ffff' }}
             >
-              <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
+              <span className="w-8 h-px" style={{ backgroundColor: '#00ffff' }} />
               Le circuit
             </div>
             <h2
               style={{
-                fontFamily: 'Playfair Display, serif',
+                fontFamily: 'Montserrat, sans-serif',
                 fontSize: 'clamp(36px, 4.5vw, 56px)',
-                fontWeight: 700,
-                color: '#3D2817',
+                fontWeight: 800,
+                color: '#ffffff',
                 lineHeight: 1.1,
               }}
             >
               6 arrêts,<br />
-              <span style={{ color: '#D4AF37' }}>un parcours unique.</span>
+              <span style={{ color: '#00ffff' }}>un parcours unique.</span>
             </h2>
           </div>
           <div>
             <p
-              className="text-gray-600 leading-relaxed mb-6"
-              style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px' }}
+              className="text-white/70 leading-relaxed mb-6"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '16px', fontWeight: 400 }}
             >
               Une immersion unique dans l'histoire, la culture et les paysages de Rangiroa.
               Visite privée, en van climatisé, en français et en anglais.
             </p>
-            <div className="flex flex-wrap gap-5 text-sm text-gray-500">
+            <div className="flex flex-wrap gap-5 text-sm text-white/60">
               <span className="flex items-center gap-1.5">
-                <Clock size={14} style={{ color: '#D4AF37' }} />2h30 (pick-up inclus)
+                <Clock size={14} style={{ color: '#00ffff' }} />2h30 (pick-up inclus)
               </span>
               <span className="flex items-center gap-1.5">
-                <Globe size={14} style={{ color: '#D4AF37' }} />FR &amp; EN
+                <Globe size={14} style={{ color: '#00ffff' }} />FR &amp; EN
               </span>
               <span className="flex items-center gap-1.5">
-                <MapPin size={14} style={{ color: '#D4AF37' }} />6 arrêts
+                <MapPin size={14} style={{ color: '#00ffff' }} />6 arrêts
               </span>
             </div>
           </div>
@@ -123,8 +111,8 @@ export default function Tours() {
           {stops.map((stop, i) => (
             <div
               key={i}
-              className="reveal group relative overflow-hidden rounded-2xl cursor-default"
-              style={{ transitionDelay: `${i * 80}ms`, height: '280px' }}
+              className="group relative overflow-hidden rounded-2xl cursor-default"
+              style={{ height: '280px' }}
             >
               <img
                 src={stop.img}
@@ -132,10 +120,10 @@ export default function Tours() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div
-                className="absolute inset-0 transition-all duration-300"
+                className="absolute inset-0"
                 style={{
                   background:
-                    'linear-gradient(to top, rgba(61,40,23,0.92) 0%, rgba(61,40,23,0.3) 60%, transparent 100%)',
+                    'linear-gradient(to top, rgba(15,28,42,0.92) 0%, rgba(15,28,42,0.3) 60%, transparent 100%)',
                 }}
               />
               <div className="absolute inset-0 p-5 flex flex-col justify-between">
@@ -143,8 +131,9 @@ export default function Tours() {
                   <span
                     className="text-6xl font-bold leading-none"
                     style={{
-                      fontFamily: 'Playfair Display, serif',
-                      color: 'rgba(212,175,55,0.22)',
+                      fontFamily: 'Montserrat, sans-serif',
+                      color: 'rgba(0,255,255,0.2)',
+                      fontWeight: 900,
                     }}
                   >
                     {stop.num}
@@ -152,8 +141,8 @@ export default function Tours() {
                   <span
                     className="px-2.5 py-1 rounded-full text-xs font-medium"
                     style={{
-                      backgroundColor: 'rgba(212,175,55,0.18)',
-                      color: '#D4AF37',
+                      backgroundColor: 'rgba(0,255,255,0.12)',
+                      color: '#00ffff',
                       backdropFilter: 'blur(4px)',
                     }}
                   >
@@ -163,7 +152,7 @@ export default function Tours() {
                 <div>
                   <h3
                     className="text-white font-bold text-lg mb-1.5"
-                    style={{ fontFamily: 'Playfair Display, serif' }}
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700 }}
                   >
                     {stop.name}
                   </h3>
@@ -176,12 +165,12 @@ export default function Tours() {
 
         {/* Tarifs */}
         <div
-          className="reveal rounded-2xl p-8 md:p-10 text-center"
-          style={{ backgroundColor: '#3D2817' }}
+          className="rounded-2xl p-8 md:p-10 text-center"
+          style={{ backgroundColor: '#0f1c2a' }}
         >
           <h3
             className="text-white text-2xl font-bold mb-2"
-            style={{ fontFamily: 'Playfair Display, serif' }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800 }}
           >
             Tarifs
           </h3>
@@ -191,16 +180,16 @@ export default function Tours() {
               <div
                 key={p.label}
                 className="rounded-xl p-5"
-                style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
+                style={{ backgroundColor: 'rgba(0,255,255,0.06)' }}
               >
                 <div className="text-white/70 text-xs uppercase tracking-widest mb-2">{p.label}</div>
                 <div
-                  className="text-2xl font-bold text-white"
-                  style={{ fontFamily: 'Playfair Display, serif' }}
+                  className="text-2xl font-bold"
+                  style={{ fontFamily: 'Montserrat, sans-serif', color: '#00ffff', fontWeight: 800 }}
                 >
                   {p.price}
                 </div>
-                {p.sub && <div className="text-xs mt-1" style={{ color: '#D4AF37' }}>{p.sub}</div>}
+                {p.sub && <div className="text-xs mt-1 text-white/50">{p.sub}</div>}
               </div>
             ))}
           </div>

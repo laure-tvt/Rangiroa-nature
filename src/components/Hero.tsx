@@ -2,27 +2,20 @@ import { useState, useEffect, useRef } from 'react'
 
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0)
-  const vhRef   = useRef(typeof window !== 'undefined' ? window.innerHeight : 700)
+  const vhRef    = useRef(typeof window !== 'undefined' ? window.innerHeight : 700)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     vhRef.current = window.innerHeight
     const onScroll = () => setScrollY(window.scrollY)
     window.addEventListener('scroll', onScroll, { passive: true })
-
-    // Force play as soon as possible — required on some mobile browsers
-    const vid = videoRef.current
-    if (vid) {
-      vid.play().catch(() => {
-        // Retry once on first user interaction if autoplay was blocked
-        const resume = () => { vid.play(); document.removeEventListener('touchstart', resume); document.removeEventListener('click', resume) }
-        document.addEventListener('touchstart', resume, { once: true })
-        document.addEventListener('click', resume, { once: true })
-      })
-    }
-
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Ensure playback starts as soon as the video is ready
+  const handleCanPlay = () => {
+    videoRef.current?.play().catch(() => {})
+  }
 
   const progress = Math.min(1, Math.max(0, scrollY / vhRef.current))
 
@@ -34,14 +27,11 @@ export default function Hero() {
 
   const overlayOpacity = progress * 0.55
 
-  // Video drifts downward as user scrolls (parallax)
-  const videoY = scrollY * 0.4
-
   return (
     <section id="accueil" style={{ height: '200vh', position: 'relative' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
 
-        {/* Video background — starts above viewport, drifts down on scroll */}
+        {/* Video background */}
         <video
           ref={videoRef}
           autoPlay
@@ -50,19 +40,14 @@ export default function Hero() {
           playsInline
           preload="auto"
           poster="/hero-poster.jpg"
+          onCanPlay={handleCanPlay}
           style={{
-            position: 'absolute',
-            top: '-18%',
-            left: 0,
-            width: '100%',
-            height: '136%',
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
             objectFit: 'cover',
             objectPosition: 'center',
             zIndex: 0,
             pointerEvents: 'none',
-            userSelect: 'none',
-            transform: `translateY(${videoY}px)`,
-            willChange: 'transform',
           }}
         >
           <source src="/hero-bg.mp4" type="video/mp4" />

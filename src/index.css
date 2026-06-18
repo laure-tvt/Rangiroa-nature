@@ -114,3 +114,54 @@
     rgba(0, 0, 0, 0.8) 100%
   );
 }
+
+/* ── Hero animations ───────────────────────────────────── */
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-title-anim   { animation: heroFadeIn 0.4s ease 0ms   both; }
+.hero-subtitle-anim{ animation: heroFadeIn 0.4s ease 300ms both; }
+.hero-cta-anim     { animation: heroFadeIn 0.4s ease 500ms both; }
+.hero-stats-anim   { animation: heroFadeIn 0.4s ease 700ms both; }
+
+/* ── Text masking: image shows through the text ─────────── */
+.hero-clip-text {
+  font-family: 'Montserrat', sans-serif;
+  background-image: url('/hero-bg.jpg');
+  background-size: cover;
+  background-position: center 40%;
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+  width: 100%;
+}
+
+/* ── Hero CTA button (cyan override for hero only) ──────── */
+.hero-cta-btn {
+  background: #00ffff;
+  color: #1a2b3d;
+  padding: 16px 40px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.hero-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 255, 255, 0.35);
+}
+
+/* ── Scroll arrow bounce ────────────────────────────────── */
+@keyframes heroBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+.hero-bounce { animation: heroBounce 1.5s ease-in-out infinite; }

@@ -16,11 +16,11 @@ export default function Hero() {
       id="accueil"
       className="relative w-full h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background: Rangiroa lagoon aerial photo */}
+      {/* Background: photo Rangiroa filao + lagon */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80')`,
+          backgroundImage: `url('/hero-bg.jpg')`,
         }}
       />
       {/* Overlay */}

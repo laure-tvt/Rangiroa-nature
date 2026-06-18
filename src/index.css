@@ -188,3 +188,20 @@
 .card-dark[data-reveal].is-visible:hover {
   transform: translateY(-3px) !important;
 }
+
+/* ── Cloud animations ──────────────────────────────────────────── */
+@keyframes cloudDriftLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes cloudDriftRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+@keyframes cloudDriftLeftSlow {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.cloud-drift-left  { animation: cloudDriftLeft  linear infinite; }
+.cloud-drift-right { animation: cloudDriftRight linear infinite; }

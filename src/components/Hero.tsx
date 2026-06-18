@@ -1,204 +1,291 @@
-import { useState } from 'react'
-import { Search, MapPin, ChevronDown } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
 
-const propertyTypes = ['Tous types', 'Villa', 'Maison', 'Appartement', 'Bungalow', 'Terrain']
-const budgets = ['Tous budgets', '< 20M XPF', '20–50M XPF', '50–100M XPF', '100M+ XPF']
+/* ─── Colors ─────────────────────────────────────────────────── */
+const CC = 'rgba(255,252,248,0.97)'
+const CS = 'rgba(210,185,150,0.3)'
 
-export default function Hero() {
-  const [type, setType] = useState('Tous types')
-  const [budget, setBudget] = useState('Tous budgets')
-  const [location, setLocation] = useState('')
-  const [tab, setTab] = useState<'acheter' | 'louer'>('acheter')
+/* ─── SVG Cloud shapes ───────────────────────────────────────── */
+const CloudA = () => (
+  <svg viewBox="0 0 560 170" className="w-full h-full" style={{ filter: 'drop-shadow(0 18px 28px rgba(180,140,90,0.18))' }}>
+    <ellipse cx="280" cy="152" rx="268" ry="28" fill={CS}/>
+    <ellipse cx="120" cy="118" rx="105" ry="85" fill={CC}/>
+    <ellipse cx="230" cy="90"  rx="125" ry="100" fill={CC}/>
+    <ellipse cx="355" cy="85"  rx="120" ry="97"  fill={CC}/>
+    <ellipse cx="460" cy="108" rx="98"  ry="75"  fill={CC}/>
+    <ellipse cx="520" cy="132" rx="55"  ry="40"  fill={CC}/>
+    <ellipse cx="280" cy="145" rx="268" ry="32"  fill={CC}/>
+  </svg>
+)
 
-  const scrollToListings = () => {
-    const el = document.querySelector('#biens')
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  }
+const CloudB = () => (
+  <svg viewBox="0 0 420 140" className="w-full h-full" style={{ filter: 'drop-shadow(0 14px 22px rgba(180,140,90,0.16))' }}>
+    <ellipse cx="210" cy="122" rx="200" ry="24" fill={CS}/>
+    <ellipse cx="90"  cy="95"  rx="82"  ry="68" fill={CC}/>
+    <ellipse cx="195" cy="75"  rx="105" ry="82" fill={CC}/>
+    <ellipse cx="320" cy="88"  rx="90"  ry="70" fill={CC}/>
+    <ellipse cx="385" cy="112" rx="48"  ry="36" fill={CC}/>
+    <ellipse cx="210" cy="125" rx="200" ry="26" fill={CC}/>
+  </svg>
+)
+
+const CloudC = () => (
+  <svg viewBox="0 0 280 110" className="w-full h-full" style={{ filter: 'drop-shadow(0 10px 16px rgba(180,140,90,0.14))' }}>
+    <ellipse cx="140" cy="95"  rx="130" ry="20" fill={CS}/>
+    <ellipse cx="60"  cy="72"  rx="55"  ry="48" fill={CC}/>
+    <ellipse cx="138" cy="58"  rx="80"  ry="65" fill={CC}/>
+    <ellipse cx="220" cy="70"  rx="62"  ry="50" fill={CC}/>
+    <ellipse cx="140" cy="95"  rx="130" ry="22" fill={CC}/>
+  </svg>
+)
+
+const CloudD = () => (
+  <svg viewBox="0 0 500 90" className="w-full h-full" style={{ filter: 'drop-shadow(0 8px 14px rgba(180,140,90,0.12))' }}>
+    <ellipse cx="250" cy="76"  rx="238" ry="18" fill={CS}/>
+    <ellipse cx="80"  cy="58"  rx="72"  ry="44" fill={CC}/>
+    <ellipse cx="200" cy="44"  rx="120" ry="52" fill={CC}/>
+    <ellipse cx="350" cy="52"  rx="100" ry="45" fill={CC}/>
+    <ellipse cx="455" cy="64"  rx="58"  ry="34" fill={CC}/>
+    <ellipse cx="250" cy="76"  rx="238" ry="20" fill={CC}/>
+  </svg>
+)
+
+const CloudE = () => (
+  <svg viewBox="0 0 200 85" className="w-full h-full" style={{ filter: 'drop-shadow(0 8px 12px rgba(180,140,90,0.12))' }}>
+    <ellipse cx="100" cy="72"  rx="92"  ry="16" fill={CS}/>
+    <ellipse cx="42"  cy="55"  rx="38"  ry="35" fill={CC}/>
+    <ellipse cx="100" cy="42"  rx="58"  ry="50" fill={CC}/>
+    <ellipse cx="160" cy="52"  rx="42"  ry="34" fill={CC}/>
+    <ellipse cx="100" cy="72"  rx="92"  ry="18" fill={CC}/>
+  </svg>
+)
+
+/* ─── Cloud layer component ──────────────────────────────────── */
+interface StripCloud { x: number; y: number; width: number; type: 'A'|'B'|'C'|'D'|'E' }
+
+const SHAPES: Record<string, React.FC> = { A: CloudA, B: CloudB, C: CloudC, D: CloudD, E: CloudE }
+
+function CloudLayer({ clouds, duration, direction, parallaxY, opacity = 1 }: {
+  clouds: StripCloud[]
+  duration: number
+  direction: 'left'|'right'
+  parallaxY: number
+  opacity?: number
+}) {
+  // double the set for seamless loop
+  const doubled = [
+    ...clouds,
+    ...clouds.map(c => ({ ...c, x: c.x + 100 })),
+  ]
 
   return (
-    <section
-      id="accueil"
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
+    <div
+      className={direction === 'left' ? 'cloud-drift-left' : 'cloud-drift-right'}
+      style={{
+        position: 'absolute',
+        inset: 0,
+        width: '200%',
+        animationDuration: `${duration}s`,
+        transform: `translateY(${parallaxY}px)`,
+        willChange: 'transform',
+        opacity,
+      }}
     >
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1920&q=85')` }}
-      />
-      <div
-        className="absolute inset-0"
-        style={{ background: 'linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.75) 100%)' }}
-      />
+      {doubled.map((c, i) => {
+        const Comp = SHAPES[c.type]
+        return (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: `${c.x / 2}%`,
+              top: `${c.y}%`,
+              width: `${c.width}px`,
+              height: `${Math.round(c.width * 0.35)}px`,
+            }}
+          >
+            <Comp />
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pt-32 pb-24 text-center">
+/* ─── Cloud definitions ────────────────────────────────────────── */
+const BG_CLOUDS: StripCloud[] = [
+  { x: 4,  y: 5,  width: 240, type: 'E' },
+  { x: 22, y: 11, width: 200, type: 'C' },
+  { x: 40, y: 4,  width: 255, type: 'E' },
+  { x: 57, y: 9,  width: 210, type: 'C' },
+  { x: 74, y: 6,  width: 230, type: 'E' },
+  { x: 88, y: 13, width: 195, type: 'C' },
+]
 
-        {/* Badge */}
-        <div
-          className="anim-1 inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
-          style={{ border: '1px solid rgba(111,79,40,0.5)', color: '#6F4F28', backgroundColor: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(6px)' }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#6F4F28' }} />
-          Polynésie française · Premier portail immobilier
+const MID_CLOUDS: StripCloud[] = [
+  { x: 2,  y: 22, width: 380, type: 'D' },
+  { x: 24, y: 28, width: 420, type: 'B' },
+  { x: 48, y: 20, width: 360, type: 'D' },
+  { x: 70, y: 30, width: 400, type: 'B' },
+  { x: 90, y: 25, width: 350, type: 'D' },
+]
+
+const FG_CLOUDS: StripCloud[] = [
+  { x: 0,  y: 42, width: 580, type: 'A' },
+  { x: 28, y: 48, width: 540, type: 'A' },
+  { x: 56, y: 44, width: 560, type: 'A' },
+  { x: 82, y: 50, width: 500, type: 'B' },
+]
+
+/* ─── Hero ──────────────────────────────────────────────────────── */
+export default function Hero() {
+  const [scrollY, setScrollY] = useState(0)
+  const vhRef = useRef(typeof window !== 'undefined' ? window.innerHeight : 700)
+
+  useEffect(() => {
+    vhRef.current = window.innerHeight
+    const onScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const progress    = Math.min(1, Math.max(0, scrollY / vhRef.current))
+
+  const titleOpacity = Math.max(0, 1 - progress * 3.2)
+  const titleY       = -progress * 70
+
+  const logoOpacity  = Math.max(0, Math.min(1, (progress - 0.22) / 0.38))
+  const logoScale    = 0.68 + logoOpacity * 0.32
+
+  const py1 = -scrollY * 0.08
+  const py2 = -scrollY * 0.20
+  const py3 = -scrollY * 0.38
+
+  const skyDarken = progress * 0.78
+
+  return (
+    <section id="accueil" style={{ height: '200vh', position: 'relative' }}>
+      {/* ── Sticky sky viewport ── */}
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+
+        {/* Sky gradient */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 0,
+          background: `linear-gradient(
+            180deg,
+            #0d0500 0%,
+            #2a1508 4%,
+            #6F4F28 14%,
+            #a8712e 26%,
+            #c99040 38%,
+            #dfb86a 52%,
+            #edd8a8 68%,
+            #f5eacf 82%,
+            #fdf7ec 92%,
+            #fffcf7 100%
+          )`,
+        }}/>
+
+        {/* Dark overlay builds on scroll */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 10,
+          backgroundColor: '#000000',
+          opacity: skyDarken,
+          pointerEvents: 'none',
+        }}/>
+
+        {/* Cloud layer 1 — background */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+          <CloudLayer clouds={BG_CLOUDS} duration={90} direction="left"  parallaxY={py1} opacity={0.72}/>
         </div>
 
-        {/* Title */}
-        <h1
-          className="anim-2"
-          style={{
+        {/* Cloud layer 2 — midground */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 2 }}>
+          <CloudLayer clouds={MID_CLOUDS} duration={58} direction="right" parallaxY={py2} opacity={0.9}/>
+        </div>
+
+        {/* Title — fades out on scroll */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 5,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          opacity: titleOpacity,
+          transform: `translateY(${titleY}px)`,
+          pointerEvents: titleOpacity < 0.05 ? 'none' : 'auto',
+        }}>
+          <h1 style={{
             fontFamily: 'Montserrat, sans-serif',
-            fontSize: 'clamp(38px, 6.5vw, 88px)',
+            fontSize: 'clamp(30px, 5.5vw, 74px)',
             fontWeight: 900,
-            lineHeight: 1.0,
+            color: '#2a1508',
+            textAlign: 'center',
             letterSpacing: '-0.01em',
-            marginBottom: '20px',
-          }}
-        >
-          <span style={{ color: '#ffffff' }}>Trouvez votre bien</span>
-          <br />
-          <span style={{ color: '#6F4F28' }}>idéal en Polynésie</span>
-        </h1>
-
-        <p
-          className="anim-3 mb-10 max-w-xl mx-auto"
-          style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(14px, 1.5vw, 17px)', fontWeight: 400, lineHeight: 1.65, color: 'rgba(255,255,255,0.65)' }}
-        >
-          Des milliers de biens à vendre et à louer à Tahiti, Moorea, Bora Bora, Rangiroa et dans tout l'archipel.
-        </p>
-
-        {/* Search card */}
-        <div
-          className="anim-4 rounded-2xl overflow-hidden"
-          style={{ backgroundColor: 'rgba(0,0,0,0.78)', backdropFilter: 'blur(16px)', border: '1px solid rgba(111,79,40,0.25)' }}
-        >
-          {/* Tabs */}
-          <div className="flex" style={{ borderBottom: '1px solid rgba(111,79,40,0.18)' }}>
-            {(['acheter', 'louer'] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                style={{
-                  flex: 1,
-                  padding: '16px',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: tab === t ? '#6F4F28' : 'rgba(255,255,255,0.4)',
-                  background: 'none',
-                  border: 'none',
-                  borderBottom: tab === t ? '2px solid #6F4F28' : '2px solid transparent',
-                  cursor: 'pointer',
-                  transition: 'color 0.2s',
-                }}
-              >
-                {t === 'acheter' ? 'Acheter' : 'Louer'}
-              </button>
-            ))}
-          </div>
-
-          {/* Inputs row */}
-          <div className="p-5 flex flex-col sm:flex-row gap-3">
-            {/* Location */}
-            <div className="flex-1 relative">
-              <MapPin size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: '#6F4F28' }} />
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Île, commune, quartier…"
-                className="w-full pl-10 pr-4 py-3.5 rounded-xl text-sm outline-none"
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0.06)',
-                  color: '#ffffff',
-                  border: '1px solid rgba(111,79,40,0.2)',
-                  fontFamily: 'Montserrat, sans-serif',
-                }}
-              />
-            </div>
-
-            {/* Type */}
-            <div className="relative">
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="pl-4 pr-8 py-3.5 rounded-xl text-sm outline-none appearance-none cursor-pointer"
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0.06)',
-                  color: type === 'Tous types' ? 'rgba(255,255,255,0.45)' : '#ffffff',
-                  border: '1px solid rgba(111,79,40,0.2)',
-                  fontFamily: 'Montserrat, sans-serif',
-                  minWidth: '155px',
-                }}
-              >
-                {propertyTypes.map((t) => (
-                  <option key={t} value={t} style={{ backgroundColor: '#111', color: '#fff' }}>{t}</option>
-                ))}
-              </select>
-              <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'rgba(255,255,255,0.35)' }} />
-            </div>
-
-            {/* Budget */}
-            <div className="relative">
-              <select
-                value={budget}
-                onChange={(e) => setBudget(e.target.value)}
-                className="pl-4 pr-8 py-3.5 rounded-xl text-sm outline-none appearance-none cursor-pointer"
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0.06)',
-                  color: budget === 'Tous budgets' ? 'rgba(255,255,255,0.45)' : '#ffffff',
-                  border: '1px solid rgba(111,79,40,0.2)',
-                  fontFamily: 'Montserrat, sans-serif',
-                  minWidth: '165px',
-                }}
-              >
-                {budgets.map((b) => (
-                  <option key={b} value={b} style={{ backgroundColor: '#111', color: '#fff' }}>{b}</option>
-                ))}
-              </select>
-              <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'rgba(255,255,255,0.35)' }} />
-            </div>
-
-            {/* Search button */}
-            <button
-              onClick={scrollToListings}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                backgroundColor: '#6F4F28',
-                color: '#ffffff',
-                border: 'none',
-                padding: '14px 28px',
-                borderRadius: '12px',
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 700,
-                fontSize: '14px',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-                transition: 'background-color 0.2s, transform 0.2s',
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#8B6535' }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#6F4F28' }}
-            >
-              <Search size={15} />
-              Rechercher
-            </button>
-          </div>
+            lineHeight: 1.1,
+            textShadow: '0 2px 32px rgba(255,240,210,0.9), 0 4px 10px rgba(255,240,210,0.6)',
+            padding: '0 24px',
+            maxWidth: '820px',
+          }}>
+            6 arrêts,<br />
+            <span style={{ color: '#6F4F28' }}>900 ans d'histoire.</span>
+          </h1>
+          <div style={{ width: '52px', height: '2px', backgroundColor: 'rgba(111,79,40,0.5)', marginTop: '28px' }}/>
+          <p style={{
+            fontFamily: 'Montserrat, sans-serif',
+            fontSize: 'clamp(11px, 1.3vw, 15px)',
+            fontWeight: 600,
+            color: 'rgba(42,21,8,0.6)',
+            marginTop: '18px',
+            textAlign: 'center',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            textShadow: '0 1px 8px rgba(255,240,210,0.8)',
+          }}>
+            Rangiroa · Polynésie française
+          </p>
         </div>
 
-        {/* Stats */}
-        <div className="flex items-center justify-center gap-12 mt-12 flex-wrap">
-          {[
-            { value: '1 200+', label: 'Biens disponibles' },
-            { value: '95+', label: 'Agents actifs' },
-            { value: '8 500+', label: 'Ventes réalisées' },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800, fontSize: '26px', color: '#6F4F28' }}>{s.value}</div>
-              <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: '4px', fontFamily: 'Montserrat, sans-serif' }}>{s.label}</div>
-            </div>
-          ))}
+        {/* Cloud layer 3 — foreground (in front of title) */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 4 }}>
+          <CloudLayer clouds={FG_CLOUDS} duration={38} direction="left"  parallaxY={py3} opacity={1}/>
+        </div>
+
+        {/* Logo — appears as title fades */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 6,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          opacity: logoOpacity,
+          transform: `scale(${logoScale})`,
+          pointerEvents: logoOpacity < 0.05 ? 'none' : 'auto',
+        }}>
+          <img
+            src="/logo-tvt.jpg"
+            alt="Tevaiti Van Tours Rangiroa"
+            style={{
+              width: 'clamp(180px, 30vw, 360px)',
+              height: 'auto',
+              mixBlendMode: 'multiply',
+              userSelect: 'none',
+            } as React.CSSProperties}
+            draggable={false}
+          />
+        </div>
+
+        {/* Scroll hint */}
+        <div style={{
+          position: 'absolute', bottom: '32px', left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 7,
+          opacity: Math.max(0, 1 - progress * 6),
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
+        }}>
+          <span style={{
+            fontFamily: 'Montserrat, sans-serif', fontSize: '10px',
+            letterSpacing: '0.18em', textTransform: 'uppercase',
+            color: 'rgba(42,21,8,0.5)',
+          }}>
+            Défiler
+          </span>
+          <svg width="18" height="18" viewBox="0 0 18 18" className="hero-bounce">
+            <path d="M9 2v14M4 11l5 5 5-5" stroke="rgba(42,21,8,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+          </svg>
         </div>
       </div>
     </section>

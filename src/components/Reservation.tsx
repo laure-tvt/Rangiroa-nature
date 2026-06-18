@@ -1,326 +1,183 @@
 import { useState } from 'react'
-import { CalendarDays, Users, MapPin, CheckCircle } from 'lucide-react'
+import { Phone, Mail, Building2, CheckCircle } from 'lucide-react'
 
-const circuits = [
-  "Tour de l'Île — Visite Guidée (2h30)",
-  'Demande spéciale / Sur mesure',
-]
-
-type FormState = {
+type FormData = {
   name: string
   email: string
   phone: string
-  circuit: string
-  date: string
-  guests: string
+  project: string
+  budget: string
   message: string
 }
 
-const inputBase: React.CSSProperties = {
-  backgroundColor: 'rgba(0,0,0,0.8)',
-  borderColor: 'rgba(139,107,66,0.2)',
-  color: '#ffffff',
-  fontFamily: 'Montserrat, sans-serif',
-}
-
-const inputFocused: React.CSSProperties = {
-  backgroundColor: 'rgba(0,0,0,0.8)',
-  borderColor: '#8B6B42',
-  color: '#ffffff',
-  fontFamily: 'Montserrat, sans-serif',
-}
-
-function useFieldFocus() {
-  const [focused, setFocused] = useState<string | null>(null)
-  const bind = (name: string) => ({
-    onFocus: () => setFocused(name),
-    onBlur: () => setFocused(null),
-    style: focused === name ? inputFocused : inputBase,
-  })
-  return bind
-}
+const projects = ['Acheter un bien', 'Louer un bien', 'Vendre mon bien', 'Investissement locatif', 'Autre']
+const budgets = ['< 20M XPF', '20–50M XPF', '50–100M XPF', '100–200M XPF', '200M+ XPF']
 
 export default function Reservation() {
+  const [form, setForm] = useState<FormData>({ name: '', email: '', phone: '', project: '', budget: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
-  const [form, setForm] = useState<FormState>({
-    name: '',
-    email: '',
-    phone: '',
-    circuit: '',
-    date: '',
-    guests: '2',
-    message: '',
+  const [focused, setFocused] = useState<string | null>(null)
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }))
+
+  const inputStyle = (name: string): React.CSSProperties => ({
+    width: '100%',
+    padding: '12px 16px',
+    borderRadius: '12px',
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    border: `1px solid ${focused === name ? '#6F4F28' : 'rgba(111,79,40,0.18)'}`,
+    color: '#ffffff',
+    fontFamily: 'Montserrat, sans-serif',
+    fontSize: '14px',
+    outline: 'none',
+    transition: 'border-color 0.2s',
   })
 
-  const bind = useFieldFocus()
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
-
   const labelStyle: React.CSSProperties = {
-    color: 'rgba(255,255,255,0.6)',
+    display: 'block',
     fontFamily: 'Montserrat, sans-serif',
+    fontSize: '11px',
     fontWeight: 600,
+    color: 'rgba(255,255,255,0.4)',
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.08em',
+    marginBottom: '6px',
   }
 
   return (
-    <section
-      id="reservation"
-      className="py-24 px-6"
-      style={{ backgroundColor: '#000000' }}
-    >
+    <section id="contact" className="py-24 px-6" style={{ backgroundColor: '#000000' }}>
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Left: Info */}
-          <div>
-            <div
-              className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#8B6B42' }}
-            >
-              <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
-              Réservation
-            </div>
-            <h2 className="section-title mb-6">
-              Réservez votre{' '}
-              <span className="cyan-accent">visite</span>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-14 items-start">
+
+          {/* Left info */}
+          <div className="lg:col-span-2">
+            <div className="section-label">Contact</div>
+            <h2 style={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: 'clamp(28px, 3.5vw, 42px)',
+              fontWeight: 800,
+              color: '#ffffff',
+              lineHeight: 1.1,
+              marginBottom: '16px',
+            }}>
+              Parlons de<br />
+              <span style={{ color: '#6F4F28' }}>votre projet.</span>
             </h2>
-            <p
-              className="text-white/70 leading-relaxed mb-10"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400 }}
-            >
-              Remplissez le formulaire et nous vous contacterons sous 24h pour confirmer
-              votre réservation et personnaliser votre expérience.
+            <p style={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: '15px',
+              color: 'rgba(255,255,255,0.5)',
+              lineHeight: 1.7,
+              marginBottom: '32px',
+            }}>
+              Remplissez le formulaire et un conseiller vous rappelle sous 48h pour vous accompagner dans votre projet immobilier en Polynésie.
             </p>
 
-            {/* Info blocks */}
-            <div className="space-y-6">
+            <div className="space-y-5">
               {[
-                {
-                  icon: CalendarDays,
-                  title: 'Réservation flexible',
-                  text: "Annulation gratuite jusqu'à 48h avant la visite. Paiement sur place.",
-                },
-                {
-                  icon: Users,
-                  title: 'Groupes privés uniquement',
-                  text: "Vos circuits sont réservés exclusivement à votre groupe. Aucun mélange avec d'autres voyageurs.",
-                },
-                {
-                  icon: MapPin,
-                  title: "Prise en charge à l'hôtel",
-                  text: 'Nous venons vous chercher à votre hôtel ou pension sur Rangiroa. Aucune organisation de votre côté.',
-                },
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4">
+                { icon: Phone, title: 'Téléphone', val: '+689 40 50 60 70' },
+                { icon: Mail, title: 'Email', val: 'contact@find-polynesie.pf' },
+                { icon: Building2, title: 'Agence principale', val: 'Papeete, Tahiti · Polynésie' },
+              ].map((c, i) => (
+                <div key={i} className="flex items-center gap-4">
                   <div
-                    className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: '#0d0d0d' }}
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: 'rgba(111,79,40,0.1)', border: '1px solid rgba(111,79,40,0.25)' }}
                   >
-                    <item.icon size={20} style={{ color: '#8B6B42' }} />
+                    <c.icon size={17} style={{ color: '#6F4F28' }} />
                   </div>
                   <div>
-                    <h4
-                      className="font-semibold mb-1 text-white"
-                      style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', fontWeight: 600 }}
-                    >
-                      {item.title}
-                    </h4>
-                    <p className="text-white/60 text-sm leading-relaxed">{item.text}</p>
+                    <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{c.title}</div>
+                    <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: '#ffffff', fontWeight: 500 }}>{c.val}</div>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* Contact direct */}
-            <div
-              className="mt-10 p-5 rounded-xl"
-              style={{ border: '1.5px solid #8B6B42' }}
-            >
-              <p className="text-sm font-semibold mb-2 text-white">
-                Préférez-vous nous contacter directement ?
-              </p>
-              <p className="text-sm text-white/70">
-                WhatsApp :{' '}
-                <a href="tel:+68987363213" className="font-semibold" style={{ color: '#8B6B42' }}>
-                  +689 87 36 32 13
-                </a>
-              </p>
-              <p className="text-sm text-white/70">
-                Email :{' '}
-                <a href="mailto:tevaiti.van.tours@gmail.com" className="font-semibold" style={{ color: '#8B6B42' }}>
-                  tevaiti.van.tours@gmail.com
-                </a>
-              </p>
-            </div>
           </div>
 
-          {/* Right: Form */}
-          <div>
-            <div className="rounded-2xl p-8" style={{ backgroundColor: '#1a1208' }}>
+          {/* Right form */}
+          <div className="lg:col-span-3">
+            <div className="rounded-2xl p-8" style={{ backgroundColor: '#0D0D0D', border: '1px solid rgba(111,79,40,0.14)' }}>
               {submitted ? (
-                <div className="text-center py-12">
-                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#8B6B42' }} />
-                  <h3
-                    className="text-2xl font-bold mb-3 text-white"
-                    style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700 }}
-                  >
+                <div className="text-center py-10">
+                  <CheckCircle size={52} className="mx-auto mb-4" style={{ color: '#6F4F28' }} />
+                  <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800, fontSize: '22px', color: '#ffffff', marginBottom: '10px' }}>
                     Demande envoyée !
                   </h3>
-                  <p className="text-white/60 text-sm leading-relaxed">
-                    Merci {form.name} ! Nous vous répondrons sous 24h pour confirmer votre
-                    réservation et vous fournir tous les détails pratiques.
+                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7 }}>
+                    Merci {form.name}. Un conseiller FIND Polynésie vous contactera sous 48h pour discuter de votre projet immobilier.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="mt-6 text-sm font-medium underline"
-                    style={{ color: '#8B6B42' }}
+                    style={{ marginTop: '20px', color: '#6F4F28', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: '3px' }}
                   >
-                    Faire une nouvelle demande
+                    Envoyer une nouvelle demande
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <h3
-                    className="text-xl font-bold mb-6 text-white"
-                    style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700 }}
-                  >
-                    Demande de réservation
+                <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }} className="space-y-4">
+                  <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#ffffff', marginBottom: '20px' }}>
+                    Demande de contact
                   </h3>
 
-                  {/* Name + Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
-                        Nom complet *
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        required
-                        value={form.name}
-                        onChange={handleChange}
-                        placeholder="Jean Dupont"
-                        className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                        {...bind('name')}
-                      />
+                      <label style={labelStyle}>Nom complet *</label>
+                      <input type="text" name="name" required value={form.name} onChange={onChange} placeholder="Jean Dupont"
+                        style={inputStyle('name')} onFocus={() => setFocused('name')} onBlur={() => setFocused(null)} />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        required
-                        value={form.email}
-                        onChange={handleChange}
-                        placeholder="jean@email.com"
-                        className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                        {...bind('email')}
-                      />
+                      <label style={labelStyle}>Email *</label>
+                      <input type="email" name="email" required value={form.email} onChange={onChange} placeholder="jean@email.com"
+                        style={inputStyle('email')} onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} />
                     </div>
                   </div>
 
-                  {/* Phone */}
                   <div>
-                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
-                      Téléphone / WhatsApp
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={form.phone}
-                      onChange={handleChange}
-                      placeholder="+33 6 12 34 56 78"
-                      className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                      {...bind('phone')}
-                    />
+                    <label style={labelStyle}>Téléphone / WhatsApp</label>
+                    <input type="tel" name="phone" value={form.phone} onChange={onChange} placeholder="+689 87 00 00 00"
+                      style={inputStyle('phone')} onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} />
                   </div>
 
-                  {/* Circuit */}
-                  <div>
-                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
-                      Circuit souhaité *
-                    </label>
-                    <select
-                      name="circuit"
-                      required
-                      value={form.circuit}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                      {...bind('circuit')}
-                    >
-                      <option value="" disabled style={{ backgroundColor: '#0d0d0d', color: '#9CA3AF' }}>Sélectionner un circuit</option>
-                      {circuits.map((c) => (
-                        <option key={c} value={c} style={{ backgroundColor: '#0d0d0d', color: '#ffffff' }}>{c}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Date + Guests */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
-                        Date souhaitée *
-                      </label>
-                      <input
-                        type="date"
-                        name="date"
-                        required
-                        value={form.date}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                        {...bind('date')}
-                      />
+                      <label style={labelStyle}>Mon projet *</label>
+                      <select name="project" required value={form.project} onChange={onChange}
+                        style={{ ...inputStyle('project'), color: form.project ? '#ffffff' : 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                        onFocus={() => setFocused('project')} onBlur={() => setFocused(null)}>
+                        <option value="" disabled style={{ backgroundColor: '#111', color: '#666' }}>Sélectionner</option>
+                        {projects.map((p) => <option key={p} value={p} style={{ backgroundColor: '#111', color: '#fff' }}>{p}</option>)}
+                      </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
-                        Nombre de personnes *
-                      </label>
-                      <select
-                        name="guests"
-                        value={form.guests}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                        {...bind('guests')}
-                      >
-                        {[1,2,3,4,5,6,7,8].map((n) => (
-                          <option key={n} value={n} style={{ backgroundColor: '#0d0d0d', color: '#ffffff' }}>{n} {n === 1 ? 'personne' : 'personnes'}</option>
-                        ))}
+                      <label style={labelStyle}>Budget</label>
+                      <select name="budget" value={form.budget} onChange={onChange}
+                        style={{ ...inputStyle('budget'), color: form.budget ? '#ffffff' : 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                        onFocus={() => setFocused('budget')} onBlur={() => setFocused(null)}>
+                        <option value="" style={{ backgroundColor: '#111', color: '#666' }}>Non défini</option>
+                        {budgets.map((b) => <option key={b} value={b} style={{ backgroundColor: '#111', color: '#fff' }}>{b}</option>)}
                       </select>
                     </div>
                   </div>
 
-                  {/* Message */}
                   <div>
-                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
-                      Message / demandes spéciales
-                    </label>
-                    <textarea
-                      name="message"
-                      value={form.message}
-                      onChange={handleChange}
-                      rows={4}
-                      placeholder="Anniversaire, allergie alimentaire, enfants en bas âge..."
-                      className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 resize-none"
-                      {...bind('message')}
-                    />
+                    <label style={labelStyle}>Message</label>
+                    <textarea name="message" value={form.message} onChange={onChange} rows={4}
+                      placeholder="Décrivez votre projet, vos critères, vos questions…"
+                      style={{ ...inputStyle('message'), resize: 'none' }}
+                      onFocus={() => setFocused('message')} onBlur={() => setFocused(null)} />
                   </div>
 
-                  <button type="submit" className="btn-primary w-full justify-center py-4 text-base">
+                  <button
+                    type="submit"
+                    className="btn-primary w-full justify-center py-4 text-base font-bold"
+                    style={{ borderRadius: '12px' }}
+                  >
                     Envoyer ma demande
                   </button>
-
-                  <p className="text-center text-xs text-white/40">
-                    Réponse garantie sous 24h · Aucun paiement requis maintenant
+                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: 'rgba(255,255,255,0.25)', textAlign: 'center', marginTop: '8px' }}>
+                    Réponse garantie sous 48h · Aucun engagement requis
                   </p>
                 </form>
               )}

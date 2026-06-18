@@ -1,83 +1,98 @@
 const reviews = [
   {
-    name: 'Claire & Thomas M.',
-    from: 'Lyon · Juin 2025',
-    text: "Une visite absolument magique. Le guide connaît chaque recoin de l'île et partage des anecdotes qu'on ne trouve dans aucun guide de voyage. Indispensable !",
+    name: 'Marie-Cécile D.',
+    from: 'Paris → Papeete · 2025',
+    text: "Grâce à FIND Polynésie, j'ai trouvé ma villa à Arue en moins de 3 semaines. L'agent était réactif, professionnel, et la transaction s'est faite sans accroc. Je recommande vivement !",
     stars: 5,
+    type: 'Acheteuse — Villa 4 chambres',
   },
   {
-    name: 'Sophie & Pierre L.',
-    from: 'Paris · Mars 2025',
-    text: "Nous avons découvert des endroits que jamais on n'aurait trouvés seuls. La passe de Tiputa au coucher du soleil... inoubliable. Merci pour cette journée parfaite !",
+    name: 'Jean-Pierre & Hina M.',
+    from: 'Moorea · 2024',
+    text: "Nous voulions vendre notre bungalow rapidement avant notre départ en Métropole. Le bien a été vendu en 6 semaines au prix demandé. Service impeccable, communication au top.",
     stars: 5,
+    type: 'Vendeurs — Bungalow 2 chambres',
   },
   {
-    name: 'David K.',
-    from: 'Genève · Août 2024',
-    text: "Van climatisé, guide passionné, arrêts bien choisis. On repart avec une vraie compréhension de Rangiroa. À faire absolument avant de reprendre l'avion.",
+    name: 'Thomas K.',
+    from: 'Genève → Bora Bora · 2025',
+    text: "Investisseur depuis 10 ans, FIND Polynésie est la première agence à m'avoir fourni une analyse de marché aussi complète. Un vrai partenaire pour investir aux antipodes.",
     stars: 5,
+    type: 'Investisseur — Terrain + Villa',
   },
 ]
 
 const Star = () => (
-  <svg className="w-4 h-4" fill="#8B6B42" viewBox="0 0 20 20">
+  <svg className="w-4 h-4" fill="#6F4F28" viewBox="0 0 20 20">
     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
   </svg>
 )
 
 export default function Testimonials() {
   return (
-    <section id="avis" className="py-24 px-6" style={{ backgroundColor: '#0d0d0d' }}>
+    <section id="avis" className="py-24 px-6" style={{ backgroundColor: '#0D0D0D' }}>
       <div className="max-w-7xl mx-auto">
-
-        <div className="text-center mb-16">
-          <div
-            className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-            style={{ color: '#8B6B42' }}
-          >
-            <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
-            Avis clients
-            <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
+        <div className="text-center mb-14">
+          <div className="section-label justify-center mx-auto">
+            Témoignages clients
           </div>
-          <h2
-            style={{
-              fontFamily: 'Montserrat, sans-serif',
-              fontSize: 'clamp(32px, 4vw, 48px)',
-              fontWeight: 800,
-              color: '#ffffff',
-              lineHeight: 1.15,
-            }}
-          >
-            Ce qu'ils <span style={{ color: '#8B6B42' }}>disent de nous</span>
+          <h2 style={{
+            fontFamily: 'Montserrat, sans-serif',
+            fontSize: 'clamp(28px, 4vw, 44px)',
+            fontWeight: 800,
+            color: '#ffffff',
+            lineHeight: 1.15,
+          }}>
+            Ce que nos clients<br />
+            <span style={{ color: '#6F4F28' }}>disent de nous</span>
           </h2>
-          <p className="text-white/50 max-w-xl mx-auto text-sm leading-relaxed mt-4">
-            Des voyageurs du monde entier partagent leur expérience avec Tevaiti Van Tours.
+          <p style={{
+            fontFamily: 'Montserrat, sans-serif',
+            fontSize: '15px',
+            color: 'rgba(255,255,255,0.45)',
+            marginTop: '14px',
+            maxWidth: '460px',
+            margin: '14px auto 0',
+          }}>
+            Plus de 8 500 transactions réalisées depuis 2004 en Polynésie française.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
           {reviews.map((r, i) => (
-            <div key={i} className="card-navy p-7">
-              <div className="flex gap-1 mb-4">
+            <div key={i} className="card-dark p-7 flex flex-col">
+              <div className="flex gap-0.5 mb-4">
                 {[...Array(r.stars)].map((_, s) => <Star key={s} />)}
               </div>
               <blockquote
-                className="text-white/80 text-sm leading-relaxed mb-5 italic"
-                style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400 }}
+                style={{
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.72)',
+                  lineHeight: 1.75,
+                  fontStyle: 'italic',
+                  flexGrow: 1,
+                  marginBottom: '20px',
+                }}
               >
                 "{r.text}"
               </blockquote>
-              <div>
-                <div
-                  className="font-semibold text-sm text-white"
-                  style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600 }}
-                >
-                  {r.name}
-                </div>
-                <div className="text-xs mt-0.5" style={{ color: '#8B6B42' }}>{r.from}</div>
+              <div style={{ borderTop: '1px solid rgba(111,79,40,0.12)', paddingTop: '16px' }}>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '14px', color: '#ffffff' }}>{r.name}</div>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: '#6F4F28', marginTop: '2px' }}>{r.from}</div>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: 'rgba(255,255,255,0.28)', marginTop: '4px' }}>{r.type}</div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Rating summary */}
+        <div className="flex items-center justify-center gap-4 text-center">
+          <div>
+            <div style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '52px', color: '#6F4F28', lineHeight: 1 }}>4.9</div>
+            <div className="flex justify-center gap-0.5 mt-2">{[...Array(5)].map((_, i) => <Star key={i} />)}</div>
+            <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>Note moyenne · 1 240 avis vérifiés</div>
+          </div>
         </div>
       </div>
     </section>

@@ -3,167 +3,121 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
+  html { scroll-behavior: smooth; }
   body {
     font-family: 'Montserrat', sans-serif;
     color: #ffffff;
     background-color: #000000;
     -webkit-font-smoothing: antialiased;
   }
-
-  h1, h2, h3, h4 {
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: 0.02em;
-  }
+  h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer;
-    background-color: #8B6B42;
-    color: #000000;
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer text-sm;
+    background-color: #6F4F28;
+    color: #ffffff;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+    border: none;
   }
   .btn-primary:hover {
-    background-color: #ffffff;
-    color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(139, 107, 66, 0.35);
+    background-color: #8B6535;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(111,79,40,0.35);
   }
 
   .btn-outline {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer;
-    border: 2px solid #8B6B42;
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer text-sm;
+    border: 1.5px solid #6F4F28;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+    background: none;
   }
   .btn-outline:hover {
-    background-color: #8B6B42;
-    color: #000000;
-    transform: translateY(-2px);
-  }
-
-  .section-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 700;
+    background-color: #6F4F28;
     color: #ffffff;
-    line-height: 1.2;
-    letter-spacing: 0.03em;
+    transform: translateY(-1px);
   }
 
-  .cyan-accent {
-    color: #8B6B42;
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all duration-200 cursor-pointer text-sm;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Montserrat', sans-serif;
+    background: none;
+    border: none;
+  }
+  .btn-ghost:hover {
+    color: #ffffff;
+    background-color: rgba(255,255,255,0.06);
   }
 
-  .card-navy {
-    background-color: #1a1208;
-    border: 1px solid rgba(139, 107, 66, 0.12);
+  .card-dark {
+    background-color: #111111;
+    border: 1px solid rgba(111,79,40,0.12);
     border-radius: 16px;
     transition: all 0.3s ease;
   }
-  .card-navy:hover {
-    border-color: #8B6B42;
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(139, 107, 66, 0.15);
+  .card-dark:hover {
+    border-color: rgba(111,79,40,0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(111,79,40,0.12);
+  }
+
+  .nav-link {
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0;
+    transition: color 0.2s ease;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background-color: #6F4F28;
+    transition: width 0.25s ease;
+  }
+  .nav-link:hover { color: #ffffff; }
+  .nav-link:hover::after { width: 100%; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6F4F28;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 16px;
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #0d0d0d;
-}
-::-webkit-scrollbar-thumb {
-  background: #8B6B42;
-  border-radius: 3px;
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #6F4F28; border-radius: 3px; }
 
-/* Nav link underline animation */
-.nav-link {
-  position: relative;
-}
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #8B6B42;
-  transition: width 0.3s ease;
-}
-.nav-link:hover::after {
-  width: 100%;
-}
-.nav-link:hover {
-  color: #8B6B42;
-}
-
-/* Hero overlay */
-.hero-overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-}
-
-/* ── Hero animations ───────────────────────────────────── */
-@keyframes heroFadeIn {
+@keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+.anim-1 { animation: fadeSlideUp 0.5s ease 0.0s both; }
+.anim-2 { animation: fadeSlideUp 0.5s ease 0.15s both; }
+.anim-3 { animation: fadeSlideUp 0.5s ease 0.3s both; }
+.anim-4 { animation: fadeSlideUp 0.5s ease 0.45s both; }
 
-.hero-title-anim   { animation: heroFadeIn 0.4s ease 0ms   both; }
-.hero-subtitle-anim{ animation: heroFadeIn 0.4s ease 300ms both; }
-.hero-cta-anim     { animation: heroFadeIn 0.4s ease 500ms both; }
-.hero-stats-anim   { animation: heroFadeIn 0.4s ease 700ms both; }
-
-/* ── Text masking: image shows through the text ─────────── */
-.hero-clip-text {
-  font-family: 'Montserrat', sans-serif;
-  background-image: url('/hero-bg.webp');
-  background-size: cover;
-  background-position: center 40%;
-  background-attachment: fixed;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  display: inline-block;
-  width: 100%;
-}
-
-/* ── Hero CTA button (cyan override for hero only) ──────── */
-.hero-cta-btn {
-  background: #00ffff;
-  color: #1a2b3d;
-  padding: 16px 40px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.hero-cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0, 255, 255, 0.35);
-}
-
-/* ── Scroll arrow bounce ────────────────────────────────── */
 @keyframes heroBounce {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(8px); }
+  50% { transform: translateY(7px); }
 }
-.hero-bounce { animation: heroBounce 1.5s ease-in-out infinite; }
+.hero-bounce { animation: heroBounce 1.6s ease-in-out infinite; }

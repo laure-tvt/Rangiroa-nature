@@ -1,212 +1,206 @@
-import { ChevronDown, ArrowRight } from 'lucide-react'
+import { useState } from 'react'
+import { Search, MapPin, ChevronDown } from 'lucide-react'
+
+const propertyTypes = ['Tous types', 'Villa', 'Maison', 'Appartement', 'Bungalow', 'Terrain']
+const budgets = ['Tous budgets', '< 20M XPF', '20–50M XPF', '50–100M XPF', '100M+ XPF']
 
 export default function Hero() {
-  const scrollToTours = () => {
-    const el = document.querySelector('#visites')
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  }
+  const [type, setType] = useState('Tous types')
+  const [budget, setBudget] = useState('Tous budgets')
+  const [location, setLocation] = useState('')
+  const [tab, setTab] = useState<'acheter' | 'louer'>('acheter')
 
-  const scrollToBooking = () => {
-    const el = document.querySelector('#reservation')
+  const scrollToListings = () => {
+    const el = document.querySelector('#biens')
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <section
       id="accueil"
-      className="relative w-full h-screen flex items-center justify-center overflow-hidden"
+      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background: filao + lagon */}
+      {/* Background */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url('/hero-bg.jpg')` }}
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1920&q=85')` }}
       />
-      {/* Overlay léger — photo bien visible, style FIND */}
       <div
         className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.12) 40%, rgba(0,0,0,0.58) 100%)',
-        }}
+        style={{ background: 'linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.75) 100%)' }}
       />
 
-      <div className="relative z-10 text-center px-6 w-full max-w-7xl mx-auto">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pt-32 pb-24 text-center">
 
         {/* Badge */}
         <div
-          className="hero-badge inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full text-xs font-semibold tracking-widest uppercase"
+          className="anim-1 inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
+          style={{ border: '1px solid rgba(111,79,40,0.5)', color: '#6F4F28', backgroundColor: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(6px)' }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#6F4F28' }} />
+          Polynésie française · Premier portail immobilier
+        </div>
+
+        {/* Title */}
+        <h1
+          className="anim-2"
           style={{
-            border: '1px solid rgba(139,107,66,0.55)',
-            color: '#8B6B42',
-            backgroundColor: 'rgba(0,0,0,0.25)',
-            backdropFilter: 'blur(6px)',
+            fontFamily: 'Montserrat, sans-serif',
+            fontSize: 'clamp(38px, 6.5vw, 88px)',
+            fontWeight: 900,
+            lineHeight: 1.0,
+            letterSpacing: '-0.01em',
+            marginBottom: '20px',
           }}
         >
-          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#8B6B42' }} />
-          Polynésie Française · Rangiroa
-        </div>
+          <span style={{ color: '#ffffff' }}>Trouvez votre bien</span>
+          <br />
+          <span style={{ color: '#6F4F28' }}>idéal en Polynésie</span>
+        </h1>
 
-        {/* Brand name — le FIND de TVT : massif, dominant */}
-        <div className="hero-title-anim" style={{ lineHeight: 0.92, marginBottom: '28px' }}>
-          <span
-            className="block"
-            style={{
-              fontFamily: 'Montserrat, sans-serif',
-              fontSize: 'clamp(46px, 7.5vw, 108px)',
-              fontWeight: 900,
-              color: '#ffffff',
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              textShadow: '0 4px 48px rgba(0,0,0,0.35)',
-            }}
-          >
-            Tevaiti
-          </span>
-          <span
-            className="block"
-            style={{
-              fontFamily: 'Montserrat, sans-serif',
-              fontSize: 'clamp(46px, 7.5vw, 108px)',
-              fontWeight: 900,
-              color: '#8B6B42',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              textShadow: '0 4px 48px rgba(0,0,0,0.35)',
-            }}
-          >
-            Van Tours
-          </span>
-        </div>
+        <p
+          className="anim-3 mb-10 max-w-xl mx-auto"
+          style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(14px, 1.5vw, 17px)', fontWeight: 400, lineHeight: 1.65, color: 'rgba(255,255,255,0.65)' }}
+        >
+          Des milliers de biens à vendre et à louer à Tahiti, Moorea, Bora Bora, Rangiroa et dans tout l'archipel.
+        </p>
 
-        {/* Séparateur */}
+        {/* Search card */}
         <div
-          className="mx-auto mb-7"
-          style={{ width: '56px', height: '2px', backgroundColor: 'rgba(255,255,255,0.35)' }}
-        />
-
-        {/* Tagline — le « Find What Moves You » de TVT */}
-        <p
-          className="hero-subtitle-anim text-white mb-3"
-          style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: 'clamp(22px, 3vw, 42px)',
-            fontWeight: 700,
-            letterSpacing: '0.01em',
-            lineHeight: 1.2,
-            textShadow: '0 2px 16px rgba(0,0,0,0.4)',
-          }}
+          className="anim-4 rounded-2xl overflow-hidden"
+          style={{ backgroundColor: 'rgba(0,0,0,0.78)', backdropFilter: 'blur(16px)', border: '1px solid rgba(111,79,40,0.25)' }}
         >
-          6 arrêts, 900 ans d'histoire.
-        </p>
+          {/* Tabs */}
+          <div className="flex" style={{ borderBottom: '1px solid rgba(111,79,40,0.18)' }}>
+            {(['acheter', 'louer'] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                style={{
+                  flex: 1,
+                  padding: '16px',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: tab === t ? '#6F4F28' : 'rgba(255,255,255,0.4)',
+                  background: 'none',
+                  border: 'none',
+                  borderBottom: tab === t ? '2px solid #6F4F28' : '2px solid transparent',
+                  cursor: 'pointer',
+                  transition: 'color 0.2s',
+                }}
+              >
+                {t === 'acheter' ? 'Acheter' : 'Louer'}
+              </button>
+            ))}
+          </div>
 
-        {/* Sous-titre */}
-        <p
-          className="text-white/65 mb-10 max-w-md mx-auto"
-          style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: 'clamp(13px, 1.4vw, 16px)',
-            fontWeight: 400,
-            lineHeight: '1.7',
-          }}
-        >
-          Visite guidée privée en van climatisé · 2h30 · Polynésie Française
-        </p>
+          {/* Inputs row */}
+          <div className="p-5 flex flex-col sm:flex-row gap-3">
+            {/* Location */}
+            <div className="flex-1 relative">
+              <MapPin size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: '#6F4F28' }} />
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Île, commune, quartier…"
+                className="w-full pl-10 pr-4 py-3.5 rounded-xl text-sm outline-none"
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  color: '#ffffff',
+                  border: '1px solid rgba(111,79,40,0.2)',
+                  fontFamily: 'Montserrat, sans-serif',
+                }}
+              />
+            </div>
 
-        {/* CTAs — style pill sombre inspiré FIND */}
-        <div className="hero-cta-anim flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button
-            onClick={scrollToBooking}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              backgroundColor: 'rgba(10,10,10,0.75)',
-              color: '#ffffff',
-              border: '1.5px solid rgba(255,255,255,0.3)',
-              padding: '15px 38px',
-              borderRadius: '50px',
-              fontFamily: 'Montserrat, sans-serif',
-              fontWeight: 600,
-              fontSize: '15px',
-              cursor: 'pointer',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              transition: 'all 0.25s ease',
-            }}
-            onMouseEnter={e => {
-              ;(e.currentTarget as HTMLButtonElement).style.backgroundColor = '#8B6B42'
-              ;(e.currentTarget as HTMLButtonElement).style.borderColor = '#8B6B42'
-            }}
-            onMouseLeave={e => {
-              ;(e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(10,10,10,0.75)'
-              ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.3)'
-            }}
-          >
-            Réserver maintenant <ArrowRight size={16} />
-          </button>
+            {/* Type */}
+            <div className="relative">
+              <select
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                className="pl-4 pr-8 py-3.5 rounded-xl text-sm outline-none appearance-none cursor-pointer"
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  color: type === 'Tous types' ? 'rgba(255,255,255,0.45)' : '#ffffff',
+                  border: '1px solid rgba(111,79,40,0.2)',
+                  fontFamily: 'Montserrat, sans-serif',
+                  minWidth: '155px',
+                }}
+              >
+                {propertyTypes.map((t) => (
+                  <option key={t} value={t} style={{ backgroundColor: '#111', color: '#fff' }}>{t}</option>
+                ))}
+              </select>
+              <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'rgba(255,255,255,0.35)' }} />
+            </div>
 
-          <button
-            onClick={scrollToTours}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              backgroundColor: 'transparent',
-              color: 'rgba(255,255,255,0.7)',
-              border: 'none',
-              padding: '15px 12px',
-              fontFamily: 'Montserrat, sans-serif',
-              fontWeight: 500,
-              fontSize: '15px',
-              cursor: 'pointer',
-              textDecoration: 'underline',
-              textUnderlineOffset: '4px',
-              textDecorationColor: 'rgba(255,255,255,0.35)',
-              transition: 'color 0.2s',
-            }}
-          >
-            Découvrir le circuit
-          </button>
+            {/* Budget */}
+            <div className="relative">
+              <select
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+                className="pl-4 pr-8 py-3.5 rounded-xl text-sm outline-none appearance-none cursor-pointer"
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  color: budget === 'Tous budgets' ? 'rgba(255,255,255,0.45)' : '#ffffff',
+                  border: '1px solid rgba(111,79,40,0.2)',
+                  fontFamily: 'Montserrat, sans-serif',
+                  minWidth: '165px',
+                }}
+              >
+                {budgets.map((b) => (
+                  <option key={b} value={b} style={{ backgroundColor: '#111', color: '#fff' }}>{b}</option>
+                ))}
+              </select>
+              <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'rgba(255,255,255,0.35)' }} />
+            </div>
+
+            {/* Search button */}
+            <button
+              onClick={scrollToListings}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                backgroundColor: '#6F4F28',
+                color: '#ffffff',
+                border: 'none',
+                padding: '14px 28px',
+                borderRadius: '12px',
+                fontFamily: 'Montserrat, sans-serif',
+                fontWeight: 700,
+                fontSize: '14px',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                transition: 'background-color 0.2s, transform 0.2s',
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#8B6535' }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#6F4F28' }}
+            >
+              <Search size={15} />
+              Rechercher
+            </button>
+          </div>
         </div>
 
         {/* Stats */}
-        <div className="hero-stats-anim flex items-center justify-center gap-10 mt-16 flex-wrap">
+        <div className="flex items-center justify-center gap-12 mt-12 flex-wrap">
           {[
-            { value: '2h30', label: 'Durée de la visite' },
-            { value: '6', label: 'Arrêts incontournables' },
-            { value: 'FR / EN', label: 'Langues disponibles' },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div
-                style={{
-                  fontFamily: 'Montserrat, sans-serif',
-                  color: '#8B6B42',
-                  fontWeight: 800,
-                  fontSize: '26px',
-                }}
-              >
-                {stat.value}
-              </div>
-              <div
-                className="text-xs tracking-widest mt-1 uppercase"
-                style={{ color: 'rgba(255,255,255,0.5)' }}
-              >
-                {stat.label}
-              </div>
+            { value: '1 200+', label: 'Biens disponibles' },
+            { value: '95+', label: 'Agents actifs' },
+            { value: '8 500+', label: 'Ventes réalisées' },
+          ].map((s) => (
+            <div key={s.label} className="text-center">
+              <div style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800, fontSize: '26px', color: '#6F4F28' }}>{s.value}</div>
+              <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: '4px', fontFamily: 'Montserrat, sans-serif' }}>{s.label}</div>
             </div>
           ))}
         </div>
       </div>
-
-      <button
-        onClick={scrollToTours}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-colors"
-        style={{ color: 'rgba(255,255,255,0.45)' }}
-        aria-label="Défiler vers le bas"
-      >
-        <span className="text-xs tracking-widest uppercase">Défiler</span>
-        <ChevronDown size={20} className="hero-bounce" />
-      </button>
     </section>
   )
 }

@@ -1,133 +1,66 @@
 import { useEffect, useRef, useState } from 'react'
+import { TrendingUp, Shield, Clock, Award } from 'lucide-react'
 
-const phrases = [
-  'Pas un groupe de 40. Un guide. Une île.',
-  'Pas des photos Instagram. Des histoires à emporter.',
-  'Pas du temps. De la compréhension.',
+const stats = [
+  { icon: TrendingUp, value: '20 ans', label: "d'expertise locale", desc: "Une équipe implantée en Polynésie depuis 2004" },
+  { icon: Shield, value: '100%', label: 'sécurisé', desc: "Transactions vérifiées, agents certifiés" },
+  { icon: Clock, value: '48h', label: 'délai de réponse', desc: "Un conseiller vous rappelle sous 48h max" },
+  { icon: Award, value: '#1', label: 'portail immo', desc: "Premier portail immobilier de Polynésie" },
 ]
 
 export default function ValueProp() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const [strikeActive, setStrikeActive] = useState(false)
-  const [phrasesActive, setPhrasesActive] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setStrikeActive(true)
-          setTimeout(() => setPhrasesActive(true), 900)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.35 }
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect() } },
+      { threshold: 0.2 }
     )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
   }, [])
 
   return (
-    <section
-      id="comprendre"
-      ref={sectionRef}
-      className="py-28 px-6"
-      style={{ backgroundColor: '#0d0d0d' }}
-    >
-      <div className="max-w-4xl mx-auto text-center">
-
-        {/* Label */}
-        <div
-          className="inline-flex items-center gap-2 mb-6 text-sm font-medium tracking-widest uppercase"
-          style={{ color: '#8B6B42', fontFamily: 'Montserrat, sans-serif' }}
-        >
-          <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
-          La visite
-          <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
+    <section ref={ref} className="py-20 px-6" style={{ backgroundColor: '#0D0D0D' }}>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="section-label justify-center mx-auto">
+            Pourquoi FIND Polynésie
+          </div>
+          <h2 style={{
+            fontFamily: 'Montserrat, sans-serif',
+            fontSize: 'clamp(26px, 3.5vw, 42px)',
+            fontWeight: 800,
+            color: '#ffffff',
+            lineHeight: 1.15,
+          }}>
+            L'immobilier en Polynésie,{' '}
+            <span style={{ color: '#6F4F28' }}>simplifié.</span>
+          </h2>
         </div>
 
-        {/* Section title */}
-        <h2
-          className="mb-16"
-          style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: 'clamp(22px, 3.5vw, 42px)',
-            fontWeight: 700,
-            color: '#ffffff',
-            lineHeight: 1.25,
-            letterSpacing: '0.03em',
-          }}
-        >
-          Comprendre Rangiroa<br />
-          pour la visiter réellement
-        </h2>
-
-        {/* Big statement with strikethrough on "générique" */}
-        <div
-          className="mb-16"
-          style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: 'clamp(22px, 4.5vw, 52px)',
-            fontWeight: 700,
-            lineHeight: 1.2,
-            color: '#ffffff',
-          }}
-        >
-          Tourisme{' '}
-          <span className="relative inline-block">
-            <span style={{ color: 'rgba(255,255,255,0.4)' }}>générique</span>
-
-            {/* SVG stroke-dashoffset strikethrough */}
-            <svg
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '-3%',
-                width: '106%',
-                height: '4px',
-                transform: 'translateY(-50%)',
-                overflow: 'visible',
-              }}
-              viewBox="0 0 100 1"
-              preserveAspectRatio="none"
-            >
-              <line
-                x1="0"
-                y1="0.5"
-                x2="100"
-                y2="0.5"
-                stroke="#00ffff"
-                vectorEffect="non-scaling-stroke"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeDasharray="110"
-                strokeDashoffset={strikeActive ? 0 : 110}
-                style={{ transition: 'stroke-dashoffset 1s ease-in-out' }}
-              />
-            </svg>
-          </span>
-          .{' '}
-          <span style={{ color: '#8B6B42' }}>Rangiroa</span> mérite mieux.
-        </div>
-
-        {/* 3 contrast phrases with fade-in + slide-up */}
-        <div className="space-y-5 max-w-2xl mx-auto">
-          {phrases.map((phrase, i) => (
-            <p
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+          {stats.map((s, i) => (
+            <div
               key={i}
+              className="card-dark p-7 text-center"
               style={{
-                opacity: phrasesActive ? 1 : 0,
-                transform: phrasesActive ? 'translateY(0)' : 'translateY(20px)',
-                transition: `opacity 0.6s ease ${i * 220}ms, transform 0.6s ease ${i * 220}ms`,
-                fontSize: 'clamp(15px, 2vw, 18px)',
-                color: 'rgba(255,255,255,0.75)',
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 400,
-                lineHeight: 1.65,
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(24px)',
+                transition: `opacity 0.5s ease ${i * 120}ms, transform 0.5s ease ${i * 120}ms`,
               }}
             >
-              {phrase}
-            </p>
+              <div
+                className="flex items-center justify-center w-11 h-11 rounded-xl mx-auto mb-4"
+                style={{ backgroundColor: 'rgba(111,79,40,0.1)', border: '1px solid rgba(111,79,40,0.25)' }}
+              >
+                <s.icon size={20} style={{ color: '#6F4F28' }} />
+              </div>
+              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '28px', fontWeight: 800, color: '#6F4F28', lineHeight: 1.1 }}>{s.value}</div>
+              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 600, color: '#ffffff', marginTop: '4px' }}>{s.label}</div>
+              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '6px', lineHeight: 1.55 }}>{s.desc}</div>
+            </div>
           ))}
         </div>
       </div>

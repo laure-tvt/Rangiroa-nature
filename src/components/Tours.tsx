@@ -1,200 +1,242 @@
-import { Clock, Globe, MapPin, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import { Heart, Bed, Bath, Maximize2, MapPin, ArrowRight } from 'lucide-react'
 
-const stops = [
+const properties = [
   {
-    num: '01',
-    name: "Le quai d'Avatoru",
-    theme: "Peuplement de l'île",
-    desc: "Point de départ emblématique, découverte du port et de la vie maritime de l'atoll.",
-    img: 'https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=800&q=80',
+    id: 1,
+    type: 'Villa',
+    status: 'Vente',
+    price: '95 000 000 XPF',
+    priceEur: '795 000 €',
+    title: 'Villa contemporaine vue lagon',
+    location: 'Bora Bora, Iles Sous-le-Vent',
+    beds: 4, baths: 3, surface: 320,
+    img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80',
+    featured: true,
   },
   {
-    num: '02',
-    name: "L'église catholique",
-    theme: 'Culture & Histoire',
-    desc: "Histoire de l'évangélisation en Polynésie et impact de la chrétienté sur la culture locale.",
-    img: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=800&q=80',
+    id: 2,
+    type: 'Bungalow',
+    status: 'Vente',
+    price: '42 000 000 XPF',
+    priceEur: '352 000 €',
+    title: 'Bungalow sur pilotis — accès lagon',
+    location: 'Moorea, Iles du Vent',
+    beds: 2, baths: 2, surface: 95,
+    img: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',
+    featured: false,
   },
   {
-    num: '03',
-    name: "Le village d'Avatoru",
-    theme: 'Village traditionnel',
-    desc: "Immersion dans l'ancien village, ses traditions, son architecture et son mode de vie authentique.",
+    id: 3,
+    type: 'Maison',
+    status: 'Location',
+    price: '280 000 XPF/mois',
+    priceEur: '2 350 €/mois',
+    title: 'Maison familiale avec jardin tropical',
+    location: 'Papeete, Tahiti',
+    beds: 3, baths: 2, surface: 180,
+    img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+    featured: false,
+  },
+  {
+    id: 4,
+    type: 'Terrain',
+    status: 'Vente',
+    price: '12 500 000 XPF',
+    priceEur: '105 000 €',
+    title: 'Terrain vue mer — 1 200 m²',
+    location: 'Rangiroa, Tuamotu',
+    beds: 0, baths: 0, surface: 1200,
     img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+    featured: false,
   },
   {
-    num: '04',
-    name: 'La plage publique',
-    theme: 'Nature & Détente',
-    desc: "Une pause sur l'une des plus belles plages de l'atoll, entre lagon turquoise et sable blanc.",
-    img: 'https://images.unsplash.com/photo-1559829095-7e1a38ed7296?w=800&q=80',
+    id: 5,
+    type: 'Villa',
+    status: 'Vente',
+    price: '128 000 000 XPF',
+    priceEur: '1 072 000 €',
+    title: 'Villa de prestige — piscine à débordement',
+    location: 'Arue, Tahiti',
+    beds: 5, baths: 4, surface: 450,
+    img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',
+    featured: true,
   },
   {
-    num: '05',
-    name: 'Le platier de récif',
-    theme: 'Écosystème corallien',
-    desc: "Face à l'hôtel le Kia Ora — découverte de la formation corallienne et de sa protection naturelle.",
-    img: 'https://images.unsplash.com/photo-1583148929897-a54c5f01ecf8?w=800&q=80',
-  },
-  {
-    num: '06',
-    name: 'La passe de Tiputa',
-    theme: 'Légendes & Faune',
-    desc: "La passe la plus célèbre de Rangiroa, théâtre de légendes locales et d'histoires de guerres ancestrales.",
-    img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80',
+    id: 6,
+    type: 'Appartement',
+    status: 'Location',
+    price: '150 000 XPF/mois',
+    priceEur: '1 260 €/mois',
+    title: 'Appartement moderne centre-ville',
+    location: 'Papeete, Tahiti',
+    beds: 2, baths: 1, surface: 75,
+    img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
+    featured: false,
   },
 ]
 
-const prices = [
-  { label: 'Adulte', price: '5 000 XPF', sub: '≈ 42 €' },
-  { label: 'Enfant (- 11 ans)', price: '2 500 XPF', sub: '≈ 21 €' },
-  { label: 'Bébé (- 3 ans)', price: 'Gratuit', sub: '' },
-]
+type FilterTab = 'Tous' | 'Vente' | 'Location'
 
 export default function Tours() {
-  const handleBook = () => {
-    const el = document.querySelector('#reservation')
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  }
+  const [activeTab, setActiveTab] = useState<FilterTab>('Tous')
+  const [liked, setLiked] = useState<number[]>([])
+
+  const filtered = activeTab === 'Tous' ? properties : properties.filter((p) => p.status === activeTab)
+
+  const toggleLike = (id: number) =>
+    setLiked((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
 
   return (
-    <section id="visites" className="py-24 px-6" style={{ backgroundColor: '#000000' }}>
+    <section id="biens" className="py-24 px-6" style={{ backgroundColor: '#000000' }}>
       <div className="max-w-7xl mx-auto">
 
-        {/* Section header — split layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end mb-16">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
           <div>
-            <div
-              className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#8B6B42' }}
-            >
-              <span className="w-8 h-px" style={{ backgroundColor: '#8B6B42' }} />
-              Le circuit
-            </div>
-            <h2
-              style={{
-                fontFamily: 'Montserrat, sans-serif',
-                fontSize: 'clamp(36px, 4.5vw, 56px)',
-                fontWeight: 800,
-                color: '#ffffff',
-                lineHeight: 1.1,
-              }}
-            >
-              6 arrêts,<br />
-              <span style={{ color: '#8B6B42' }}>un parcours unique.</span>
+            <div className="section-label">Annonces immobilières</div>
+            <h2 style={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: 'clamp(28px, 4vw, 48px)',
+              fontWeight: 800,
+              color: '#ffffff',
+              lineHeight: 1.1,
+            }}>
+              Biens en <span style={{ color: '#6F4F28' }}>vedette</span>
             </h2>
           </div>
-          <div>
-            <p
-              className="text-white/70 leading-relaxed mb-6"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '16px', fontWeight: 400 }}
-            >
-              Une immersion unique dans l'histoire, la culture et les paysages de Rangiroa.
-              Visite privée, en van climatisé, en français et en anglais.
-            </p>
-            <div className="flex flex-wrap gap-5 text-sm text-white/60">
-              <span className="flex items-center gap-1.5">
-                <Clock size={14} style={{ color: '#8B6B42' }} />2h30 (pick-up inclus)
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Globe size={14} style={{ color: '#8B6B42' }} />FR &amp; EN
-              </span>
-              <span className="flex items-center gap-1.5">
-                <MapPin size={14} style={{ color: '#8B6B42' }} />6 arrêts
-              </span>
-            </div>
+
+          {/* Filter tabs */}
+          <div className="flex rounded-xl overflow-hidden" style={{ border: '1px solid rgba(111,79,40,0.2)' }}>
+            {(['Tous', 'Vente', 'Location'] as FilterTab[]).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                style={{
+                  padding: '10px 20px',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  backgroundColor: activeTab === tab ? '#6F4F28' : 'transparent',
+                  color: activeTab === tab ? '#ffffff' : 'rgba(255,255,255,0.45)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Stop cards — image overlay style */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-          {stops.map((stop, i) => (
-            <div
-              key={i}
-              className="group relative overflow-hidden rounded-2xl cursor-default"
-              style={{ height: '280px' }}
-            >
-              <img
-                src={stop.img}
-                alt={stop.name}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)',
-                }}
-              />
-              <div className="absolute inset-0 p-5 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {filtered.map((p) => (
+            <div key={p.id} className="card-dark overflow-hidden group cursor-pointer">
+              {/* Image */}
+              <div className="relative overflow-hidden" style={{ height: '220px' }}>
+                <img
+                  src={p.img}
+                  alt={p.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)' }} />
+
+                {/* Top badges */}
+                <div className="absolute top-3 left-3 flex gap-2">
                   <span
-                    className="text-6xl font-bold leading-none"
-                    style={{
-                      fontFamily: 'Montserrat, sans-serif',
-                      color: 'rgba(139,107,66,0.2)',
-                      fontWeight: 900,
-                    }}
+                    className="px-2.5 py-1 rounded-full text-xs font-bold"
+                    style={{ backgroundColor: p.status === 'Vente' ? '#6F4F28' : '#2a2a2a', color: '#fff' }}
                   >
-                    {stop.num}
+                    {p.status}
                   </span>
-                  <span
-                    className="px-2.5 py-1 rounded-full text-xs font-medium"
-                    style={{
-                      backgroundColor: 'rgba(139,107,66,0.12)',
-                      color: '#8B6B42',
-                      backdropFilter: 'blur(4px)',
-                    }}
-                  >
-                    {stop.theme}
-                  </span>
+                  {p.featured && (
+                    <span
+                      className="px-2.5 py-1 rounded-full text-xs font-bold"
+                      style={{ backgroundColor: 'rgba(0,0,0,0.7)', color: '#6F4F28', border: '1px solid rgba(111,79,40,0.5)' }}
+                    >
+                      Coup de cœur
+                    </span>
+                  )}
                 </div>
-                <div>
-                  <h3
-                    className="text-white font-bold text-lg mb-1.5"
-                    style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700 }}
+
+                {/* Like */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); toggleLike(p.id) }}
+                  className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center"
+                  style={{ backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', border: 'none', cursor: 'pointer' }}
+                >
+                  <Heart
+                    size={14}
+                    fill={liked.includes(p.id) ? '#6F4F28' : 'none'}
+                    style={{ color: liked.includes(p.id) ? '#6F4F28' : 'rgba(255,255,255,0.7)' }}
+                  />
+                </button>
+
+                {/* Type */}
+                <span
+                  className="absolute bottom-3 left-3 px-2 py-0.5 rounded text-xs font-medium"
+                  style={{ backgroundColor: 'rgba(0,0,0,0.65)', color: 'rgba(255,255,255,0.75)' }}
+                >
+                  {p.type}
+                </span>
+              </div>
+
+              {/* Body */}
+              <div className="p-5">
+                <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '15px', color: '#ffffff', lineHeight: 1.3, marginBottom: '6px' }}>
+                  {p.title}
+                </h3>
+                <div className="flex items-center gap-1 mb-4">
+                  <MapPin size={12} style={{ color: '#6F4F28', flexShrink: 0 }} />
+                  <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}>{p.location}</span>
+                </div>
+
+                {/* Specs */}
+                <div className="flex items-center gap-4 mb-4 pb-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                  {p.beds > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <Bed size={13} style={{ color: 'rgba(255,255,255,0.35)' }} />
+                      <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>{p.beds} ch.</span>
+                    </div>
+                  )}
+                  {p.baths > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <Bath size={13} style={{ color: 'rgba(255,255,255,0.35)' }} />
+                      <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>{p.baths} sdb.</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-1.5">
+                    <Maximize2 size={13} style={{ color: 'rgba(255,255,255,0.35)' }} />
+                    <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>{p.surface} m²</span>
+                  </div>
+                </div>
+
+                {/* Price + CTA */}
+                <div className="flex items-end justify-between">
+                  <div>
+                    <div style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800, fontSize: '17px', color: '#6F4F28' }}>{p.price}</div>
+                    <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>{p.priceEur}</div>
+                  </div>
+                  <button
+                    className="flex items-center gap-1.5 text-xs font-semibold transition-colors duration-200"
+                    style={{ color: 'rgba(255,255,255,0.4)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Montserrat, sans-serif' }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = '#6F4F28')}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = 'rgba(255,255,255,0.4)')}
                   >
-                    {stop.name}
-                  </h3>
-                  <p className="text-white/70 text-xs leading-relaxed">{stop.desc}</p>
+                    Voir <ArrowRight size={12} />
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Tarifs */}
-        <div
-          className="rounded-2xl p-8 md:p-10 text-center"
-          style={{ backgroundColor: '#0d0d0d' }}
-        >
-          <h3
-            className="text-white text-2xl font-bold mb-2"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700 }}
-          >
-            Tarifs
-          </h3>
-          <p className="text-white/60 text-sm mb-8">Pick-up et boisson inclus dans tous les tarifs</p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto mb-8">
-            {prices.map((p) => (
-              <div
-                key={p.label}
-                className="rounded-xl p-5"
-                style={{ backgroundColor: 'rgba(139,107,66,0.06)' }}
-              >
-                <div className="text-white/70 text-xs uppercase tracking-widest mb-2">{p.label}</div>
-                <div
-                  className="text-2xl font-bold"
-                  style={{ fontFamily: 'Montserrat, sans-serif', color: '#8B6B42', fontWeight: 800 }}
-                >
-                  {p.price}
-                </div>
-                {p.sub && <div className="text-xs mt-1 text-white/50">{p.sub}</div>}
-              </div>
-            ))}
-          </div>
-          <button onClick={handleBook} className="btn-outline">
-            Réserver maintenant <ChevronRight size={16} />
+        {/* CTA */}
+        <div className="text-center">
+          <button className="btn-outline px-10 py-4 text-base">
+            Voir tous les biens
           </button>
         </div>
       </div>

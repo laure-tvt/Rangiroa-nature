@@ -85,10 +85,15 @@ export default function Stops() {
               data-reveal="scale"
               data-delay={String(idx * 90)}
             >
-              <div className="flex items-start justify-between mb-5">
-                <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '36px', fontWeight: 900, color: 'rgba(111,79,40,0.18)', lineHeight: 1 }}>
-                  {s.num}
-                </span>
+              <div className="flex items-center justify-between mb-5">
+                <div
+                  className="flex items-center justify-center w-11 h-11 rounded-2xl flex-shrink-0"
+                  style={{ backgroundColor: 'rgba(111,79,40,0.22)', border: '1px solid rgba(111,79,40,0.55)', boxShadow: '0 0 14px rgba(111,79,40,0.45)' }}
+                >
+                  <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '15px', color: '#C8894A' }}>
+                    {s.num}
+                  </span>
+                </div>
                 <span
                   className="px-3 py-1 rounded-full text-xs font-semibold"
                   style={{ backgroundColor: 'rgba(111,79,40,0.12)', color: '#6F4F28', border: '1px solid rgba(111,79,40,0.3)', flexShrink: 0 }}
@@ -96,7 +101,7 @@ export default function Stops() {
                   {s.theme}
                 </span>
               </div>
-              <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '17px', color: '#ffffff', lineHeight: 1.3, marginBottom: '10px' }}>
+              <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '17px', color: '#C8894A', lineHeight: 1.3, marginBottom: '10px' }}>
                 {s.name}
               </h3>
               <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>

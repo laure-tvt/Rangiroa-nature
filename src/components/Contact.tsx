@@ -5,12 +5,12 @@ const infos = [
   {
     icon: Phone,
     title: 'Téléphone / WhatsApp',
-    lines: ['+689 87 65 43 21', 'Disponible 7j/7, 7h–19h'],
+    lines: ['+689 87 36 32 13', 'Disponible 7j/7'],
   },
   {
     icon: Mail,
     title: 'Email',
-    lines: ['contact@rangiroa-nature.pf', 'Réponse sous 24h'],
+    lines: ['tevaiti.van.tours@gmail.com', 'Réponse sous 24h'],
   },
   {
     icon: MapPin,
@@ -19,8 +19,8 @@ const infos = [
   },
   {
     icon: Clock,
-    title: 'Horaires',
-    lines: ['Lundi – Samedi : 7h – 19h', 'Dimanche : sur rendez-vous'],
+    title: 'Langues',
+    lines: ['Français & Anglais', 'Visite privée sur rendez-vous'],
   },
 ]
 
@@ -55,8 +55,8 @@ export default function Contact() {
             <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
           </div>
           <h2 className="section-title mb-4">
-            Une question ?{' '}
-            <span className="gold-accent">Écrivez-nous</span>
+            Contactez{' '}
+            <span className="gold-accent">Tevaiti Van Tours</span>
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
             Notre équipe est disponible pour répondre à toutes vos questions et vous aider

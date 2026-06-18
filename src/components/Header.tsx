@@ -45,7 +45,7 @@ export default function Header() {
             className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-bold transition-all duration-300"
             style={{ backgroundColor: '#D4AF37' }}
           >
-            R
+            T
           </div>
           <div className="text-left">
             <div
@@ -55,10 +55,10 @@ export default function Header() {
                 fontSize: scrolled ? '16px' : '18px',
               }}
             >
-              Rangiroa Nature
+              Tevaiti Van Tours
             </div>
             <div className="text-xs tracking-widest uppercase" style={{ color: '#D4AF37', opacity: 0.9 }}>
-              Visites Guidées
+              Rangiroa · Visites Guidées
             </div>
           </div>
         </button>

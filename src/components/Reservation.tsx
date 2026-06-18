@@ -2,11 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { CalendarDays, Users, MapPin, CheckCircle } from 'lucide-react'
 
 const circuits = [
-  'Tour du Grand Lagon (4h)',
-  'Motus Secrets (8h)',
-  'Coucher de Soleil aux Avatoru (2h)',
-  'Découverte Complète (10h)',
-  'Circuit sur mesure',
+  'Tour de l\'Île — Visite Guidée (2h30)',
+  'Demande spéciale / Sur mesure',
 ]
 
 type FormState = {
@@ -136,14 +133,14 @@ export default function Reservation() {
               </p>
               <p className="text-sm text-gray-600">
                 WhatsApp :{' '}
-                <a href="tel:+68987654321" className="font-semibold" style={{ color: '#3D2817' }}>
-                  +689 87 65 43 21
+                <a href="tel:+68987363213" className="font-semibold" style={{ color: '#3D2817' }}>
+                  +689 87 36 32 13
                 </a>
               </p>
               <p className="text-sm text-gray-600">
                 Email :{' '}
-                <a href="mailto:contact@rangiroa-nature.pf" className="font-semibold" style={{ color: '#3D2817' }}>
-                  contact@rangiroa-nature.pf
+                <a href="mailto:tevaiti.van.tours@gmail.com" className="font-semibold" style={{ color: '#3D2817' }}>
+                  tevaiti.van.tours@gmail.com
                 </a>
               </p>
             </div>

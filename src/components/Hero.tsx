@@ -16,18 +16,13 @@ export default function Hero() {
       id="accueil"
       className="relative w-full h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background image via CSS gradient + unsplash image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80')`,
         }}
       />
-
-      {/* Overlay */}
       <div className="absolute inset-0 hero-gradient" />
-
-      {/* Subtle pattern overlay */}
       <div
         className="absolute inset-0 opacity-10"
         style={{
@@ -36,9 +31,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        {/* Eyebrow */}
         <div
           className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border text-sm font-medium tracking-widest uppercase"
           style={{ borderColor: '#D4AF37', color: '#D4AF37' }}
@@ -47,7 +40,6 @@ export default function Hero() {
           Polynésie Française · Rangiroa
         </div>
 
-        {/* Main heading */}
         <h1
           className="text-white mb-6 leading-tight"
           style={{
@@ -59,10 +51,9 @@ export default function Hero() {
         >
           Découvrez Rangiroa
           <br />
-          <span style={{ color: '#D4AF37' }}>en voiture</span>
+          <span style={{ color: '#D4AF37' }}>en van privé</span>
         </h1>
 
-        {/* Subtitle */}
         <p
           className="text-white/90 mb-10 max-w-2xl mx-auto"
           style={{
@@ -72,26 +63,24 @@ export default function Hero() {
             textShadow: '0 1px 8px rgba(0,0,0,0.3)',
           }}
         >
-          Circuits privés, expériences authentiques. Partez à la découverte
-          du plus grand atoll du monde avec un guide local passionné.
+          Visite guidée privée de l'atoll en 6 arrêts incontournables.
+          Histoire, culture polynésienne et paysages époustouflants — en français et en anglais.
         </p>
 
-        {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button onClick={scrollToTours} className="btn-outline text-base px-8 py-4">
-            Explorer les visites
+            Découvrir la visite
           </button>
           <button onClick={scrollToBooking} className="btn-primary text-base px-8 py-4">
             Réserver maintenant
           </button>
         </div>
 
-        {/* Stats */}
         <div className="flex items-center justify-center gap-8 mt-16 flex-wrap">
           {[
-            { value: '4+', label: 'Circuits exclusifs' },
-            { value: '100%', label: 'Privé & personnalisé' },
-            { value: '10 ans', label: "d'expérience locale" },
+            { value: '2h30', label: 'Durée de la visite' },
+            { value: '6', label: 'Arrêts incontournables' },
+            { value: 'FR / EN', label: 'Langues disponibles' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div
@@ -106,7 +95,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <button
         onClick={scrollToTours}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"

@@ -1,9 +1,9 @@
 import { Heart } from 'lucide-react'
 
 const links = {
-  Visites: ['Tour du Grand Lagon', 'Motus Secrets', 'Coucher de Soleil', 'Découverte Complète'],
+  Visite: ['Tour de l\'Île (2h30)', '6 arrêts incontournables', 'Français & Anglais', 'Pick-up inclus'],
   Informations: ['À propos de nous', 'Comment ça marche', 'Politique d\'annulation', 'FAQ'],
-  Contact: ['contact@rangiroa-nature.pf', '+689 87 65 43 21', 'Avatoru, Rangiroa', 'Polynésie française'],
+  Contact: ['tevaiti.van.tours@gmail.com', '+689 87 36 32 13', 'Avatoru, Rangiroa', 'Polynésie française'],
 }
 
 export default function Footer() {
@@ -23,23 +23,23 @@ export default function Footer() {
                 className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-bold"
                 style={{ backgroundColor: '#D4AF37' }}
               >
-                R
+                T
               </div>
               <div>
                 <div
                   className="text-white font-bold leading-tight"
                   style={{ fontFamily: 'Playfair Display, serif', fontSize: '18px' }}
                 >
-                  Rangiroa Nature
+                  Tevaiti Van Tours
                 </div>
                 <div className="text-xs tracking-widest uppercase" style={{ color: '#D4AF37', opacity: 0.8 }}>
-                  Visites Guidées
+                  Rangiroa · Visites Guidées
                 </div>
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Découvrez l'atoll de Rangiroa avec un guide local passionné.
-              Circuits privés, expériences authentiques depuis 2014.
+              Visite guidée privée de l'atoll de Rangiroa en van climatisé.
+              6 arrêts, 2h30, en français et en anglais. Pick-up inclus.
             </p>
             <button
               onClick={() => handleNav('#reservation')}

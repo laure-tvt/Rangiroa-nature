@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0)
-  const vhRef    = useRef(typeof window !== 'undefined' ? window.innerHeight : 700)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const vhRef = useRef(typeof window !== 'undefined' ? window.innerHeight : 700)
 
   useEffect(() => {
     vhRef.current = window.innerHeight
@@ -11,11 +10,6 @@ export default function Hero() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  // Ensure playback starts as soon as the video is ready
-  const handleCanPlay = () => {
-    videoRef.current?.play().catch(() => {})
-  }
 
   const progress = Math.min(1, Math.max(0, scrollY / vhRef.current))
 
@@ -31,16 +25,13 @@ export default function Hero() {
     <section id="accueil" style={{ height: '200vh', position: 'relative' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
 
-        {/* Video background */}
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster="/hero-poster.jpg"
-          onCanPlay={handleCanPlay}
+        {/* Photo background — eager, high priority, no rotation */}
+        <img
+          src="/hero-bg.jpg"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="sync"
           style={{
             position: 'absolute', inset: 0,
             width: '100%', height: '100%',
@@ -48,10 +39,10 @@ export default function Hero() {
             objectPosition: 'center',
             zIndex: 0,
             pointerEvents: 'none',
+            userSelect: 'none',
           }}
-        >
-          <source src="/hero-bg.mp4" type="video/mp4" />
-        </video>
+          draggable={false}
+        />
 
         {/* Dark overlay builds on scroll */}
         <div style={{

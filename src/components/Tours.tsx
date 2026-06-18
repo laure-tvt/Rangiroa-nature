@@ -43,8 +43,21 @@ export default function Tours() {
       <div className="max-w-7xl mx-auto">
 
         <div className="text-center mb-14">
-          <div data-reveal className="section-label justify-center mx-auto">
-            Le parcours
+          <div data-reveal className="flex justify-center mb-4">
+            <span style={{
+              display: 'inline-block',
+              padding: '8px 20px',
+              borderRadius: '999px',
+              backgroundColor: '#ffffff',
+              color: '#6F4F28',
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: '11px',
+              fontWeight: 700,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+            }}>
+              Le circuit
+            </span>
           </div>
           <h2
             data-reveal

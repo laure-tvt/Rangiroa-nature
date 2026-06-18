@@ -51,9 +51,9 @@ export default function ValueProp() {
             >
               <div
                 className="flex items-center justify-center w-11 h-11 rounded-xl mx-auto mb-4"
-                style={{ backgroundColor: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.2)' }}
+                style={{ backgroundColor: 'rgba(111,79,40,0.22)', border: '1px solid rgba(111,79,40,0.55)', boxShadow: '0 0 14px rgba(111,79,40,0.45)' }}
               >
-                <s.icon size={20} style={{ color: '#ffffff' }} />
+                <s.icon size={20} style={{ color: '#C8894A' }} />
               </div>
               <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '28px', fontWeight: 800, color: '#6F4F28', lineHeight: 1.1 }}>{s.value}</div>
               <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: '4px' }}>{s.label}</div>

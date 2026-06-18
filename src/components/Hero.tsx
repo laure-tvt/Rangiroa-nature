@@ -1,172 +1,107 @@
-import { useRef, useState, useEffect } from 'react'
-import { ArrowRight, Volume2, VolumeX } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 export default function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [muted, setMuted] = useState(true)
-  const [introVisible, setIntroVisible] = useState(true)
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !muted
-      setMuted(!muted)
-    }
+  const scrollToTours = () => {
+    const el = document.querySelector('#visites')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // Remove intro overlay from DOM after animation completes (~3.2s)
-  useEffect(() => {
-    const timer = setTimeout(() => setIntroVisible(false), 3200)
-    return () => clearTimeout(timer)
-  }, [])
-
-  const scrollTo = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
+  const scrollToBooking = () => {
+    const el = document.querySelector('#reservation')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
-    <section id="accueil" className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section
+      id="accueil"
+      className="relative w-full h-screen flex items-center justify-center overflow-hidden"
+    >
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80')`,
+        }}
+      />
+      <div className="absolute inset-0 hero-gradient" />
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(212,175,55,0.4) 1px, transparent 0)`,
+          backgroundSize: '32px 32px',
+        }}
+      />
 
-      {/* ── CLIP-TEXT INTRO OVERLAY ── */}
-      {introVisible && (
-        <div className="clip-intro flex items-center justify-center">
-          {/* Background fills the overlay */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: 'url(/hero-poster.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
-          {/* Clip-text: la vraie photo Rangiroa transparaît à travers les lettres */}
-          <div
-            className="clip-intro-text relative z-10 select-none"
-            style={{
-              backgroundImage: 'url(/hero-poster.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              fontFamily: 'Playfair Display, serif',
-              fontSize: 'clamp(80px, 18vw, 220px)',
-              fontWeight: 700,
-              letterSpacing: '-0.03em',
-              lineHeight: 1,
-              textAlign: 'center',
-            }}
-          >
-            RANGIROA
-          </div>
-        </div>
-      )}
-
-      {/* VIDEO / POSTER — with parallax-rise scale */}
-      <div className="absolute inset-0 hero-parallax">
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/hero-poster.jpg"
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <div
+          className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border text-sm font-medium tracking-widest uppercase"
+          style={{ borderColor: '#D4AF37', color: '#D4AF37' }}
         >
-          <source src="/hero.mov" type="video/quicktime" />
-          <source src="/hero.mov" type="video/mp4" />
-        </video>
-      </div>
-
-      {/* Overlay */}
-      <div className="absolute inset-0" style={{
-        background: 'linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.2) 45%, rgba(10,10,10,0.7) 100%)'
-      }} />
-
-      {/* ── CONTENU CENTRÉ ── */}
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center">
-
-        {/* Badge */}
-        <div className="hero-eyebrow flex items-center gap-2 mb-8">
-          <span className="w-8 h-px" style={{ backgroundColor: 'var(--teal)' }} />
-          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-white/80">
-            Rangiroa · Polynésie Française
-          </span>
-          <span className="w-8 h-px" style={{ backgroundColor: 'var(--teal)' }} />
+          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#D4AF37' }} />
+          Polynésie Française · Rangiroa
         </div>
 
-        {/* Titre XXL éditorial */}
-        <h1 className="hero-title text-white mb-6"
+        <h1
+          className="text-white mb-6 leading-tight"
           style={{
             fontFamily: 'Playfair Display, serif',
-            fontSize: 'clamp(52px, 9vw, 96px)',
-            fontWeight: 700,
-            lineHeight: 1.0,
-            letterSpacing: '-0.02em',
-          }}>
-          Découvrez<br />
-          <span style={{ color: 'var(--teal)', fontStyle: 'italic' }}>Rangiroa</span>
+            fontSize: 'clamp(36px, 6vw, 64px)',
+            fontWeight: '700',
+            textShadow: '0 2px 20px rgba(0,0,0,0.3)',
+          }}
+        >
+          Découvrez Rangiroa
+          <br />
+          <span style={{ color: '#D4AF37' }}>en van privé</span>
         </h1>
 
-        {/* Sous-titre épuré */}
-        <p className="hero-sub mb-10 text-white/75 max-w-lg"
-          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 18px)', lineHeight: 1.7 }}>
-          Visite guidée privée en van · 6 arrêts · 2h30<br />
-          Français &amp; Anglais · Pick-up inclus
+        <p
+          className="text-white/90 mb-10 max-w-2xl mx-auto"
+          style={{
+            fontFamily: 'Inter, sans-serif',
+            fontSize: 'clamp(16px, 2.5vw, 20px)',
+            lineHeight: '1.7',
+            textShadow: '0 1px 8px rgba(0,0,0,0.3)',
+          }}
+        >
+          Visite guidée privée de l'atoll en 6 arrêts incontournables.
+          Histoire, culture polynésienne et paysages époustouflants — en français et en anglais.
         </p>
 
-        {/* CTAs */}
-        <div className="hero-ctas flex flex-col sm:flex-row gap-3 items-center">
-          <button
-            onClick={() => scrollTo('#reservation')}
-            className="group flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300"
-            style={{ background: 'var(--teal)' }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--teal-bright)'; e.currentTarget.style.transform = 'scale(1.04)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'var(--teal)'; e.currentTarget.style.transform = 'scale(1)' }}
-          >
-            Réserver ma visite
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button onClick={scrollToTours} className="btn-outline text-base px-8 py-4">
+            Découvrir la visite
           </button>
-          <button
-            onClick={() => scrollTo('#visites')}
-            className="flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300"
-            style={{ border: '1.5px solid rgba(255,255,255,0.4)', backdropFilter: 'blur(4px)' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--teal)'; e.currentTarget.style.transform = 'scale(1.04)' }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.transform = 'scale(1)' }}
-          >
-            Voir le circuit
+          <button onClick={scrollToBooking} className="btn-primary text-base px-8 py-4">
+            Réserver maintenant
           </button>
         </div>
 
-        {/* Stats minimalistes */}
-        <div className="hero-stats flex items-center gap-8 mt-14 flex-wrap justify-center">
+        <div className="flex items-center justify-center gap-8 mt-16 flex-wrap">
           {[
-            { value: '2h30', label: 'de visite' },
-            { value: '6', label: 'arrêts' },
-            { value: 'FR/EN', label: 'bilingue' },
-          ].map((s, i) => (
-            <div key={i} className="text-center">
-              <div className="text-white font-bold" style={{ fontFamily: 'Playfair Display, serif', fontSize: '28px', lineHeight: 1 }}>
-                {s.value}
+            { value: '2h30', label: 'Durée de la visite' },
+            { value: '6', label: 'Arrêts incontournables' },
+            { value: 'FR / EN', label: 'Langues disponibles' },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div
+                className="text-2xl font-bold"
+                style={{ fontFamily: 'Playfair Display, serif', color: '#D4AF37' }}
+              >
+                {stat.value}
               </div>
-              <div className="text-white/50 text-xs tracking-widest uppercase mt-1">{s.label}</div>
+              <div className="text-white/70 text-xs tracking-wide mt-1">{stat.label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Son / Mute */}
       <button
-        onClick={toggleMute}
-        className="absolute bottom-8 right-6 flex items-center gap-2 px-3 py-2 rounded-full text-xs text-white/70 hover:text-white transition-colors"
-        style={{ border: '1px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(6px)', background: 'rgba(0,0,0,0.2)' }}
-        aria-label="Activer/couper le son"
+        onClick={scrollToTours}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
+        aria-label="Défiler vers le bas"
       >
-        {muted ? <VolumeX size={14} /> : <Volume2 size={14} />}
-        <span>{muted ? 'Son' : 'Mute'}</span>
-      </button>
-
-      {/* Scroll hint */}
-      <button
-        onClick={() => scrollTo('#visites')}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 hover:text-white/80 transition-colors"
-      >
-        <div className="w-px h-10 arrow-bounce" style={{ background: 'linear-gradient(to bottom, transparent, var(--teal))' }} />
+        <span className="text-xs tracking-widest uppercase">Défiler</span>
+        <ChevronDown size={20} className="arrow-bounce" />
       </button>
     </section>
   )

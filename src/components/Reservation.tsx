@@ -67,14 +67,14 @@ export default function Reservation() {
           <div className="reveal">
             <div
               className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: 'var(--teal)' }}
+              style={{ color: '#D4AF37' }}
             >
-              <span className="w-8 h-px" style={{ backgroundColor: 'var(--teal)' }} />
+              <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
               Réservation
             </div>
             <h2 className="section-title mb-6">
               Planifiez votre{' '}
-              <span className="teal-accent">aventure</span>
+              <span className="gold-accent">aventure</span>
             </h2>
             <p
               className="text-gray-600 leading-relaxed mb-10"
@@ -108,7 +108,7 @@ export default function Reservation() {
                     className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
                     style={{ backgroundColor: '#3D2817' }}
                   >
-                    <item.icon size={20} style={{ color: 'var(--teal)' }} />
+                    <item.icon size={20} style={{ color: '#D4AF37' }} />
                   </div>
                   <div>
                     <h4
@@ -126,7 +126,7 @@ export default function Reservation() {
             {/* Contact direct */}
             <div
               className="mt-10 p-5 rounded-xl border"
-              style={{ borderColor: 'var(--teal)', borderWidth: '1.5px' }}
+              style={{ borderColor: '#D4AF37', borderWidth: '1.5px' }}
             >
               <p className="text-sm font-semibold mb-2" style={{ color: '#3D2817' }}>
                 Préférez-vous nous contacter directement ?
@@ -151,7 +151,7 @@ export default function Reservation() {
             <div className="bg-white rounded-2xl shadow-sm p-8">
               {submitted ? (
                 <div className="text-center py-12">
-                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: 'var(--teal)' }} />
+                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#D4AF37' }} />
                   <h3
                     className="text-2xl font-bold mb-3"
                     style={{ fontFamily: 'Playfair Display, serif', color: '#3D2817' }}
@@ -194,7 +194,7 @@ export default function Reservation() {
                         placeholder="Jean Dupont"
                         className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
                         style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                        onFocus={(e) => { e.target.style.borderColor = 'var(--teal)' }}
+                        onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
                         onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
                       />
                     </div>
@@ -211,7 +211,7 @@ export default function Reservation() {
                         placeholder="jean@email.com"
                         className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
                         style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                        onFocus={(e) => { e.target.style.borderColor = 'var(--teal)' }}
+                        onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
                         onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
                       />
                     </div>
@@ -230,7 +230,7 @@ export default function Reservation() {
                       placeholder="+33 6 12 34 56 78"
                       className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
                       style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                      onFocus={(e) => { e.target.style.borderColor = 'var(--teal)' }}
+                      onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
                       onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
                     />
                   </div>
@@ -247,7 +247,7 @@ export default function Reservation() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 bg-white"
                       style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif', color: form.circuit ? '#1A1A1A' : '#9CA3AF' }}
-                      onFocus={(e) => { e.target.style.borderColor = 'var(--teal)' }}
+                      onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
                       onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
                     >
                       <option value="" disabled>Sélectionner un circuit</option>
@@ -271,7 +271,7 @@ export default function Reservation() {
                         onChange={handleChange}
                         className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
                         style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                        onFocus={(e) => { e.target.style.borderColor = 'var(--teal)' }}
+                        onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
                         onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
                       />
                     </div>
@@ -285,7 +285,7 @@ export default function Reservation() {
                         onChange={handleChange}
                         className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 bg-white"
                         style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                        onFocus={(e) => { e.target.style.borderColor = 'var(--teal)' }}
+                        onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
                         onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
                       >
                         {[1,2,3,4,5,6,7,8].map((n) => (
@@ -308,7 +308,7 @@ export default function Reservation() {
                       placeholder="Anniversaire, allergie alimentaire, enfants en bas âge..."
                       className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 resize-none"
                       style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                      onFocus={(e) => { e.target.style.borderColor = 'var(--teal)' }}
+                      onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
                       onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
                     />
                   </div>

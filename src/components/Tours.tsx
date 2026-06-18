@@ -59,6 +59,25 @@ export default function Tours() {
               Le circuit
             </span>
           </div>
+
+          <div data-reveal data-delay="60" className="flex justify-center mb-6">
+            <div style={{ display: 'inline-flex', borderBottom: '1px solid rgba(111,79,40,0.25)' }}>
+              <span style={{
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: '13px',
+                fontWeight: 700,
+                color: '#6F4F28',
+                padding: '8px 18px',
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                borderBottom: '2px solid #6F4F28',
+                marginBottom: '-1px',
+              }}>
+                Le déroulé
+              </span>
+            </div>
+          </div>
+
           <h2
             data-reveal
             data-delay="100"

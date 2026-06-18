@@ -15,8 +15,8 @@ export default function Footer() {
           {/* Brand */}
           <div data-reveal>
             <div className="flex items-baseline gap-1.5 mb-4">
-              <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '22px', color: '#6F4F28', letterSpacing: '0.06em' }}>TVT</span>
-              <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 300, fontSize: '18px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.06em' }}>RANGIROA</span>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: '26px', color: '#C8894A', letterSpacing: '0.12em' }}>TVT</span>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: '20px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.2em' }}>RANGIROA</span>
             </div>
             <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7, marginBottom: '20px' }}>
               Visite guidée de l'atoll de Rangiroa en 6 arrêts. Une immersion authentique dans 900 ans d'histoire polynésienne.

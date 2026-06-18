@@ -64,12 +64,13 @@ export default function Hero() {
           {/* "6 arrêts," — apparaît en premier */}
           <div style={{ animation: `fadeSlideUp 1s ${ease} 0.15s both` }}>
             <span style={{
-              fontFamily: 'Montserrat, sans-serif',
-              fontSize: 'clamp(30px, 5.5vw, 74px)',
-              fontWeight: 900,
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 'clamp(38px, 6.5vw, 88px)',
+              fontWeight: 700,
               color: '#ffffff',
-              letterSpacing: '-0.01em',
-              lineHeight: 1.1,
+              letterSpacing: '0.06em',
+              lineHeight: 1.05,
+              textTransform: 'uppercase',
               textShadow: '0 2px 32px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.35)',
               display: 'block',
               textAlign: 'center',
@@ -82,12 +83,13 @@ export default function Hero() {
           {/* "900 ans d'histoire." — apparaît après */}
           <div style={{ animation: `fadeSlideUp 1s ${ease} 0.6s both` }}>
             <span style={{
-              fontFamily: 'Montserrat, sans-serif',
-              fontSize: 'clamp(30px, 5.5vw, 74px)',
-              fontWeight: 900,
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 'clamp(38px, 6.5vw, 88px)',
+              fontWeight: 700,
               color: '#dfa45a',
-              letterSpacing: '-0.01em',
-              lineHeight: 1.1,
+              letterSpacing: '0.06em',
+              lineHeight: 1.05,
+              textTransform: 'uppercase',
               textShadow: '0 2px 32px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.35)',
               display: 'block',
               textAlign: 'center',

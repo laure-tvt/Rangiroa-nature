@@ -34,7 +34,7 @@ export default function ValueProp() {
           <h2
             data-reveal
             data-delay="100"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 800, color: '#ffffff', lineHeight: 1.15 }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.1, letterSpacing: '0.04em' }}
           >
             Une immersion authentique<br />
             <span style={{ color: '#6F4F28' }}>au cœur de Rangiroa.</span>
@@ -55,7 +55,7 @@ export default function ValueProp() {
               >
                 <s.icon size={20} style={{ color: '#C8894A' }} />
               </div>
-              <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '28px', fontWeight: 800, color: '#6F4F28', lineHeight: 1.1 }}>{s.value}</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '34px', fontWeight: 700, color: '#C8894A', lineHeight: 1.1, letterSpacing: '0.04em' }}>{s.value}</div>
               <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: '4px' }}>{s.label}</div>
               <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.72)', marginTop: '6px', lineHeight: 1.55 }}>{s.desc}</div>
             </div>

@@ -70,7 +70,7 @@ export default function Stops() {
           <h1
             data-reveal
             data-delay="100"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 800, color: '#ffffff', lineHeight: 1.1 }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 5vw, 58px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.05, letterSpacing: '0.05em' }}
           >
             6 arrêts, <span style={{ color: '#6F4F28' }}>900 ans d'histoire.</span>
           </h1>
@@ -122,7 +122,7 @@ export default function Stops() {
                     {s.theme}
                   </span>
                 </div>
-                <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '17px', color: '#C8894A', lineHeight: 1.3, marginBottom: '10px' }}>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: '20px', color: '#C8894A', lineHeight: 1.2, letterSpacing: '0.04em', marginBottom: '10px' }}>
                   {s.name}
                 </h3>
                 <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>

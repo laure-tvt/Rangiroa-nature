@@ -58,8 +58,8 @@ export default function Header() {
           style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}
         >
           <img src="/logo-icon.png" alt="TVT logo" style={{ height: '36px', width: 'auto', display: 'block' }} />
-          <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '22px', letterSpacing: '0.06em', color: '#6F4F28', textTransform: 'uppercase' }}>TVT</span>
-          <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 300, fontSize: '18px', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase' }}>RANGIROA</span>
+          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: '26px', letterSpacing: '0.12em', color: '#C8894A', textTransform: 'uppercase' }}>TVT</span>
+          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: '20px', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase' }}>RANGIROA</span>
         </Link>
 
         {/* Desktop Nav */}

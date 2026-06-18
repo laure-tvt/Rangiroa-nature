@@ -45,7 +45,7 @@ export default function Tours() {
           <h2
             data-reveal
             data-delay="100"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, color: '#ffffff', lineHeight: 1.15 }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4.5vw, 54px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.1, letterSpacing: '0.04em' }}
           >
             La visite se déroule<br />
             <span style={{ color: '#6F4F28' }}>en deux parties.</span>
@@ -79,7 +79,7 @@ export default function Tours() {
                   <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 800, color: '#C8894A', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '3px', textShadow: '0 0 12px rgba(200,137,74,0.7)' }}>
                     Partie {p.num} · {p.stops}
                   </div>
-                  <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '20px', color: '#C8894A' }}>{p.title}</h3>
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: '24px', color: '#C8894A', letterSpacing: '0.04em' }}>{p.title}</h3>
                 </div>
               </div>
               <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.78)', lineHeight: 1.75, marginBottom: '20px' }}>

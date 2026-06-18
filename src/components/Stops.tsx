@@ -6,36 +6,42 @@ const stops = [
     name: 'Le quai d\'AVATORU',
     desc: 'Point de départ sur le lagon de Rangiroa. Découverte de la vie maritime de l\'atoll et de son histoire portuaire.',
     theme: 'Peuplement',
+    img: '/stop-01-quai.jpg',
   },
   {
     num: '02',
     name: 'L\'église d\'AVATORU',
     desc: 'L\'arrivée du christianisme et son empreinte profonde sur la culture, l\'architecture et les traditions polynésiennes.',
     theme: 'Chrétienté',
+    img: '/stop-02-eglise.jpg',
   },
   {
     num: '03',
     name: 'Le village d\'AVATORU',
     desc: 'Exploration de l\'ancien village et du peuplement ancestral des Tuamotu. L\'histoire vivante de l\'atoll.',
     theme: 'Village historique',
+    img: '/stop-03-village.jpg',
   },
   {
     num: '04',
     name: 'La plage publique',
     desc: 'Panorama sur le lagon turquoise, les motu et la faune marine. La beauté brute de Rangiroa à portée de regard.',
     theme: 'Lagon & nature',
+    img: '/stop-04-plage.jpg',
   },
   {
     num: '05',
     name: 'Le platier de récif',
     desc: 'Face à l\'hôtel Le Kiaora. La barrière corallienne, sa protection millénaire et la formation d\'un atoll expliquées.',
     theme: 'Récif corallien',
+    img: '/stop-05-platier.jpg',
   },
   {
     num: '06',
     name: 'La passe de TIPUTA',
     desc: 'La mythique passe où nagent les dauphins. Histoires de guerres ancestrales et légendes locales de l\'archipel.',
     theme: 'Légendes & guerres',
+    img: null,
   },
 ]
 
@@ -81,32 +87,46 @@ export default function Stops() {
           {stops.map((s, idx) => (
             <div
               key={s.num}
-              className="card-dark p-7"
+              className="card-dark overflow-hidden"
               data-reveal="scale"
               data-delay={String(idx * 90)}
             >
-              <div className="flex items-center justify-between mb-5">
-                <div
-                  className="flex items-center justify-center w-11 h-11 rounded-2xl flex-shrink-0"
-                  style={{ backgroundColor: 'rgba(111,79,40,0.22)', border: '1px solid rgba(111,79,40,0.55)', boxShadow: '0 0 14px rgba(111,79,40,0.45)' }}
-                >
-                  <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '15px', color: '#C8894A' }}>
-                    {s.num}
+              {/* Photo */}
+              {s.img && (
+                <div style={{ height: '190px', overflow: 'hidden' }}>
+                  <img
+                    src={s.img}
+                    alt={s.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                </div>
+              )}
+
+              {/* Contenu */}
+              <div className="p-7">
+                <div className="flex items-center justify-between mb-5">
+                  <div
+                    className="flex items-center justify-center w-11 h-11 rounded-2xl flex-shrink-0"
+                    style={{ backgroundColor: 'rgba(111,79,40,0.22)', border: '1px solid rgba(111,79,40,0.55)', boxShadow: '0 0 14px rgba(111,79,40,0.45)' }}
+                  >
+                    <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '15px', color: '#C8894A' }}>
+                      {s.num}
+                    </span>
+                  </div>
+                  <span
+                    className="px-3 py-1 rounded-full text-xs font-semibold"
+                    style={{ backgroundColor: 'rgba(111,79,40,0.12)', color: '#6F4F28', border: '1px solid rgba(111,79,40,0.3)', flexShrink: 0 }}
+                  >
+                    {s.theme}
                   </span>
                 </div>
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-semibold"
-                  style={{ backgroundColor: 'rgba(111,79,40,0.12)', color: '#6F4F28', border: '1px solid rgba(111,79,40,0.3)', flexShrink: 0 }}
-                >
-                  {s.theme}
-                </span>
+                <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '17px', color: '#C8894A', lineHeight: 1.3, marginBottom: '10px' }}>
+                  {s.name}
+                </h3>
+                <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>
+                  {s.desc}
+                </p>
               </div>
-              <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '17px', color: '#C8894A', lineHeight: 1.3, marginBottom: '10px' }}>
-                {s.name}
-              </h3>
-              <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>
-                {s.desc}
-              </p>
             </div>
           ))}
         </div>
@@ -120,9 +140,12 @@ export default function Stops() {
           >
             Voir les tarifs
           </Link>
-          <button
-            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+          <Link
+            to="/#contact"
+            onClick={() => setTimeout(() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }), 100)}
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
               padding: '14px 36px',
               borderRadius: '50px',
               border: '1px solid rgba(111,79,40,0.4)',
@@ -131,11 +154,11 @@ export default function Stops() {
               fontFamily: 'Montserrat, sans-serif',
               fontSize: '15px',
               fontWeight: 700,
-              cursor: 'pointer',
+              textDecoration: 'none',
             }}
           >
             Réserver maintenant
-          </button>
+          </Link>
         </div>
       </div>
     </section>

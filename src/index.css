@@ -121,3 +121,70 @@
   50% { transform: translateY(7px); }
 }
 .hero-bounce { animation: heroBounce 1.6s ease-in-out infinite; }
+
+/* ── Scroll reveal ─────────────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(44px);
+  transition:
+    opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+[data-reveal="up"].is-visible,
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal="scale"] {
+  opacity: 0;
+  transform: scale(0.93) translateY(28px);
+}
+[data-reveal="scale"].is-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+[data-reveal="left"] {
+  opacity: 0;
+  transform: translateX(-48px);
+}
+[data-reveal="left"].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+[data-reveal="right"] {
+  opacity: 0;
+  transform: translateX(48px);
+}
+[data-reveal="right"].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+[data-reveal="fade"] {
+  opacity: 0;
+  transform: none;
+}
+[data-reveal="fade"].is-visible {
+  opacity: 1;
+}
+
+/* card-dark ne doit pas entrer en conflit avec reveal */
+.card-dark[data-reveal]:not(.is-visible) {
+  transform: translateY(44px);
+}
+.card-dark[data-reveal="scale"]:not(.is-visible) {
+  transform: scale(0.93) translateY(28px);
+}
+.card-dark[data-reveal].is-visible {
+  transform: translateY(0) !important;
+}
+.card-dark[data-reveal="scale"].is-visible {
+  transform: scale(1) translateY(0) !important;
+}
+.card-dark[data-reveal].is-visible:hover {
+  transform: translateY(-3px) !important;
+}

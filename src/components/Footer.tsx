@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
 
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1" data-reveal>
             <div className="flex items-baseline gap-1.5 mb-4">
               <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '22px', color: '#6F4F28', letterSpacing: '0.06em' }}>FIND</span>
               <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 300, fontSize: '18px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.06em' }}>POLYNÉSIE</span>
@@ -23,21 +23,7 @@ export default function Footer() {
               Le premier portail immobilier de Polynésie française. Villas, bungalows, terrains et appartements dans tout l'archipel.
             </p>
             <button
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                backgroundColor: '#6F4F28',
-                color: '#ffffff',
-                border: 'none',
-                padding: '10px 20px',
-                borderRadius: '50px',
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 700,
-                fontSize: '12px',
-                cursor: 'pointer',
-                transition: 'background-color 0.2s',
-              }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: '#6F4F28', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '50px', fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '12px', cursor: 'pointer', transition: 'background-color 0.2s' }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.backgroundColor = '#8B6535')}
               onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.backgroundColor = '#6F4F28')}
             >
@@ -46,20 +32,16 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          {Object.entries(links).map(([cat, items]) => (
-            <div key={cat}>
+          {Object.entries(links).map(([cat, items], i) => (
+            <div key={cat} data-reveal data-delay={String((i + 1) * 80)}>
               <h5 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '13px', color: '#ffffff', marginBottom: '14px', letterSpacing: '0.04em' }}>
                 {cat}
               </h5>
               <ul className="space-y-2.5">
                 {items.map((item) => (
                   <li key={item}>
-                    <span
-                      style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.38)', cursor: 'default', transition: 'color 0.2s' }}
-                      className="hover:text-white"
-                    >
-                      {item}
-                    </span>
+                    <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.38)', cursor: 'default', transition: 'color 0.2s' }}
+                      className="hover:text-white">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -78,13 +60,8 @@ export default function Footer() {
           </p>
           <div className="flex gap-5">
             {['Mentions légales', 'Confidentialité', 'CGU'].map((l) => (
-              <span
-                key={l}
-                style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.28)', cursor: 'pointer' }}
-                className="hover:text-white transition-colors"
-              >
-                {l}
-              </span>
+              <span key={l} style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.28)', cursor: 'pointer' }}
+                className="hover:text-white transition-colors">{l}</span>
             ))}
           </div>
         </div>

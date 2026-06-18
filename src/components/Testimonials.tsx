@@ -1,24 +1,18 @@
 const reviews = [
   {
-    name: 'Marie-Cécile D.',
-    from: 'Paris → Papeete · 2025',
+    name: 'Marie-Cécile D.', from: 'Paris → Papeete · 2025',
     text: "Grâce à FIND Polynésie, j'ai trouvé ma villa à Arue en moins de 3 semaines. L'agent était réactif, professionnel, et la transaction s'est faite sans accroc. Je recommande vivement !",
-    stars: 5,
-    type: 'Acheteuse — Villa 4 chambres',
+    stars: 5, type: 'Acheteuse — Villa 4 chambres',
   },
   {
-    name: 'Jean-Pierre & Hina M.',
-    from: 'Moorea · 2024',
+    name: 'Jean-Pierre & Hina M.', from: 'Moorea · 2024',
     text: "Nous voulions vendre notre bungalow rapidement avant notre départ en Métropole. Le bien a été vendu en 6 semaines au prix demandé. Service impeccable, communication au top.",
-    stars: 5,
-    type: 'Vendeurs — Bungalow 2 chambres',
+    stars: 5, type: 'Vendeurs — Bungalow 2 chambres',
   },
   {
-    name: 'Thomas K.',
-    from: 'Genève → Bora Bora · 2025',
+    name: 'Thomas K.', from: 'Genève → Bora Bora · 2025',
     text: "Investisseur depuis 10 ans, FIND Polynésie est la première agence à m'avoir fourni une analyse de marché aussi complète. Un vrai partenaire pour investir aux antipodes.",
-    stars: 5,
-    type: 'Investisseur — Terrain + Villa',
+    stars: 5, type: 'Investisseur — Terrain + Villa',
   },
 ]
 
@@ -33,48 +27,38 @@ export default function Testimonials() {
     <section id="avis" className="py-24 px-6" style={{ backgroundColor: '#0D0D0D' }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
-          <div className="section-label justify-center mx-auto">
+          <div data-reveal className="section-label justify-center mx-auto">
             Témoignages clients
           </div>
-          <h2 style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: 'clamp(28px, 4vw, 44px)',
-            fontWeight: 800,
-            color: '#ffffff',
-            lineHeight: 1.15,
-          }}>
+          <h2
+            data-reveal
+            data-delay="100"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, color: '#ffffff', lineHeight: 1.15 }}
+          >
             Ce que nos clients<br />
             <span style={{ color: '#6F4F28' }}>disent de nous</span>
           </h2>
-          <p style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: '15px',
-            color: 'rgba(255,255,255,0.45)',
-            marginTop: '14px',
-            maxWidth: '460px',
-            margin: '14px auto 0',
-          }}>
+          <p
+            data-reveal
+            data-delay="200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.45)', marginTop: '14px', maxWidth: '460px', margin: '14px auto 0' }}
+          >
             Plus de 8 500 transactions réalisées depuis 2004 en Polynésie française.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
           {reviews.map((r, i) => (
-            <div key={i} className="card-dark p-7 flex flex-col">
+            <div
+              key={i}
+              className="card-dark p-7 flex flex-col"
+              data-reveal="up"
+              data-delay={String(i * 140)}
+            >
               <div className="flex gap-0.5 mb-4">
                 {[...Array(r.stars)].map((_, s) => <Star key={s} />)}
               </div>
-              <blockquote
-                style={{
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontSize: '14px',
-                  color: 'rgba(255,255,255,0.72)',
-                  lineHeight: 1.75,
-                  fontStyle: 'italic',
-                  flexGrow: 1,
-                  marginBottom: '20px',
-                }}
-              >
+              <blockquote style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75, fontStyle: 'italic', flexGrow: 1, marginBottom: '20px' }}>
                 "{r.text}"
               </blockquote>
               <div style={{ borderTop: '1px solid rgba(111,79,40,0.12)', paddingTop: '16px' }}>
@@ -86,8 +70,7 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* Rating summary */}
-        <div className="flex items-center justify-center gap-4 text-center">
+        <div className="flex items-center justify-center text-center" data-reveal data-delay="100">
           <div>
             <div style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '52px', color: '#6F4F28', lineHeight: 1 }}>4.9</div>
             <div className="flex justify-center gap-0.5 mt-2">{[...Array(5)].map((_, i) => <Star key={i} />)}</div>

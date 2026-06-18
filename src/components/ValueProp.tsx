@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
 import { TrendingUp, Shield, Clock, Award } from 'lucide-react'
 
 const stats = [
@@ -9,32 +8,24 @@ const stats = [
 ]
 
 export default function ValueProp() {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect() } },
-      { threshold: 0.2 }
-    )
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [])
-
   return (
-    <section ref={ref} className="py-20 px-6" style={{ backgroundColor: '#0D0D0D' }}>
+    <section className="py-20 px-6" style={{ backgroundColor: '#0D0D0D' }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <div className="section-label justify-center mx-auto">
+          <div data-reveal className="section-label justify-center mx-auto">
             Pourquoi FIND Polynésie
           </div>
-          <h2 style={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: 'clamp(26px, 3.5vw, 42px)',
-            fontWeight: 800,
-            color: '#ffffff',
-            lineHeight: 1.15,
-          }}>
+          <h2
+            data-reveal
+            data-delay="100"
+            style={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: 'clamp(26px, 3.5vw, 42px)',
+              fontWeight: 800,
+              color: '#ffffff',
+              lineHeight: 1.15,
+            }}
+          >
             L'immobilier en Polynésie,{' '}
             <span style={{ color: '#6F4F28' }}>simplifié.</span>
           </h2>
@@ -45,11 +36,8 @@ export default function ValueProp() {
             <div
               key={i}
               className="card-dark p-7 text-center"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? 'translateY(0)' : 'translateY(24px)',
-                transition: `opacity 0.5s ease ${i * 120}ms, transform 0.5s ease ${i * 120}ms`,
-              }}
+              data-reveal="scale"
+              data-delay={String(i * 120)}
             >
               <div
                 className="flex items-center justify-center w-11 h-11 rounded-xl mx-auto mb-4"

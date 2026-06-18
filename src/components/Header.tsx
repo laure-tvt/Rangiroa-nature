@@ -29,25 +29,25 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
         scrolled ? 'py-3 shadow-lg' : 'py-5'
       }`}
-      style={{ backgroundColor: scrolled ? '#3D2817' : 'transparent' }}
+      style={{ backgroundColor: scrolled ? '#0f1c2a' : 'transparent' }}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <button onClick={() => handleNav('#accueil')} className="flex items-center gap-3 group">
           <div
-            className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-bold"
-            style={{ backgroundColor: '#D4AF37' }}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold"
+            style={{ backgroundColor: '#00ffff', color: '#1a2b3d' }}
           >
             T
           </div>
           <div className="text-left">
             <div
               className="text-white font-bold leading-tight"
-              style={{ fontFamily: 'Playfair Display, serif', fontSize: scrolled ? '16px' : '18px' }}
+              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '17px', fontWeight: 700 }}
             >
               Tevaiti Van Tours
             </div>
-            <div className="text-xs tracking-widest uppercase" style={{ color: '#D4AF37', opacity: 0.9 }}>
+            <div className="text-xs tracking-widest uppercase" style={{ color: '#00ffff', opacity: 0.9 }}>
               Rangiroa · Visites Guidées
             </div>
           </div>
@@ -59,8 +59,8 @@ export default function Header() {
             <button
               key={link.href}
               onClick={() => handleNav(link.href)}
-              className="nav-link text-white text-sm font-medium tracking-wide transition-colors duration-200 hover:opacity-90"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="nav-link text-white text-sm font-medium tracking-wide transition-colors duration-200"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}
             >
               {link.label}
             </button>
@@ -87,13 +87,14 @@ export default function Header() {
       {menuOpen && (
         <div
           className="md:hidden absolute top-full left-0 right-0 py-6 px-6 flex flex-col gap-4"
-          style={{ backgroundColor: '#3D2817' }}
+          style={{ backgroundColor: '#0f1c2a' }}
         >
           {navLinks.map((link) => (
             <button
               key={link.href}
               onClick={() => handleNav(link.href)}
               className="text-white text-base font-medium text-left py-2 border-b border-white/10"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               {link.label}
             </button>

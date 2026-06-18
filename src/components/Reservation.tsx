@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { CalendarDays, Users, MapPin, CheckCircle } from 'lucide-react'
 
 const circuits = [
-  'Tour de l\'Île — Visite Guidée (2h30)',
+  "Tour de l'Île — Visite Guidée (2h30)",
   'Demande spéciale / Sur mesure',
 ]
 
@@ -16,8 +16,31 @@ type FormState = {
   message: string
 }
 
+const inputBase: React.CSSProperties = {
+  backgroundColor: 'rgba(15,28,42,0.8)',
+  borderColor: 'rgba(0,255,255,0.2)',
+  color: '#ffffff',
+  fontFamily: 'Montserrat, sans-serif',
+}
+
+const inputFocused: React.CSSProperties = {
+  backgroundColor: 'rgba(15,28,42,0.8)',
+  borderColor: '#00ffff',
+  color: '#ffffff',
+  fontFamily: 'Montserrat, sans-serif',
+}
+
+function useFieldFocus() {
+  const [focused, setFocused] = useState<string | null>(null)
+  const bind = (name: string) => ({
+    onFocus: () => setFocused(name),
+    onBlur: () => setFocused(null),
+    style: focused === name ? inputFocused : inputBase,
+  })
+  return bind
+}
+
 export default function Reservation() {
-  const sectionRef = useRef<HTMLDivElement>(null)
   const [submitted, setSubmitted] = useState(false)
   const [form, setForm] = useState<FormState>({
     name: '',
@@ -29,19 +52,7 @@ export default function Reservation() {
     message: '',
   })
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible')
-        })
-      },
-      { threshold: 0.1 }
-    )
-    const reveals = sectionRef.current?.querySelectorAll('.reveal')
-    reveals?.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  const bind = useFieldFocus()
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -54,31 +65,36 @@ export default function Reservation() {
     setSubmitted(true)
   }
 
+  const labelStyle: React.CSSProperties = {
+    color: 'rgba(255,255,255,0.6)',
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 600,
+  }
+
   return (
     <section
       id="reservation"
-      ref={sectionRef}
       className="py-24 px-6"
-      style={{ backgroundColor: '#F5F5F5' }}
+      style={{ backgroundColor: '#1a2b3d' }}
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left: Info */}
-          <div className="reveal">
+          <div>
             <div
               className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#D4AF37' }}
+              style={{ color: '#00ffff' }}
             >
-              <span className="w-8 h-px" style={{ backgroundColor: '#D4AF37' }} />
+              <span className="w-8 h-px" style={{ backgroundColor: '#00ffff' }} />
               Réservation
             </div>
             <h2 className="section-title mb-6">
               Réservez votre{' '}
-              <span className="gold-accent">visite</span>
+              <span className="cyan-accent">visite</span>
             </h2>
             <p
-              className="text-gray-600 leading-relaxed mb-10"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="text-white/70 leading-relaxed mb-10"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400 }}
             >
               Remplissez le formulaire et nous vous contacterons sous 24h pour confirmer
               votre réservation et personnaliser votre expérience.
@@ -90,34 +106,34 @@ export default function Reservation() {
                 {
                   icon: CalendarDays,
                   title: 'Réservation flexible',
-                  text: 'Annulation gratuite jusqu\'à 48h avant la visite. Paiement sur place.',
+                  text: "Annulation gratuite jusqu'à 48h avant la visite. Paiement sur place.",
                 },
                 {
                   icon: Users,
                   title: 'Groupes privés uniquement',
-                  text: 'Vos circuits sont réservés exclusivement à votre groupe. Aucun mélange avec d\'autres voyageurs.',
+                  text: "Vos circuits sont réservés exclusivement à votre groupe. Aucun mélange avec d'autres voyageurs.",
                 },
                 {
                   icon: MapPin,
-                  title: 'Prise en charge à l\'hôtel',
+                  title: "Prise en charge à l'hôtel",
                   text: 'Nous venons vous chercher à votre hôtel ou pension sur Rangiroa. Aucune organisation de votre côté.',
                 },
               ].map((item, i) => (
                 <div key={i} className="flex gap-4">
                   <div
                     className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: '#3D2817' }}
+                    style={{ backgroundColor: '#0f1c2a' }}
                   >
-                    <item.icon size={20} style={{ color: '#D4AF37' }} />
+                    <item.icon size={20} style={{ color: '#00ffff' }} />
                   </div>
                   <div>
                     <h4
-                      className="font-semibold mb-1"
-                      style={{ color: '#3D2817', fontFamily: 'Montserrat, sans-serif', fontSize: '14px' }}
+                      className="font-semibold mb-1 text-white"
+                      style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', fontWeight: 600 }}
                     >
                       {item.title}
                     </h4>
-                    <p className="text-gray-500 text-sm leading-relaxed">{item.text}</p>
+                    <p className="text-white/60 text-sm leading-relaxed">{item.text}</p>
                   </div>
                 </div>
               ))}
@@ -125,21 +141,21 @@ export default function Reservation() {
 
             {/* Contact direct */}
             <div
-              className="mt-10 p-5 rounded-xl border"
-              style={{ borderColor: '#D4AF37', borderWidth: '1.5px' }}
+              className="mt-10 p-5 rounded-xl"
+              style={{ border: '1.5px solid #00ffff' }}
             >
-              <p className="text-sm font-semibold mb-2" style={{ color: '#3D2817' }}>
+              <p className="text-sm font-semibold mb-2 text-white">
                 Préférez-vous nous contacter directement ?
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-white/70">
                 WhatsApp :{' '}
-                <a href="tel:+68987363213" className="font-semibold" style={{ color: '#3D2817' }}>
+                <a href="tel:+68987363213" className="font-semibold" style={{ color: '#00ffff' }}>
                   +689 87 36 32 13
                 </a>
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-white/70">
                 Email :{' '}
-                <a href="mailto:tevaiti.van.tours@gmail.com" className="font-semibold" style={{ color: '#3D2817' }}>
+                <a href="mailto:tevaiti.van.tours@gmail.com" className="font-semibold" style={{ color: '#00ffff' }}>
                   tevaiti.van.tours@gmail.com
                 </a>
               </p>
@@ -147,25 +163,25 @@ export default function Reservation() {
           </div>
 
           {/* Right: Form */}
-          <div className="reveal" style={{ transitionDelay: '150ms' }}>
-            <div className="bg-white rounded-2xl shadow-sm p-8">
+          <div>
+            <div className="rounded-2xl p-8" style={{ backgroundColor: '#243547' }}>
               {submitted ? (
                 <div className="text-center py-12">
-                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#D4AF37' }} />
+                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#00ffff' }} />
                   <h3
-                    className="text-2xl font-bold mb-3"
-                    style={{ fontFamily: 'Playfair Display, serif', color: '#3D2817' }}
+                    className="text-2xl font-bold mb-3 text-white"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800 }}
                   >
                     Demande envoyée !
                   </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">
+                  <p className="text-white/60 text-sm leading-relaxed">
                     Merci {form.name} ! Nous vous répondrons sous 24h pour confirmer votre
                     réservation et vous fournir tous les détails pratiques.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
                     className="mt-6 text-sm font-medium underline"
-                    style={{ color: '#3D2817' }}
+                    style={{ color: '#00ffff' }}
                   >
                     Faire une nouvelle demande
                   </button>
@@ -173,8 +189,8 @@ export default function Reservation() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <h3
-                    className="text-xl font-bold mb-6"
-                    style={{ fontFamily: 'Playfair Display, serif', color: '#3D2817' }}
+                    className="text-xl font-bold mb-6 text-white"
+                    style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700 }}
                   >
                     Demande de réservation
                   </h3>
@@ -182,7 +198,7 @@ export default function Reservation() {
                   {/* Name + Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={{ color: '#5C4033' }}>
+                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
                         Nom complet *
                       </label>
                       <input
@@ -193,13 +209,11 @@ export default function Reservation() {
                         onChange={handleChange}
                         placeholder="Jean Dupont"
                         className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                        style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                        onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
-                        onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
+                        {...bind('name')}
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={{ color: '#5C4033' }}>
+                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
                         Email *
                       </label>
                       <input
@@ -210,16 +224,14 @@ export default function Reservation() {
                         onChange={handleChange}
                         placeholder="jean@email.com"
                         className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                        style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                        onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
-                        onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
+                        {...bind('email')}
                       />
                     </div>
                   </div>
 
                   {/* Phone */}
                   <div>
-                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={{ color: '#5C4033' }}>
+                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
                       Téléphone / WhatsApp
                     </label>
                     <input
@@ -229,15 +241,13 @@ export default function Reservation() {
                       onChange={handleChange}
                       placeholder="+33 6 12 34 56 78"
                       className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                      style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                      onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
-                      onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
+                      {...bind('phone')}
                     />
                   </div>
 
                   {/* Circuit */}
                   <div>
-                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={{ color: '#5C4033' }}>
+                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
                       Circuit souhaité *
                     </label>
                     <select
@@ -245,14 +255,12 @@ export default function Reservation() {
                       required
                       value={form.circuit}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 bg-white"
-                      style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif', color: form.circuit ? '#1A1A1A' : '#9CA3AF' }}
-                      onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
-                      onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
+                      className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
+                      {...bind('circuit')}
                     >
-                      <option value="" disabled>Sélectionner un circuit</option>
+                      <option value="" disabled style={{ backgroundColor: '#0f1c2a', color: '#9CA3AF' }}>Sélectionner un circuit</option>
                       {circuits.map((c) => (
-                        <option key={c} value={c}>{c}</option>
+                        <option key={c} value={c} style={{ backgroundColor: '#0f1c2a', color: '#ffffff' }}>{c}</option>
                       ))}
                     </select>
                   </div>
@@ -260,7 +268,7 @@ export default function Reservation() {
                   {/* Date + Guests */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={{ color: '#5C4033' }}>
+                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
                         Date souhaitée *
                       </label>
                       <input
@@ -270,26 +278,22 @@ export default function Reservation() {
                         value={form.date}
                         onChange={handleChange}
                         className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
-                        style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                        onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
-                        onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
+                        {...bind('date')}
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={{ color: '#5C4033' }}>
+                      <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
                         Nombre de personnes *
                       </label>
                       <select
                         name="guests"
                         value={form.guests}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 bg-white"
-                        style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                        onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
-                        onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
+                        className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
+                        {...bind('guests')}
                       >
                         {[1,2,3,4,5,6,7,8].map((n) => (
-                          <option key={n} value={n}>{n} {n === 1 ? 'personne' : 'personnes'}</option>
+                          <option key={n} value={n} style={{ backgroundColor: '#0f1c2a', color: '#ffffff' }}>{n} {n === 1 ? 'personne' : 'personnes'}</option>
                         ))}
                       </select>
                     </div>
@@ -297,7 +301,7 @@ export default function Reservation() {
 
                   {/* Message */}
                   <div>
-                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={{ color: '#5C4033' }}>
+                    <label className="block text-xs font-semibold mb-2 uppercase tracking-wide" style={labelStyle}>
                       Message / demandes spéciales
                     </label>
                     <textarea
@@ -307,9 +311,7 @@ export default function Reservation() {
                       rows={4}
                       placeholder="Anniversaire, allergie alimentaire, enfants en bas âge..."
                       className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200 resize-none"
-                      style={{ borderColor: '#E5E7EB', fontFamily: 'Inter, sans-serif' }}
-                      onFocus={(e) => { e.target.style.borderColor = '#D4AF37' }}
-                      onBlur={(e) => { e.target.style.borderColor = '#E5E7EB' }}
+                      {...bind('message')}
                     />
                   </div>
 
@@ -317,7 +319,7 @@ export default function Reservation() {
                     Envoyer ma demande
                   </button>
 
-                  <p className="text-center text-xs text-gray-400">
+                  <p className="text-center text-xs text-white/40">
                     Réponse garantie sous 24h · Aucun paiement requis maintenant
                   </p>
                 </form>

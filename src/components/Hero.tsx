@@ -25,16 +25,16 @@ export default function Hero() {
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to bottom, rgba(15,28,42,0.65) 0%, rgba(15,28,42,0.45) 50%, rgba(15,28,42,0.85) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.85) 100%)',
         }}
       />
 
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
         <div
           className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border text-sm font-medium tracking-widest uppercase"
-          style={{ borderColor: '#00ffff', color: '#00ffff' }}
+          style={{ borderColor: '#6F4F28', color: '#6F4F28' }}
         >
-          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#00ffff' }} />
+          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#6F4F28' }} />
           Polynésie Française · Rangiroa
         </div>
 
@@ -56,7 +56,7 @@ export default function Hero() {
               fontFamily: 'Montserrat, sans-serif',
               fontSize: 'clamp(48px, 8vw, 96px)',
               fontWeight: 900,
-              color: '#00ffff',
+              color: '#6F4F28',
               textShadow: '0 2px 30px rgba(0,0,0,0.4)',
             }}
           >
@@ -107,7 +107,7 @@ export default function Hero() {
             <div key={stat.label} className="text-center">
               <div
                 className="text-3xl font-bold"
-                style={{ fontFamily: 'Montserrat, sans-serif', color: '#00ffff', fontWeight: 800 }}
+                style={{ fontFamily: 'Montserrat, sans-serif', color: '#6F4F28', fontWeight: 800 }}
               >
                 {stat.value}
               </div>

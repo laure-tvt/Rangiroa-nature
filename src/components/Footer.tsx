@@ -13,7 +13,7 @@ export default function Footer() {
   }
 
   return (
-    <footer style={{ backgroundColor: '#0f1c2a' }}>
+    <footer style={{ backgroundColor: '#0d0d0d' }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
@@ -21,7 +21,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold"
-                style={{ backgroundColor: '#00ffff', color: '#1a2b3d' }}
+                style={{ backgroundColor: '#6F4F28', color: '#000000' }}
               >
                 T
               </div>
@@ -32,7 +32,7 @@ export default function Footer() {
                 >
                   Tevaiti Van Tours
                 </div>
-                <div className="text-xs tracking-widest uppercase" style={{ color: '#00ffff', opacity: 0.8 }}>
+                <div className="text-xs tracking-widest uppercase" style={{ color: '#6F4F28', opacity: 0.8 }}>
                   Rangiroa · Visites Guidées
                 </div>
               </div>
@@ -74,7 +74,7 @@ export default function Footer() {
         {/* Divider */}
         <div
           className="h-px mb-8"
-          style={{ backgroundColor: 'rgba(0,255,255,0.15)' }}
+          style={{ backgroundColor: 'rgba(111,79,40,0.15)' }}
         />
 
         {/* Bottom */}
@@ -83,7 +83,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Rangiroa Nature. Tous droits réservés.
           </p>
           <p className="text-gray-500 text-xs flex items-center gap-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            Fait avec <Heart size={12} fill="#00ffff" style={{ color: '#00ffff' }} /> en Polynésie française
+            Fait avec <Heart size={12} fill="#6F4F28" style={{ color: '#6F4F28' }} /> en Polynésie française
           </p>
           <div className="flex gap-4">
             {['Mentions légales', 'Confidentialité'].map((link) => (

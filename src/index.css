@@ -10,7 +10,7 @@
   body {
     font-family: 'Montserrat', sans-serif;
     color: #ffffff;
-    background-color: #1a2b3d;
+    background-color: #000000;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -22,28 +22,28 @@
 @layer components {
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer;
-    background-color: #00ffff;
-    color: #1a2b3d;
+    background-color: #6F4F28;
+    color: #000000;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
   }
   .btn-primary:hover {
     background-color: #ffffff;
-    color: #1a2b3d;
+    color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 255, 255, 0.35);
+    box-shadow: 0 8px 24px rgba(111, 79, 40, 0.35);
   }
 
   .btn-outline {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 cursor-pointer;
-    border: 2px solid #00ffff;
+    border: 2px solid #6F4F28;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
   }
   .btn-outline:hover {
-    background-color: #00ffff;
-    color: #1a2b3d;
+    background-color: #6F4F28;
+    color: #000000;
     transform: translateY(-2px);
   }
 
@@ -56,19 +56,19 @@
   }
 
   .cyan-accent {
-    color: #00ffff;
+    color: #6F4F28;
   }
 
   .card-navy {
-    background-color: #243547;
-    border: 1px solid rgba(0, 255, 255, 0.12);
+    background-color: #1a1208;
+    border: 1px solid rgba(111, 79, 40, 0.12);
     border-radius: 16px;
     transition: all 0.3s ease;
   }
   .card-navy:hover {
-    border-color: #00ffff;
+    border-color: #6F4F28;
     transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0, 255, 255, 0.15);
+    box-shadow: 0 16px 40px rgba(111, 79, 40, 0.15);
   }
 }
 
@@ -77,10 +77,10 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f1c2a;
+  background: #0d0d0d;
 }
 ::-webkit-scrollbar-thumb {
-  background: #00ffff;
+  background: #6F4F28;
   border-radius: 3px;
 }
 
@@ -95,22 +95,22 @@
   left: 0;
   width: 0;
   height: 2px;
-  background-color: #00ffff;
+  background-color: #6F4F28;
   transition: width 0.3s ease;
 }
 .nav-link:hover::after {
   width: 100%;
 }
 .nav-link:hover {
-  color: #00ffff;
+  color: #6F4F28;
 }
 
 /* Hero overlay */
 .hero-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(15, 28, 42, 0.6) 0%,
-    rgba(15, 28, 42, 0.4) 50%,
-    rgba(15, 28, 42, 0.8) 100%
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.8) 100%
   );
 }

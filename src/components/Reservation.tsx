@@ -17,15 +17,15 @@ type FormState = {
 }
 
 const inputBase: React.CSSProperties = {
-  backgroundColor: 'rgba(15,28,42,0.8)',
-  borderColor: 'rgba(0,255,255,0.2)',
+  backgroundColor: 'rgba(0,0,0,0.8)',
+  borderColor: 'rgba(111,79,40,0.2)',
   color: '#ffffff',
   fontFamily: 'Montserrat, sans-serif',
 }
 
 const inputFocused: React.CSSProperties = {
-  backgroundColor: 'rgba(15,28,42,0.8)',
-  borderColor: '#00ffff',
+  backgroundColor: 'rgba(0,0,0,0.8)',
+  borderColor: '#6F4F28',
   color: '#ffffff',
   fontFamily: 'Montserrat, sans-serif',
 }
@@ -75,7 +75,7 @@ export default function Reservation() {
     <section
       id="reservation"
       className="py-24 px-6"
-      style={{ backgroundColor: '#1a2b3d' }}
+      style={{ backgroundColor: '#000000' }}
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -83,9 +83,9 @@ export default function Reservation() {
           <div>
             <div
               className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#00ffff' }}
+              style={{ color: '#6F4F28' }}
             >
-              <span className="w-8 h-px" style={{ backgroundColor: '#00ffff' }} />
+              <span className="w-8 h-px" style={{ backgroundColor: '#6F4F28' }} />
               Réservation
             </div>
             <h2 className="section-title mb-6">
@@ -122,9 +122,9 @@ export default function Reservation() {
                 <div key={i} className="flex gap-4">
                   <div
                     className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: '#0f1c2a' }}
+                    style={{ backgroundColor: '#0d0d0d' }}
                   >
-                    <item.icon size={20} style={{ color: '#00ffff' }} />
+                    <item.icon size={20} style={{ color: '#6F4F28' }} />
                   </div>
                   <div>
                     <h4
@@ -142,20 +142,20 @@ export default function Reservation() {
             {/* Contact direct */}
             <div
               className="mt-10 p-5 rounded-xl"
-              style={{ border: '1.5px solid #00ffff' }}
+              style={{ border: '1.5px solid #6F4F28' }}
             >
               <p className="text-sm font-semibold mb-2 text-white">
                 Préférez-vous nous contacter directement ?
               </p>
               <p className="text-sm text-white/70">
                 WhatsApp :{' '}
-                <a href="tel:+68987363213" className="font-semibold" style={{ color: '#00ffff' }}>
+                <a href="tel:+68987363213" className="font-semibold" style={{ color: '#6F4F28' }}>
                   +689 87 36 32 13
                 </a>
               </p>
               <p className="text-sm text-white/70">
                 Email :{' '}
-                <a href="mailto:tevaiti.van.tours@gmail.com" className="font-semibold" style={{ color: '#00ffff' }}>
+                <a href="mailto:tevaiti.van.tours@gmail.com" className="font-semibold" style={{ color: '#6F4F28' }}>
                   tevaiti.van.tours@gmail.com
                 </a>
               </p>
@@ -164,10 +164,10 @@ export default function Reservation() {
 
           {/* Right: Form */}
           <div>
-            <div className="rounded-2xl p-8" style={{ backgroundColor: '#243547' }}>
+            <div className="rounded-2xl p-8" style={{ backgroundColor: '#1a1208' }}>
               {submitted ? (
                 <div className="text-center py-12">
-                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#00ffff' }} />
+                  <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#6F4F28' }} />
                   <h3
                     className="text-2xl font-bold mb-3 text-white"
                     style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 800 }}
@@ -181,7 +181,7 @@ export default function Reservation() {
                   <button
                     onClick={() => setSubmitted(false)}
                     className="mt-6 text-sm font-medium underline"
-                    style={{ color: '#00ffff' }}
+                    style={{ color: '#6F4F28' }}
                   >
                     Faire une nouvelle demande
                   </button>
@@ -258,9 +258,9 @@ export default function Reservation() {
                       className="w-full px-4 py-3 rounded-xl border text-sm outline-none transition-all duration-200"
                       {...bind('circuit')}
                     >
-                      <option value="" disabled style={{ backgroundColor: '#0f1c2a', color: '#9CA3AF' }}>Sélectionner un circuit</option>
+                      <option value="" disabled style={{ backgroundColor: '#0d0d0d', color: '#9CA3AF' }}>Sélectionner un circuit</option>
                       {circuits.map((c) => (
-                        <option key={c} value={c} style={{ backgroundColor: '#0f1c2a', color: '#ffffff' }}>{c}</option>
+                        <option key={c} value={c} style={{ backgroundColor: '#0d0d0d', color: '#ffffff' }}>{c}</option>
                       ))}
                     </select>
                   </div>
@@ -293,7 +293,7 @@ export default function Reservation() {
                         {...bind('guests')}
                       >
                         {[1,2,3,4,5,6,7,8].map((n) => (
-                          <option key={n} value={n} style={{ backgroundColor: '#0f1c2a', color: '#ffffff' }}>{n} {n === 1 ? 'personne' : 'personnes'}</option>
+                          <option key={n} value={n} style={{ backgroundColor: '#0d0d0d', color: '#ffffff' }}>{n} {n === 1 ? 'personne' : 'personnes'}</option>
                         ))}
                       </select>
                     </div>

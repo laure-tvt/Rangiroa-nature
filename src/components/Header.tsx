@@ -29,14 +29,14 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
         scrolled ? 'py-3 shadow-lg' : 'py-5'
       }`}
-      style={{ backgroundColor: scrolled ? '#0f1c2a' : 'transparent' }}
+      style={{ backgroundColor: scrolled ? '#0d0d0d' : 'transparent' }}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <button onClick={() => handleNav('#accueil')} className="flex items-center gap-3 group">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold"
-            style={{ backgroundColor: '#00ffff', color: '#1a2b3d' }}
+            style={{ backgroundColor: '#6F4F28', color: '#000000' }}
           >
             T
           </div>
@@ -47,7 +47,7 @@ export default function Header() {
             >
               Tevaiti Van Tours
             </div>
-            <div className="text-xs tracking-widest uppercase" style={{ color: '#00ffff', opacity: 0.9 }}>
+            <div className="text-xs tracking-widest uppercase" style={{ color: '#6F4F28', opacity: 0.9 }}>
               Rangiroa · Visites Guidées
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function Header() {
       {menuOpen && (
         <div
           className="md:hidden absolute top-full left-0 right-0 py-6 px-6 flex flex-col gap-4"
-          style={{ backgroundColor: '#0f1c2a' }}
+          style={{ backgroundColor: '#0d0d0d' }}
         >
           {navLinks.map((link) => (
             <button

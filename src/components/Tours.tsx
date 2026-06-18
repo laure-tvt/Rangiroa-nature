@@ -58,7 +58,7 @@ export default function Tours() {
   }
 
   return (
-    <section id="visites" className="py-24 px-6" style={{ backgroundColor: '#1a2b3d' }}>
+    <section id="visites" className="py-24 px-6" style={{ backgroundColor: '#000000' }}>
       <div className="max-w-7xl mx-auto">
 
         {/* Section header — split layout */}
@@ -66,9 +66,9 @@ export default function Tours() {
           <div>
             <div
               className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase"
-              style={{ color: '#00ffff' }}
+              style={{ color: '#6F4F28' }}
             >
-              <span className="w-8 h-px" style={{ backgroundColor: '#00ffff' }} />
+              <span className="w-8 h-px" style={{ backgroundColor: '#6F4F28' }} />
               Le circuit
             </div>
             <h2
@@ -81,7 +81,7 @@ export default function Tours() {
               }}
             >
               6 arrêts,<br />
-              <span style={{ color: '#00ffff' }}>un parcours unique.</span>
+              <span style={{ color: '#6F4F28' }}>un parcours unique.</span>
             </h2>
           </div>
           <div>
@@ -94,13 +94,13 @@ export default function Tours() {
             </p>
             <div className="flex flex-wrap gap-5 text-sm text-white/60">
               <span className="flex items-center gap-1.5">
-                <Clock size={14} style={{ color: '#00ffff' }} />2h30 (pick-up inclus)
+                <Clock size={14} style={{ color: '#6F4F28' }} />2h30 (pick-up inclus)
               </span>
               <span className="flex items-center gap-1.5">
-                <Globe size={14} style={{ color: '#00ffff' }} />FR &amp; EN
+                <Globe size={14} style={{ color: '#6F4F28' }} />FR &amp; EN
               </span>
               <span className="flex items-center gap-1.5">
-                <MapPin size={14} style={{ color: '#00ffff' }} />6 arrêts
+                <MapPin size={14} style={{ color: '#6F4F28' }} />6 arrêts
               </span>
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function Tours() {
                 className="absolute inset-0"
                 style={{
                   background:
-                    'linear-gradient(to top, rgba(15,28,42,0.92) 0%, rgba(15,28,42,0.3) 60%, transparent 100%)',
+                    'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)',
                 }}
               />
               <div className="absolute inset-0 p-5 flex flex-col justify-between">
@@ -132,7 +132,7 @@ export default function Tours() {
                     className="text-6xl font-bold leading-none"
                     style={{
                       fontFamily: 'Montserrat, sans-serif',
-                      color: 'rgba(0,255,255,0.2)',
+                      color: 'rgba(111,79,40,0.2)',
                       fontWeight: 900,
                     }}
                   >
@@ -141,8 +141,8 @@ export default function Tours() {
                   <span
                     className="px-2.5 py-1 rounded-full text-xs font-medium"
                     style={{
-                      backgroundColor: 'rgba(0,255,255,0.12)',
-                      color: '#00ffff',
+                      backgroundColor: 'rgba(111,79,40,0.12)',
+                      color: '#6F4F28',
                       backdropFilter: 'blur(4px)',
                     }}
                   >
@@ -166,7 +166,7 @@ export default function Tours() {
         {/* Tarifs */}
         <div
           className="rounded-2xl p-8 md:p-10 text-center"
-          style={{ backgroundColor: '#0f1c2a' }}
+          style={{ backgroundColor: '#0d0d0d' }}
         >
           <h3
             className="text-white text-2xl font-bold mb-2"
@@ -180,12 +180,12 @@ export default function Tours() {
               <div
                 key={p.label}
                 className="rounded-xl p-5"
-                style={{ backgroundColor: 'rgba(0,255,255,0.06)' }}
+                style={{ backgroundColor: 'rgba(111,79,40,0.06)' }}
               >
                 <div className="text-white/70 text-xs uppercase tracking-widest mb-2">{p.label}</div>
                 <div
                   className="text-2xl font-bold"
-                  style={{ fontFamily: 'Montserrat, sans-serif', color: '#00ffff', fontWeight: 800 }}
+                  style={{ fontFamily: 'Montserrat, sans-serif', color: '#6F4F28', fontWeight: 800 }}
                 >
                   {p.price}
                 </div>

@@ -3,12 +3,48 @@ import { ArrowRight, Clock, Globe, MapPin } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
 const stops = [
-  { num: '01', name: 'Quai d\'Avatoru', theme: 'Peuplement', desc: 'Le port, porte d\'entrée sur la vie maritime de l\'atoll.' },
-  { num: '02', name: 'Église d\'Avatoru', theme: 'Culture & Foi', desc: 'L\'impact de la chrétienté sur la culture polynésienne.' },
-  { num: '03', name: 'Village d\'Avatoru', theme: 'Vie locale', desc: 'L\'ancien village, ses traditions et son architecture.' },
-  { num: '04', name: 'Plage publique', theme: 'Nature', desc: 'Le lagon turquoise à portée de main, sable blanc immaculé.' },
-  { num: '05', name: 'Platier de récif', theme: 'Écosystème', desc: 'Formation corallienne face à l\'hôtel Kia Ora.' },
-  { num: '06', name: 'Passe de Tiputa', theme: 'Légendes', desc: 'La passe mythique, théâtre de guerres et de légendes locales.' },
+  {
+    num: '01',
+    name: "Quai d'Avatoru",
+    theme: 'Peuplement',
+    desc: "Le port, porte d'entrée sur la vie maritime de l'atoll.",
+    img: 'https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1200&q=80',
+  },
+  {
+    num: '02',
+    name: "Église d'Avatoru",
+    theme: 'Culture & Foi',
+    desc: "L'impact de la chrétienté sur la culture polynésienne.",
+    img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80',
+  },
+  {
+    num: '03',
+    name: "Village d'Avatoru",
+    theme: 'Vie locale',
+    desc: "L'ancien village, ses traditions et son architecture.",
+    img: 'https://images.unsplash.com/photo-1540202404-d0c7fe46a087?w=1200&q=80',
+  },
+  {
+    num: '04',
+    name: 'Plage publique',
+    theme: 'Nature',
+    desc: 'Le lagon turquoise à portée de main, sable blanc immaculé.',
+    img: 'https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=1200&q=80',
+  },
+  {
+    num: '05',
+    name: 'Platier de récif',
+    theme: 'Écosystème',
+    desc: "Formation corallienne face à l'hôtel Kia Ora.",
+    img: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=1200&q=80',
+  },
+  {
+    num: '06',
+    name: 'Passe de Tiputa',
+    theme: 'Légendes',
+    desc: 'La passe mythique, théâtre de guerres et de légendes locales.',
+    img: 'https://images.unsplash.com/photo-1559828291-15e4bd0ba21f?w=1200&q=80',
+  },
 ]
 
 const prices = [
@@ -45,7 +81,7 @@ export default function Tours() {
               color: '#1A1A1A',
               letterSpacing: '-0.02em',
             }}>
-              Tour de l'Île,<br />
+              Tour de l&apos;Île,<br />
               <span style={{ color: 'var(--teal)', fontStyle: 'italic' }}>réinventé.</span>
             </h2>
           </div>
@@ -54,8 +90,8 @@ export default function Tours() {
             <div>
               <p className="text-gray-500 leading-relaxed mb-8" style={{ fontSize: '17px', lineHeight: 1.8 }}>
                 La visite se déroule en deux actes. Les trois premiers arrêts explorent
-                le peuplement de l'île, l'ancien village et l'héritage polynésien.
-                Les trois suivants plongent dans la géologie de l'atoll, la faune marine
+                le peuplement de l&apos;île, l&apos;ancien village et l&apos;héritage polynésien.
+                Les trois suivants plongent dans la géologie de l&apos;atoll, la faune marine
                 et les légendes ancestrales.
               </p>
               <div className="flex flex-wrap gap-5 mb-8">
@@ -107,7 +143,7 @@ export default function Tours() {
         </div>
       </section>
 
-      {/* ── DARK — les 6 arrêts + tarifs ── */}
+      {/* ── DARK — accordion stops + tarifs ── */}
       <section ref={ref2} className="py-24 px-6" style={{ backgroundColor: '#111' }}>
         <div className="max-w-6xl mx-auto">
 
@@ -128,40 +164,77 @@ export default function Tours() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-14">
-            {stops.map((stop, i) => (
+          {/* ── ACCORDION ROWS ── */}
+          <div className="reveal mb-14" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            {stops.map((stop) => (
               <div
-                key={i}
-                className="reveal stop-card rounded-2xl p-6"
-                style={{
-                  backgroundColor: '#1a1a1a',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  transitionDelay: `${i * 80}ms`,
-                }}
+                key={stop.num}
+                className="accordion-row"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <span className="text-5xl font-bold leading-none"
-                    style={{ fontFamily: 'Playfair Display, serif', color: 'var(--teal)', opacity: 0.25 }}>
-                    {stop.num}
-                  </span>
-                  <span className="text-xs px-2 py-1 rounded-full font-medium"
-                    style={{ backgroundColor: 'rgba(30,205,196,0.12)', color: 'var(--teal)' }}>
-                    {stop.theme}
-                  </span>
+                {/* Background image — fades in on hover */}
+                <div
+                  className="accordion-row-bg"
+                  style={{ backgroundImage: `url(${stop.img})` }}
+                />
+
+                {/* Row content — always visible at 80px height */}
+                <div className="relative z-10 h-full flex flex-col justify-center px-4 sm:px-8">
+                  {/* Top bar: number + name + arrow */}
+                  <div className="flex items-center gap-4 sm:gap-8">
+                    <span
+                      style={{
+                        fontFamily: 'Playfair Display, serif',
+                        fontSize: 'clamp(20px, 3vw, 28px)',
+                        fontWeight: 700,
+                        color: 'var(--teal)',
+                        opacity: 0.5,
+                        minWidth: '2.5rem',
+                        lineHeight: 1,
+                      }}
+                    >
+                      {stop.num}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: 'Playfair Display, serif',
+                        fontSize: 'clamp(16px, 2.5vw, 22px)',
+                        fontWeight: 600,
+                        color: '#fff',
+                        flex: 1,
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      {stop.name}
+                    </span>
+                    <span
+                      className="hidden sm:block text-xs font-semibold tracking-widest uppercase px-2 py-1 rounded-full"
+                      style={{ backgroundColor: 'rgba(30,205,196,0.12)', color: 'var(--teal)' }}
+                    >
+                      {stop.theme}
+                    </span>
+                    <ArrowRight
+                      size={18}
+                      style={{ color: 'var(--teal)', flexShrink: 0 }}
+                    />
+                  </div>
+
+                  {/* Description — slides up on hover */}
+                  <div className="accordion-row-desc mt-3 pl-14 sm:pl-20">
+                    <p
+                      className="text-sm leading-relaxed max-w-xl"
+                      style={{ color: 'rgba(255,255,255,0.7)' }}
+                    >
+                      {stop.desc}
+                    </p>
+                  </div>
                 </div>
-                <h4 className="font-bold text-white mb-2" style={{ fontSize: '15px' }}>
-                  {stop.name}
-                </h4>
-                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                  {stop.desc}
-                </p>
               </div>
             ))}
           </div>
 
           <div className="reveal pt-14 border-t" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
             <h4 className="text-white text-center mb-8 text-base font-semibold tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              Tarifs · Pick-up & boisson inclus
+              Tarifs · Pick-up &amp; boisson inclus
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-8">
               {prices.map((p) => (

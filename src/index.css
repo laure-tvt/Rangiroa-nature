@@ -292,3 +292,98 @@ section {
 .counter-animate {
   animation: countUp 600ms var(--ease-snap) both;
 }
+
+/* ─── CLIP-TEXT HERO INTRO ────────────────────────────────── */
+@keyframes clipTextOverlayFade {
+  0%   { opacity: 1; }
+  65%  { opacity: 1; }
+  90%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes clipTextScale {
+  0%   { transform: scale(1.15); opacity: 0; }
+  15%  { transform: scale(1);    opacity: 1; }
+  65%  { transform: scale(1);    opacity: 1; }
+  90%  { transform: scale(0.88); opacity: 0; }
+  100% { transform: scale(0.85); opacity: 0; }
+}
+.clip-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  animation: clipTextOverlayFade 3s var(--ease-flow) forwards;
+}
+.clip-intro-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: clipTextScale 3s var(--ease-flow) forwards;
+}
+
+/* ─── PARALLAX HERO RISE ──────────────────────────────────── */
+@keyframes heroParallaxRise {
+  0%   { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.hero-parallax {
+  animation: heroParallaxRise 2s var(--ease-flow) forwards;
+}
+
+/* ─── CYCLING TEXT ────────────────────────────────────────── */
+.cycle-text-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+@keyframes slideUpIn {
+  0%   { opacity: 0; transform: translateY(100%); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUpOut {
+  0%   { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-100%); }
+}
+.cycle-text-enter {
+  display: block;
+  animation: slideUpIn 500ms var(--ease-flow) forwards;
+}
+.cycle-text-exit {
+  display: block;
+  animation: slideUpOut 500ms var(--ease-flow) forwards;
+}
+
+/* ─── ACCORDION STOP ROWS ─────────────────────────────────── */
+.accordion-row {
+  position: relative;
+  height: 80px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: height 500ms var(--ease-flow);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.accordion-row:hover {
+  height: 200px;
+}
+.accordion-row-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 500ms var(--ease-flow);
+  filter: brightness(0.3);
+}
+.accordion-row:hover .accordion-row-bg {
+  opacity: 1;
+}
+.accordion-row-desc {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 400ms 150ms var(--ease-flow),
+              transform 400ms 150ms var(--ease-flow);
+}
+.accordion-row:hover .accordion-row-desc {
+  opacity: 1;
+  transform: translateY(0);
+}

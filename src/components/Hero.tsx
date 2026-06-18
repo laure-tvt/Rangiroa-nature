@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { ArrowRight, Volume2, VolumeX } from 'lucide-react'
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [muted, setMuted] = useState(true)
+  const [introVisible, setIntroVisible] = useState(true)
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -12,16 +13,54 @@ export default function Hero() {
     }
   }
 
+  // Remove intro overlay from DOM after animation completes (~3.2s)
+  useEffect(() => {
+    const timer = setTimeout(() => setIntroVisible(false), 3200)
+    return () => clearTimeout(timer)
+  }, [])
+
   const scrollTo = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
     <section id="accueil" className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden">
 
-      {/* VIDEO / POSTER */}
-      <div className="absolute inset-0">
+      {/* ── CLIP-TEXT INTRO OVERLAY ── */}
+      {introVisible && (
+        <div className="clip-intro flex items-center justify-center">
+          {/* Background fills the overlay */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          {/* Clip-text: the same image shows THROUGH the letters */}
+          <div
+            className="clip-intro-text relative z-10 select-none"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              fontFamily: 'Playfair Display, serif',
+              fontSize: 'clamp(80px, 18vw, 220px)',
+              fontWeight: 700,
+              letterSpacing: '-0.03em',
+              lineHeight: 1,
+              textAlign: 'center',
+            }}
+          >
+            RANGIROA
+          </div>
+        </div>
+      )}
+
+      {/* VIDEO / POSTER — with parallax-rise scale */}
+      <div className="absolute inset-0 hero-parallax">
         <video
           ref={videoRef}
-          className="w-full h-full object-cover hero-video-wrap"
+          className="w-full h-full object-cover"
           autoPlay
           loop
           muted
@@ -34,7 +73,7 @@ export default function Hero() {
         </video>
       </div>
 
-      {/* Overlay — minimal, laisse respirer le visuel */}
+      {/* Overlay */}
       <div className="absolute inset-0" style={{
         background: 'linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.2) 45%, rgba(10,10,10,0.7) 100%)'
       }} />
@@ -68,7 +107,7 @@ export default function Hero() {
         <p className="hero-sub mb-10 text-white/75 max-w-lg"
           style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 18px)', lineHeight: 1.7 }}>
           Visite guidée privée en van · 6 arrêts · 2h30<br />
-          Français & Anglais · Pick-up inclus
+          Français &amp; Anglais · Pick-up inclus
         </p>
 
         {/* CTAs */}

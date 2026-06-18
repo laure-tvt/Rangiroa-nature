@@ -1,13 +1,19 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { Heart, Shield, Leaf, Award } from 'lucide-react'
+
+const cyclingPhrases = [
+  'Découvrez Rangiroa',
+  "Découvrez l'Atoll",
+  'Découvrez Tiputa',
+]
 
 const values = [
   {
     icon: Heart,
     title: 'Passion locale',
     description:
-      'Né et élevé à Rangiroa, votre guide partage une connaissance intime et profonde de l\'atoll — ses secrets, ses légendes, ses endroits magiques.',
+      "Né et élevé à Rangiroa, votre guide partage une connaissance intime et profonde de l'atoll — ses secrets, ses légendes, ses endroits magiques.",
   },
   {
     icon: Shield,
@@ -19,15 +25,54 @@ const values = [
     icon: Leaf,
     title: 'Tourisme responsable',
     description:
-      'Nous respectons les écosystèmes fragiles de l\'atoll et travaillons avec les communautés locales pour un tourisme durable et bénéfique.',
+      "Nous respectons les écosystèmes fragiles de l'atoll et travaillons avec les communautés locales pour un tourisme durable et bénéfique.",
   },
   {
     icon: Award,
     title: 'Expériences exclusives',
     description:
-      'Groupes limités, circuits privés, accès à des sites hors des sentiers battus. Une expérience que vous ne trouverez nulle part ailleurs.',
+      "Groupes limités, circuits privés, accès à des sites hors des sentiers battus. Une expérience que vous ne trouverez nulle part ailleurs.",
   },
 ]
+
+function CyclingText() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [animClass, setAnimClass] = useState<'cycle-text-enter' | 'cycle-text-exit'>('cycle-text-enter')
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Start exit animation
+      setAnimClass('cycle-text-exit')
+
+      // After exit (500ms), switch text and play enter animation
+      const switchTimer = setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % cyclingPhrases.length)
+        setAnimClass('cycle-text-enter')
+      }, 500)
+
+      return () => clearTimeout(switchTimer)
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <span
+      className="cycle-text-wrap"
+      style={{
+        color: 'var(--teal)',
+        fontStyle: 'italic',
+        display: 'inline-block',
+        overflow: 'hidden',
+        verticalAlign: 'bottom',
+      }}
+    >
+      <span className={animClass} style={{ display: 'block' }}>
+        {cyclingPhrases[currentIndex]}
+      </span>
+    </span>
+  )
+}
 
 export default function About() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -85,16 +130,19 @@ export default function About() {
               Notre histoire
             </div>
 
-            <h2 className="section-title mb-6">
-              Une passion pour Rangiroa,{' '}
-              <span className="teal-accent">partagée avec vous</span>
+            {/* Cycling heading */}
+            <h2
+              className="section-title mb-6"
+              style={{ overflow: 'hidden' }}
+            >
+              <CyclingText />
             </h2>
 
             <p
               className="text-gray-600 leading-relaxed mb-4"
               style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px' }}
             >
-              Rangiroa Nature est née d'un amour profond pour cet atoll unique au monde. Fondée
+              Rangiroa Nature est née d&apos;un amour profond pour cet atoll unique au monde. Fondée
               par Maeva, guide certifiée et enfant du pays, notre entreprise propose des visites
               guidées authentiques depuis plus de 10 ans.
             </p>
@@ -102,7 +150,7 @@ export default function About() {
               className="text-gray-600 leading-relaxed mb-8"
               style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px' }}
             >
-              Plus qu'une simple visite touristique, nous vous offrons une rencontre avec l'âme
+              Plus qu&apos;une simple visite touristique, nous vous offrons une rencontre avec l&apos;âme
               de Rangiroa — ses paysages époustouflants, sa faune marine exceptionnelle, sa culture
               polynésienne vivante et ses habitants chaleureux.
             </p>
@@ -148,12 +196,12 @@ export default function About() {
             className="text-white text-xl md:text-2xl font-light italic max-w-3xl mx-auto mb-6"
             style={{ fontFamily: 'Playfair Display, serif' }}
           >
-            "Une journée inoubliable avec Maeva. Elle nous a fait découvrir des endroits
-            que jamais un guide ordinaire n'aurait trouvé. Rangiroa vue de l'intérieur,
-            c'est une magie totale."
+            &ldquo;Une journée inoubliable avec Maeva. Elle nous a fait découvrir des endroits
+            que jamais un guide ordinaire n&apos;aurait trouvé. Rangiroa vue de l&apos;intérieur,
+            c&apos;est une magie totale.&rdquo;
           </blockquote>
           <div>
-            <div className="text-white font-semibold text-sm">Sophie & Pierre L.</div>
+            <div className="text-white font-semibold text-sm">Sophie &amp; Pierre L.</div>
             <div className="text-xs mt-1" style={{ color: 'var(--teal)' }}>Paris · Circuit Motus Secrets · Juin 2025</div>
           </div>
         </div>

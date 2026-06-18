@@ -1,135 +1,133 @@
-import { useState, useRef, useEffect } from 'react'
-import { ChevronDown, Play, Pause } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { ArrowRight, Volume2, VolumeX } from 'lucide-react'
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [playing, setPlaying] = useState(false)
-  const [loaded, setLoaded] = useState(false)
+  const [muted, setMuted] = useState(true)
 
-  useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
-    v.addEventListener('canplaythrough', () => setLoaded(true))
-    return () => v.removeEventListener('canplaythrough', () => setLoaded(true))
-  }, [])
-
-  const togglePlay = () => {
-    const v = videoRef.current
-    if (!v) return
-    if (playing) { v.pause(); setPlaying(false) }
-    else { v.play(); setPlaying(true) }
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !muted
+      setMuted(!muted)
+    }
   }
 
-  const scrollTo = (id: string) => {
-    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
+  const scrollTo = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <section id="accueil" className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+    <section id="accueil" className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden">
 
-      {/* VIDEO — cinematic intro */}
-      <div className="absolute inset-0 hero-video-wrap">
+      {/* VIDEO / POSTER */}
+      <div className="absolute inset-0">
         <video
           ref={videoRef}
-          className="w-full h-full object-cover"
-          src="/hero.mov"
+          className="w-full h-full object-cover hero-video-wrap"
+          autoPlay
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           poster="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80"
-        />
-        {/* Fallback image si vidéo pas chargée */}
-        {!loaded && (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=1920&q=80')` }}
-          />
-        )}
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+          <source src="/hero.mov" type="video/quicktime" />
+        </video>
       </div>
 
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 hero-gradient" />
+      {/* Overlay — minimal, laisse respirer le visuel */}
+      <div className="absolute inset-0" style={{
+        background: 'linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.2) 45%, rgba(10,10,10,0.7) 100%)'
+      }} />
 
-      {/* Dot pattern subtil */}
-      <div
-        className="absolute inset-0 opacity-8"
-        style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(30,205,196,0.15) 1px, transparent 0)`,
-          backgroundSize: '40px 40px',
-        }}
-      />
+      {/* ── CONTENU CENTRÉ ── */}
+      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center">
 
-      {/* ── CONTENU ── */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-
-        {/* Eyebrow */}
-        <div className="hero-eyebrow inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border text-sm font-medium tracking-widest uppercase"
-          style={{ borderColor: 'var(--teal)', color: 'var(--teal)' }}>
-          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--teal)' }} />
-          Polynésie Française · Rangiroa
+        {/* Badge */}
+        <div className="hero-eyebrow flex items-center gap-2 mb-8">
+          <span className="w-8 h-px" style={{ backgroundColor: 'var(--teal)' }} />
+          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-white/80">
+            Rangiroa · Polynésie Française
+          </span>
+          <span className="w-8 h-px" style={{ backgroundColor: 'var(--teal)' }} />
         </div>
 
-        {/* Titre principal */}
-        <h1 className="hero-title text-white mb-6 leading-tight"
-          style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(36px, 6vw, 64px)', fontWeight: 700, textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
-          Découvrez Rangiroa
-          <br />
-          <span style={{ color: 'var(--teal)' }}>en van privé</span>
+        {/* Titre XXL éditorial */}
+        <h1 className="hero-title text-white mb-6"
+          style={{
+            fontFamily: 'Playfair Display, serif',
+            fontSize: 'clamp(52px, 9vw, 96px)',
+            fontWeight: 700,
+            lineHeight: 1.0,
+            letterSpacing: '-0.02em',
+          }}>
+          Découvrez<br />
+          <span style={{ color: 'var(--teal)', fontStyle: 'italic' }}>Rangiroa</span>
         </h1>
 
-        {/* Sous-titre */}
-        <p className="hero-sub text-white/90 mb-10 max-w-2xl mx-auto"
-          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(16px, 2.5vw, 20px)', lineHeight: 1.7, textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}>
-          Visite guidée privée de l'atoll en 6 arrêts incontournables.
-          Histoire, culture polynésienne et paysages époustouflants.
+        {/* Sous-titre épuré */}
+        <p className="hero-sub mb-10 text-white/75 max-w-lg"
+          style={{ fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 18px)', lineHeight: 1.7 }}>
+          Visite guidée privée en van · 6 arrêts · 2h30<br />
+          Français & Anglais · Pick-up inclus
         </p>
 
         {/* CTAs */}
-        <div className="hero-ctas flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button onClick={() => scrollTo('#visites')} className="btn-outline text-base px-8 py-4">
-            <span>Découvrir la visite</span>
+        <div className="hero-ctas flex flex-col sm:flex-row gap-3 items-center">
+          <button
+            onClick={() => scrollTo('#reservation')}
+            className="group flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300"
+            style={{ background: 'var(--teal)' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--teal-bright)'; e.currentTarget.style.transform = 'scale(1.04)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'var(--teal)'; e.currentTarget.style.transform = 'scale(1)' }}
+          >
+            Réserver ma visite
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
           </button>
-          <button onClick={() => scrollTo('#reservation')} className="btn-teal text-base px-8 py-4">
-            <span>Réserver maintenant</span>
+          <button
+            onClick={() => scrollTo('#visites')}
+            className="flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300"
+            style={{ border: '1.5px solid rgba(255,255,255,0.4)', backdropFilter: 'blur(4px)' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--teal)'; e.currentTarget.style.transform = 'scale(1.04)' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.transform = 'scale(1)' }}
+          >
+            Voir le circuit
           </button>
         </div>
 
-        {/* Stats */}
-        <div className="hero-stats flex items-center justify-center gap-8 mt-16 flex-wrap">
+        {/* Stats minimalistes */}
+        <div className="hero-stats flex items-center gap-8 mt-14 flex-wrap justify-center">
           {[
-            { value: '2h30', label: 'Durée de la visite' },
-            { value: '6', label: 'Arrêts incontournables' },
-            { value: 'FR / EN', label: 'Langues disponibles' },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center counter-animate">
-              <div className="text-2xl font-bold" style={{ fontFamily: 'Playfair Display, serif', color: 'var(--teal)' }}>
-                {stat.value}
+            { value: '2h30', label: 'de visite' },
+            { value: '6', label: 'arrêts' },
+            { value: 'FR/EN', label: 'bilingue' },
+          ].map((s, i) => (
+            <div key={i} className="text-center">
+              <div className="text-white font-bold" style={{ fontFamily: 'Playfair Display, serif', fontSize: '28px', lineHeight: 1 }}>
+                {s.value}
               </div>
-              <div className="text-white/70 text-xs tracking-wide mt-1">{stat.label}</div>
+              <div className="text-white/50 text-xs tracking-widest uppercase mt-1">{s.label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Bouton play/pause vidéo */}
+      {/* Son / Mute */}
       <button
-        onClick={togglePlay}
-        className="play-btn absolute bottom-20 right-6 sm:right-10 w-12 h-12 rounded-full flex items-center justify-center text-white"
-        style={{ backgroundColor: 'var(--teal)' }}
-        aria-label={playing ? 'Pause vidéo' : 'Lancer la vidéo'}
+        onClick={toggleMute}
+        className="absolute bottom-8 right-6 flex items-center gap-2 px-3 py-2 rounded-full text-xs text-white/70 hover:text-white transition-colors"
+        style={{ border: '1px solid rgba(255,255,255,0.25)', backdropFilter: 'blur(6px)', background: 'rgba(0,0,0,0.2)' }}
+        aria-label="Activer/couper le son"
       >
-        {playing ? <Pause size={18} /> : <Play size={18} />}
+        {muted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+        <span>{muted ? 'Son' : 'Mute'}</span>
       </button>
 
-      {/* Scroll indicator */}
+      {/* Scroll hint */}
       <button
         onClick={() => scrollTo('#visites')}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
-        aria-label="Défiler vers le bas"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 hover:text-white/80 transition-colors"
       >
-        <span className="text-xs tracking-widest uppercase">Défiler</span>
-        <ChevronDown size={20} className="arrow-bounce" />
+        <div className="w-px h-10 arrow-bounce" style={{ background: 'linear-gradient(to bottom, transparent, var(--teal))' }} />
       </button>
     </section>
   )

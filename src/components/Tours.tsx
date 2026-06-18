@@ -1,234 +1,194 @@
 import { useRef } from 'react'
-import { Clock, Globe, MapPin, ChevronRight } from 'lucide-react'
+import { ArrowRight, Clock, Globe, MapPin } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
 const stops = [
-  {
-    num: '01',
-    name: 'Le quai d\'Avatoru',
-    desc: 'Point de départ emblématique, découverte du port et de la vie maritime de l\'atoll.',
-    theme: 'Peuplement de l\'île',
-  },
-  {
-    num: '02',
-    name: 'L\'église d\'Avatoru',
-    desc: 'Histoire de l\'évangélisation en Polynésie et impact de la chrétienté sur la culture locale.',
-    theme: 'Culture & Histoire',
-  },
-  {
-    num: '03',
-    name: 'Le village d\'Avatoru',
-    desc: 'Immersion dans l\'ancien village, ses traditions, son architecture et son mode de vie authentique.',
-    theme: 'Village traditionnel',
-  },
-  {
-    num: '04',
-    name: 'La plage publique',
-    desc: 'Une pause sur l\'une des plus belles plages de l\'atoll, entre lagon turquoise et sable blanc.',
-    theme: 'Nature & Détente',
-  },
-  {
-    num: '05',
-    name: 'Le platier de récif',
-    desc: 'Face à l\'hôtel le Kia Ora — découverte de la formation corallienne et de sa protection naturelle.',
-    theme: 'Écosystème corallien',
-  },
-  {
-    num: '06',
-    name: 'La passe de Tiputa',
-    desc: 'La passe la plus célèbre de Rangiroa, théâtre de légendes locales et d\'histoires de guerres ancestrales.',
-    theme: 'Légendes & Faune',
-  },
+  { num: '01', name: 'Quai d\'Avatoru', theme: 'Peuplement', desc: 'Le port, porte d\'entrée sur la vie maritime de l\'atoll.' },
+  { num: '02', name: 'Église d\'Avatoru', theme: 'Culture & Foi', desc: 'L\'impact de la chrétienté sur la culture polynésienne.' },
+  { num: '03', name: 'Village d\'Avatoru', theme: 'Vie locale', desc: 'L\'ancien village, ses traditions et son architecture.' },
+  { num: '04', name: 'Plage publique', theme: 'Nature', desc: 'Le lagon turquoise à portée de main, sable blanc immaculé.' },
+  { num: '05', name: 'Platier de récif', theme: 'Écosystème', desc: 'Formation corallienne face à l\'hôtel Kia Ora.' },
+  { num: '06', name: 'Passe de Tiputa', theme: 'Légendes', desc: 'La passe mythique, théâtre de guerres et de légendes locales.' },
 ]
 
 const prices = [
-  { label: 'Adulte', price: '5 000 XPF', sub: '≈ 42 €', note: '' },
-  { label: 'Enfant (- 11 ans)', price: '2 500 XPF', sub: '≈ 21 €', note: '' },
-  { label: 'Bébé (- 3 ans)', price: 'Gratuit', sub: '', note: '' },
+  { label: 'Adulte', price: '5 000', currency: 'XPF', euro: '≈ 42 €' },
+  { label: 'Enfant (−11 ans)', price: '2 500', currency: 'XPF', euro: '≈ 21 €' },
+  { label: 'Bébé (−3 ans)', price: 'Gratuit', currency: '', euro: '' },
 ]
 
 export default function Tours() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  useScrollReveal(sectionRef)
+  const ref1 = useRef<HTMLDivElement>(null)
+  const ref2 = useRef<HTMLDivElement>(null)
+  useScrollReveal(ref1)
+  useScrollReveal(ref2)
 
-  const handleBook = () => {
-    const el = document.querySelector('#reservation')
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  }
+  const book = () => document.querySelector('#reservation')?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <section id="visites" ref={sectionRef} className="py-24 px-6" style={{ backgroundColor: '#F5F5F5' }}>
-      <div className="max-w-7xl mx-auto">
+    <div id="visites">
 
-        {/* Header */}
-        <div className="text-center mb-16 reveal">
-          <div className="inline-flex items-center gap-2 mb-4 text-sm font-medium tracking-widest uppercase teal-accent">
-            <span className="teal-line" />
-            Notre Circuit
-            <span className="teal-line" />
+      {/* ── LIGHT — présentation du circuit ── */}
+      <section ref={ref1} className="py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+
+          <div className="reveal mb-16 max-w-2xl">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="teal-line" />
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase teal-accent">Notre circuit</span>
+            </div>
+            <h2 style={{
+              fontFamily: 'Playfair Display, serif',
+              fontSize: 'clamp(38px, 6vw, 64px)',
+              fontWeight: 700,
+              lineHeight: 1.05,
+              color: '#1A1A1A',
+              letterSpacing: '-0.02em',
+            }}>
+              Tour de l'Île,<br />
+              <span style={{ color: 'var(--teal)', fontStyle: 'italic' }}>réinventé.</span>
+            </h2>
           </div>
-          <h2 className="section-title mb-4">
-            Tour de l'Île —{' '}
-            <span className="teal-accent">Visite Guidée</span>
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', lineHeight: '1.7' }}>
-            Une immersion unique dans l'histoire, la culture et les paysages de Rangiroa
-            en 6 arrêts soigneusement sélectionnés. Visite privée, en français et en anglais.
-          </p>
-        </div>
 
-        {/* Tour card principale */}
-        <div className="reveal bg-white rounded-2xl overflow-hidden shadow-sm mb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Image */}
-            <div className="relative h-72 lg:h-auto overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=800&q=80"
-                alt="Tour de l'île de Rangiroa"
-                className="w-full h-full object-cover"
-              />
-              <div
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(to top, rgba(61,40,23,0.7) 0%, transparent 60%)' }}
-              />
-              <div className="absolute bottom-6 left-6">
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-semibold text-white mb-2 inline-block"
-                  style={{ backgroundColor: 'var(--teal)' }}
-                >
-                  Circuit exclusif
-                </span>
-                <div className="text-white text-2xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
-                  Tour de l'Île
-                </div>
+          <div className="reveal grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+            <div>
+              <p className="text-gray-500 leading-relaxed mb-8" style={{ fontSize: '17px', lineHeight: 1.8 }}>
+                La visite se déroule en deux actes. Les trois premiers arrêts explorent
+                le peuplement de l'île, l'ancien village et l'héritage polynésien.
+                Les trois suivants plongent dans la géologie de l'atoll, la faune marine
+                et les légendes ancestrales.
+              </p>
+              <div className="flex flex-wrap gap-5 mb-8">
+                {[
+                  { icon: Clock, text: '2h30 · Pick-up inclus' },
+                  { icon: Globe, text: 'Français & Anglais' },
+                  { icon: MapPin, text: '6 arrêts exclusifs' },
+                ].map(({ icon: Icon, text }) => (
+                  <span key={text} className="flex items-center gap-2 text-sm text-gray-600">
+                    <Icon size={15} style={{ color: 'var(--teal)' }} />
+                    {text}
+                  </span>
+                ))}
               </div>
+              <button
+                onClick={book}
+                className="group inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200"
+                style={{ color: 'var(--brown-dark)' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--teal)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--brown-dark)' }}
+              >
+                Réserver cette visite
+                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
 
-            {/* Info */}
-            <div className="p-8 flex flex-col justify-between">
-              <div>
-                <div className="flex flex-wrap gap-4 mb-6">
-                  <span className="flex items-center gap-2 text-sm text-gray-600">
-                    <Clock size={16} style={{ color: 'var(--teal)' }} />
-                    2h30 (pick-up + boisson inclus)
-                  </span>
-                  <span className="flex items-center gap-2 text-sm text-gray-600">
-                    <Globe size={16} style={{ color: 'var(--teal)' }} />
-                    Français & Anglais
-                  </span>
-                  <span className="flex items-center gap-2 text-sm text-gray-600">
-                    <MapPin size={16} style={{ color: 'var(--teal)' }} />
-                    6 arrêts
-                  </span>
-                </div>
-
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                  La visite se déroule en deux parties : les trois premiers arrêts explorent
-                  le peuplement de l'île, l'ancien village et l'impact de la chrétienté sur
-                  la culture polynésienne. Les trois derniers plongent dans les histoires de
-                  guerres, la protection corallienne, la formation de l'atoll et ses légendes locales.
-                </p>
-
-                {/* Inclus */}
-                <div className="space-y-2 mb-6">
-                  {['Pick-up à votre hôtel / pension', 'Boisson offerte', 'Guide bilingue FR/EN', 'Groupes privés uniquement'].map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-sm text-gray-700">
-                      <span style={{ color: 'var(--teal)', fontWeight: 'bold' }}>✓</span>
-                      {item}
-                    </div>
-                  ))}
-                </div>
+            <div className="relative rounded-2xl overflow-hidden" style={{ height: '380px' }}>
+              <img
+                src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=900&q=85"
+                alt="Lagon de Rangiroa"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute top-5 left-5 px-3 py-1.5 rounded-full text-xs font-semibold text-white"
+                style={{ backgroundColor: 'var(--teal)' }}>
+                Circuit exclusif
               </div>
+            </div>
+          </div>
 
-              <button onClick={handleBook} className="btn-primary justify-center">
-                Réserver cette visite
-                <ChevronRight size={16} />
+          <div className="reveal grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {['Pick-up hôtel', 'Boisson offerte', 'Guide bilingue', 'Groupe privé'].map((item) => (
+              <div key={item} className="flex items-center gap-2 p-4 rounded-xl bg-neutral-50">
+                <span style={{ color: 'var(--teal)', fontSize: '16px' }}>✓</span>
+                <span className="text-sm font-medium text-gray-700">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── DARK — les 6 arrêts + tarifs ── */}
+      <section ref={ref2} className="py-24 px-6" style={{ backgroundColor: '#111' }}>
+        <div className="max-w-6xl mx-auto">
+
+          <div className="reveal mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="teal-line" />
+                <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: 'var(--teal)' }}>
+                  Le parcours
+                </span>
+              </div>
+              <h3 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: '#fff', lineHeight: 1.1 }}>
+                6 arrêts.<br />6 histoires.
+              </h3>
+            </div>
+            <button onClick={book} className="btn-teal self-start sm:self-auto">
+              Réserver <ArrowRight size={15} />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-14">
+            {stops.map((stop, i) => (
+              <div
+                key={i}
+                className="reveal stop-card rounded-2xl p-6"
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  transitionDelay: `${i * 80}ms`,
+                }}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <span className="text-5xl font-bold leading-none"
+                    style={{ fontFamily: 'Playfair Display, serif', color: 'var(--teal)', opacity: 0.25 }}>
+                    {stop.num}
+                  </span>
+                  <span className="text-xs px-2 py-1 rounded-full font-medium"
+                    style={{ backgroundColor: 'rgba(30,205,196,0.12)', color: 'var(--teal)' }}>
+                    {stop.theme}
+                  </span>
+                </div>
+                <h4 className="font-bold text-white mb-2" style={{ fontSize: '15px' }}>
+                  {stop.name}
+                </h4>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                  {stop.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="reveal pt-14 border-t" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
+            <h4 className="text-white text-center mb-8 text-base font-semibold tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              Tarifs · Pick-up & boisson inclus
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-8">
+              {prices.map((p) => (
+                <div key={p.label} className="price-card text-center rounded-2xl p-6"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div className="text-xs uppercase tracking-widest mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                    {p.label}
+                  </div>
+                  <div className="font-bold text-white" style={{ fontFamily: 'Playfair Display, serif', fontSize: '28px', lineHeight: 1 }}>
+                    {p.price}
+                  </div>
+                  {p.currency && (
+                    <div className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                      {p.currency} · {p.euro}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
+              <button onClick={book} className="btn-teal">
+                Réserver maintenant <ArrowRight size={15} />
               </button>
             </div>
           </div>
         </div>
-
-        {/* Les 6 arrêts */}
-        <div className="reveal mb-12">
-          <h3
-            className="text-center text-2xl font-bold mb-8"
-            style={{ fontFamily: 'Playfair Display, serif', color: '#3D2817' }}
-          >
-            Les 6 arrêts du circuit
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {stops.map((stop, i) => (
-              <div
-                key={i}
-                className="reveal bg-white rounded-xl p-5 shadow-sm stop-card"
-                style={{ transitionDelay: `${i * 80}ms` }}
-              >
-                <div className="flex items-start gap-4">
-                  <span
-                    className="text-3xl font-bold flex-shrink-0 leading-none"
-                    style={{ fontFamily: 'Playfair Display, serif', color: 'var(--teal)', opacity: 0.5 }}
-                  >
-                    {stop.num}
-                  </span>
-                  <div>
-                    <span
-                      className="text-xs font-medium tracking-wide uppercase mb-1 block"
-                      style={{ color: 'var(--teal)' }}
-                    >
-                      {stop.theme}
-                    </span>
-                    <h4
-                      className="font-bold text-sm mb-2"
-                      style={{ color: '#3D2817', fontFamily: 'Montserrat, sans-serif' }}
-                    >
-                      {stop.name}
-                    </h4>
-                    <p className="text-gray-500 text-xs leading-relaxed">{stop.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Tarifs */}
-        <div
-          className="reveal rounded-2xl p-8 md:p-10 text-center"
-          style={{ backgroundColor: '#3D2817' }}
-        >
-          <h3
-            className="text-white text-2xl font-bold mb-2"
-            style={{ fontFamily: 'Playfair Display, serif' }}
-          >
-            Tarifs
-          </h3>
-          <p className="text-white/60 text-sm mb-8">Pick-up et boisson inclus dans tous les tarifs</p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto mb-8">
-            {prices.map((p) => (
-              <div
-                key={p.label}
-                className="price-card rounded-xl p-5"
-                style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
-              >
-                <div className="text-white/70 text-xs uppercase tracking-widest mb-2">{p.label}</div>
-                <div
-                  className="text-2xl font-bold text-white"
-                  style={{ fontFamily: 'Playfair Display, serif' }}
-                >
-                  {p.price}
-                </div>
-                {p.sub && (
-                  <div className="text-xs mt-1" style={{ color: 'var(--teal)' }}>{p.sub}</div>
-                )}
-              </div>
-            ))}
-          </div>
-          <button onClick={handleBook} className="btn-outline">
-            Réserver maintenant
-          </button>
-        </div>
-
-      </div>
-    </section>
+      </section>
+    </div>
   )
 }

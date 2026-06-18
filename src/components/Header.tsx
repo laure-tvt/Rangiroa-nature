@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 const navLinks = [
-  { label: 'Le tour',      href: '#visite' },
-  { label: 'Les 6 arrêts', href: '#arrets' },
-  { label: 'Tarifs',       href: '#tarifs' },
-  { label: 'Témoignages',  href: '#temoignages' },
+  { label: 'Le tour',      href: '/', hash: '#visite' },
+  { label: 'Les 6 arrêts', href: '/arrets', hash: '' },
+  { label: 'Tarifs',       href: '/tarifs', hash: '' },
+  { label: 'Témoignages',  href: '/', hash: '#temoignages' },
 ]
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
@@ -18,10 +21,23 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const handleNav = (href: string) => {
+  const handleNav = (href: string, hash: string) => {
     setMenuOpen(false)
-    const el = document.querySelector(href)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    if (hash) {
+      if (location.pathname === href) {
+        const el = document.querySelector(hash)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        navigate(href)
+        setTimeout(() => {
+          const el = document.querySelector(hash)
+          if (el) el.scrollIntoView({ behavior: 'smooth' })
+        }, 300)
+      }
+    } else {
+      navigate(href)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   return (
@@ -37,18 +53,19 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <button
-          onClick={() => handleNav('#accueil')}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'baseline', gap: '5px' }}
+        <Link
+          to="/"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: '5px' }}
         >
           <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '22px', letterSpacing: '0.06em', color: '#6F4F28', textTransform: 'uppercase' }}>TVT</span>
           <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 300, fontSize: '18px', letterSpacing: '0.06em', color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase' }}>RANGIROA</span>
-        </button>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
-            <button key={link.label} onClick={() => handleNav(link.href)} className="nav-link">
+            <button key={link.label} onClick={() => handleNav(link.href, link.hash)} className="nav-link">
               {link.label}
             </button>
           ))}
@@ -56,7 +73,7 @@ export default function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <button onClick={() => handleNav('#contact')} className="btn-primary">
+          <button onClick={() => handleNav('/', '#contact')} className="btn-primary">
             Réserver
           </button>
         </div>
@@ -79,14 +96,14 @@ export default function Header() {
           style={{ backgroundColor: 'rgba(0,0,0,0.98)', borderBottom: '1px solid rgba(111,79,40,0.18)' }}
         >
           {navLinks.map((link) => (
-            <button key={link.label} onClick={() => handleNav(link.href)}
+            <button key={link.label} onClick={() => handleNav(link.href, link.hash)}
               className="text-left py-3 text-base font-medium"
               style={{ color: 'rgba(255,255,255,0.8)', background: 'none', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', fontFamily: 'Montserrat, sans-serif' }}>
               {link.label}
             </button>
           ))}
           <div className="mt-4">
-            <button onClick={() => handleNav('#contact')} className="btn-primary w-full justify-center">Réserver</button>
+            <button onClick={() => handleNav('/', '#contact')} className="btn-primary w-full justify-center">Réserver</button>
           </div>
         </div>
       )}

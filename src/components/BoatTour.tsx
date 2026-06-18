@@ -8,7 +8,7 @@ const tarifs = [
 
 export default function BoatTour() {
   return (
-      <section id="tarifs" className="py-24 px-6" style={{ backgroundColor: '#000000' }}>
+      <section id="tarifs" className="py-24 px-6" style={{ backgroundColor: '#000000', paddingTop: '120px' }}>
         <div className="max-w-4xl mx-auto text-center">
           <div data-reveal className="section-label justify-center mx-auto">
             Tarifs

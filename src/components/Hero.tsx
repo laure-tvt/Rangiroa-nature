@@ -13,26 +13,18 @@ export default function Hero() {
 
   const progress = Math.min(1, Math.max(0, scrollY / vhRef.current))
 
-  // ── Entrance: each element fades in as user scrolls ──────────
-  const fadeIn = (from: number, to: number) =>
-    Math.min(1, Math.max(0, (progress - from) / (to - from)))
-
-  const line1In    = fadeIn(0.00, 0.08)   // "6 arrêts,"
-  const line2In    = fadeIn(0.08, 0.16)   // "900 ans d'histoire."
-  const dividerIn  = fadeIn(0.15, 0.21)   // barre
-  const subtitleIn = fadeIn(0.19, 0.26)   // sous-titre
-
-  // ── Exit: tout disparaît ensemble au scroll avancé ───────────
+  // Exit on scroll
   const exit = Math.max(0, 1 - progress * 3.2)
   const exitY = -progress * 70
 
-  // ── Logo ─────────────────────────────────────────────────────
+  // Logo
   const logoOpacity = Math.max(0, Math.min(1, (progress - 0.22) / 0.38))
   const logoScale   = 0.68 + logoOpacity * 0.32
 
   const overlayOpacity = progress * 0.55
 
-  const slideY = (t: number) => `${(1 - t) * 28}px`
+  // Shared animation easing
+  const ease = 'cubic-bezier(0.22, 1, 0.36, 1)'
 
   return (
     <section id="accueil" style={{ height: '200vh', position: 'relative' }}>
@@ -54,13 +46,13 @@ export default function Hero() {
           draggable={false}
         />
 
-        {/* Dark overlay builds on scroll */}
+        {/* Dark overlay */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
           backgroundColor: '#000', opacity: overlayOpacity, pointerEvents: 'none',
         }}/>
 
-        {/* Texts — global exit container */}
+        {/* Texts — exit driven by scroll, entrance by CSS animation */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 5,
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
@@ -69,12 +61,8 @@ export default function Hero() {
           pointerEvents: exit < 0.05 ? 'none' : 'auto',
         }}>
 
-          {/* "6 arrêts," */}
-          <div style={{
-            opacity: line1In,
-            transform: `translateY(${slideY(line1In)})`,
-            transition: 'none',
-          }}>
+          {/* "6 arrêts," — apparaît en premier */}
+          <div style={{ animation: `fadeSlideUp 1s ${ease} 0.15s both` }}>
             <span style={{
               fontFamily: 'Montserrat, sans-serif',
               fontSize: 'clamp(30px, 5.5vw, 74px)',
@@ -91,12 +79,8 @@ export default function Hero() {
             </span>
           </div>
 
-          {/* "900 ans d'histoire." */}
-          <div style={{
-            opacity: line2In,
-            transform: `translateY(${slideY(line2In)})`,
-            transition: 'none',
-          }}>
+          {/* "900 ans d'histoire." — apparaît après */}
+          <div style={{ animation: `fadeSlideUp 1s ${ease} 0.6s both` }}>
             <span style={{
               fontFamily: 'Montserrat, sans-serif',
               fontSize: 'clamp(30px, 5.5vw, 74px)',
@@ -115,21 +99,14 @@ export default function Hero() {
 
           {/* Divider */}
           <div style={{
-            opacity: dividerIn,
-            transform: `translateY(${slideY(dividerIn)})`,
-            transition: 'none',
+            animation: `fadeSlideUp 0.8s ${ease} 1.05s both`,
             width: '52px', height: '2px',
             backgroundColor: 'rgba(223,164,90,0.7)',
             marginTop: '28px',
           }}/>
 
           {/* Subtitle */}
-          <div style={{
-            opacity: subtitleIn,
-            transform: `translateY(${slideY(subtitleIn)})`,
-            transition: 'none',
-            marginTop: '18px',
-          }}>
+          <div style={{ animation: `fadeSlideUp 0.8s ${ease} 1.3s both`, marginTop: '18px' }}>
             <p style={{
               fontFamily: 'Montserrat, sans-serif',
               fontSize: 'clamp(11px, 1.3vw, 15px)',
@@ -146,7 +123,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Logo — appears as title fades */}
+        {/* Logo */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 6,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -159,9 +136,7 @@ export default function Hero() {
             alt="Tevaiti Van Tours Rangiroa"
             style={{
               width: 'clamp(240px, 38vw, 460px)',
-              height: 'auto',
-              borderRadius: '50%',
-              userSelect: 'none',
+              height: 'auto', borderRadius: '50%', userSelect: 'none',
             } as React.CSSProperties}
             draggable={false}
           />
@@ -173,6 +148,7 @@ export default function Hero() {
           transform: 'translateX(-50%)',
           zIndex: 7,
           opacity: Math.max(0, 1 - progress * 6),
+          animation: `fadeSlideUp 0.8s ${ease} 1.6s both`,
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
         }}>
           <span style={{

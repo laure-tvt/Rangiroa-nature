@@ -116,6 +116,7 @@ function StopCard({ s, visible }: { s: Stop; visible: boolean }) {
 
 export default function Stops() {
   const [revealedCount, setRevealedCount] = useState(0)
+  const [buttonVisible, setButtonVisible] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -136,6 +137,8 @@ export default function Stops() {
           )
           timers.push(t)
         })
+        const btnTimer = setTimeout(() => setButtonVisible(true), 4800)
+        timers.push(btnTimer)
       },
       { threshold: 0.05 }
     )
@@ -179,39 +182,10 @@ export default function Stops() {
           <p
             data-reveal
             data-delay="180"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7, marginBottom: '32px' }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7 }}
           >
             Découverte de l'atoll en 6 arrêts soigneusement choisis pour vous faire vivre Rangiroa sous toutes ses facettes.
           </p>
-          <div className="flex flex-wrap gap-3" data-reveal data-delay="260">
-            <Link
-              to="/#contact"
-              onClick={() => setTimeout(() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }), 100)}
-              className="btn-primary px-8 py-3 text-sm"
-              style={{ textDecoration: 'none', textAlign: 'center' }}
-            >
-              Réserver maintenant
-            </Link>
-            <Link
-              to="/tarifs"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '12px 28px',
-                borderRadius: '50px',
-                border: '1px solid rgba(111,79,40,0.4)',
-                backgroundColor: 'transparent',
-                color: 'rgba(255,255,255,0.80)',
-                fontFamily: 'Montserrat, sans-serif',
-                fontSize: '13px',
-                fontWeight: 700,
-                textDecoration: 'none',
-              }}
-            >
-              Voir les tarifs
-            </Link>
-          </div>
         </div>
 
         {/* 6 stop cards — révélation strictement séquentielle 1 → 6 */}
@@ -219,6 +193,23 @@ export default function Stops() {
           {stops.map((s, idx) => (
             <StopCard key={s.num} s={s} visible={idx < revealedCount} />
           ))}
+        </div>
+
+        <div style={{
+          marginTop: '48px',
+          textAlign: 'center',
+          opacity: buttonVisible ? 1 : 0,
+          transform: buttonVisible ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+        }}>
+          <Link
+            to="/#contact"
+            onClick={() => setTimeout(() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }), 100)}
+            className="btn-primary px-10 py-4 text-base font-bold"
+            style={{ textDecoration: 'none', borderRadius: '50px' }}
+          >
+            Réserver ma visite guidée
+          </Link>
         </div>
 
       </div>

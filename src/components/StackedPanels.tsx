@@ -10,6 +10,12 @@ const panels = [
     to: '/arrets',
   },
   {
+    label: 'À propos',
+    tag: 'Le guide & le véhicule',
+    desc: "Laure-Eline, guide passionnée. Hyundai Staria 9 places entièrement équipé.",
+    to: '/a-propos',
+  },
+  {
     label: 'Les tarifs',
     tag: 'Pick-up & boisson inclus',
     desc: 'À partir de 5 000 XFP par adulte. Sans paiement en ligne.',
@@ -31,7 +37,7 @@ function Panel({ panel, index }: { panel: typeof panels[0]; index: number }) {
         justifyContent: 'space-between',
         padding: '28px 60px',
         textDecoration: 'none',
-        borderBottom: index === 0 ? '1px solid rgba(111,79,40,0.15)' : 'none',
+        borderBottom: index < panels.length - 1 ? '1px solid rgba(111,79,40,0.15)' : 'none',
         backgroundColor: hovered ? 'rgba(111,79,40,0.06)' : 'transparent',
         transition: 'background-color 0.3s ease',
         cursor: 'pointer',

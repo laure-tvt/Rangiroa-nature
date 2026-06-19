@@ -31,7 +31,7 @@ export default function Reservation() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-14 items-start">
 
           {/* Left */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2" style={{ position: 'sticky', top: '90px', alignSelf: 'start' }}>
             <div data-reveal className="section-label">Réservation</div>
             <h2
               data-reveal

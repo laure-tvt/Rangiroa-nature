@@ -8,10 +8,10 @@ const stats = [
   { icon: Tag, value: 'Dès 42€', label: 'par adulte', desc: "5 000 XFP adulte · 2 500 XFP enfant (−11 ans) · Gratuit bébé (−3 ans)." },
 ]
 
-// Chaque chevron: point droit à 100% 50%, encoche gauche à 18% 50%
-// overlap = 18% × largeur individuelle = alignement parfait
-const FIRST = 'polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%)'
-const OTHER = 'polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%, 18% 50%)'
+// Flèches indépendantes — bord gauche droit pour la 1ère, V-encoche pour les suivantes
+// Séparées par un gap visible, PAS d'overlap
+const FIRST = 'polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%)'
+const OTHER = 'polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%, 22% 50%)'
 
 function ChevronSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -28,41 +28,38 @@ function ChevronSection() {
     return () => obs.disconnect()
   }, [])
 
-  // W = 100 / (4 - 3*0.18) = 100 / 3.46 ≈ 28.9%  → overlap = 18% × 28.9% ≈ 5.2%
-  const W = '29%'
-  const OVERLAP = '-5.3%'
-
   return (
     <div ref={ref}>
-      {/* Rangée de 4 chevrons pleine largeur */}
+      {/* 4 flèches séparées, centrées, avec gap entre elles */}
       <div
         style={{
           display: 'flex',
-          alignItems: 'stretch',
-          height: 'clamp(140px, 18vw, 240px)',
+          gap: '12px',
+          height: 'clamp(130px, 15vw, 200px)',
           marginTop: '52px',
-          overflow: 'visible',
+          maxWidth: '860px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         }}
       >
         {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
             style={{
-              flex: `0 0 ${W}`,
+              flex: 1,
               height: '100%',
-              marginLeft: i === 0 ? '0' : OVERLAP,
-              backgroundColor: 'rgba(255,255,255,0.20)',
+              backgroundColor: 'rgba(255,255,255,0.22)',
               clipPath: i === 0 ? FIRST : OTHER,
               opacity: visible ? 1 : 0,
-              transform: visible ? 'translateX(0)' : 'translateX(-50px)',
-              transition: 'opacity 0.55s ease, transform 0.55s ease',
-              transitionDelay: `${i * 220}ms`,
+              transform: visible ? 'translateX(0)' : 'translateX(-60px)',
+              transition: 'opacity 0.75s ease, transform 0.75s ease',
+              transitionDelay: `${i * 320}ms`,
             }}
           />
         ))}
       </div>
 
-      {/* Texte apparaît après la 4e flèche */}
+      {/* Texte qui apparaît après la 4e flèche */}
       <p
         style={{
           fontFamily: 'Montserrat, sans-serif',
@@ -74,8 +71,8 @@ function ChevronSection() {
           textAlign: 'center',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(18px)',
-          transition: 'opacity 0.6s ease, transform 0.6s ease',
-          transitionDelay: '980ms',
+          transition: 'opacity 0.7s ease, transform 0.7s ease',
+          transitionDelay: '1300ms',
         }}
       >
         C'est comprendre le cœur de Rangiroa, l'histoire de ses habitants,<br />

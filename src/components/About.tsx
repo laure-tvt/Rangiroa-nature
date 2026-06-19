@@ -48,7 +48,7 @@ export default function About() {
             }}
           >
             {/* Photo avec halo */}
-            <div style={{ flexShrink: 0, position: 'relative' }}>
+            <div style={{ flexShrink: 0, position: 'relative', margin: '0 auto' }}>
               {/* Halo ambré derrière la photo */}
               <div style={{
                 position: 'absolute',

@@ -75,7 +75,7 @@ export default function About() {
                     height: '290px',
                     display: 'block',
                     objectFit: 'cover',
-                    objectPosition: 'center top',
+                    objectPosition: 'center 30%',
                   }}
                 />
               </div>

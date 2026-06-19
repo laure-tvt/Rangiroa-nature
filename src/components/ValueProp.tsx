@@ -169,7 +169,7 @@ export default function ValueProp() {
                 </div>
                 <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '32px', fontWeight: 700, color: '#C8894A', lineHeight: 1.1, letterSpacing: '0.04em' }}>{s.value}</div>
                 <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: '4px' }}>{s.label}</div>
-                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.65)', marginTop: '6px', lineHeight: 1.5 }}>{s.desc}</div>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '15px', fontWeight: 400, color: '#ffffff', marginTop: '6px', lineHeight: 1.6 }}>{s.desc}</div>
               </div>
             ))}
           </div>

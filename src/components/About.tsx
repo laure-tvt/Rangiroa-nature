@@ -35,45 +35,84 @@ export default function About() {
             </span>
           </div>
 
-          <h1
+          {/* Photo + texte côte à côte */}
+          <div
             data-reveal
             data-delay="100"
             style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(42px, 6vw, 80px)',
-              fontWeight: 400, fontStyle: 'italic',
-              color: '#ffffff', lineHeight: 1.05,
-              letterSpacing: '0.02em', textAlign: 'center',
-              marginBottom: '56px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '56px',
             }}
+            className="md:flex-row md:items-start md:gap-16"
           >
-            Laure-Eline
-          </h1>
+            {/* Photo */}
+            <div style={{ flexShrink: 0, width: '100%', maxWidth: '340px' }}>
+              <div style={{
+                borderRadius: '20px',
+                overflow: 'hidden',
+                border: '1px solid rgba(200,137,74,0.25)',
+                boxShadow: '0 0 40px rgba(111,79,40,0.20)',
+              }}>
+                <img
+                  src="/guide-laure-eline.jpg"
+                  alt="Laure-Eline, guide Tevaiti Van Tours"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    objectFit: 'cover',
+                  }}
+                />
+              </div>
+              <p style={{
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: '11px',
+                color: 'rgba(255,255,255,0.35)',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                textAlign: 'center',
+                marginTop: '14px',
+              }}>
+                Laure-Eline — Guide Tevaiti Van Tours
+              </p>
+            </div>
 
-          <div
-            data-reveal
-            data-delay="180"
-            style={{ maxWidth: '680px', margin: '0 auto' }}
-          >
-            {[
-              "Je m'appelle Laure-Eline et à travers TEVAITI VAN TOURS, je souhaite vous faire découvrir Rangiroa autrement.",
-              "Après 10 ans à osciller entre mon île de cœur et ma Bretagne natale, j'ai finalement rejoint mon mari sur l'atoll en 2023. Porté par un héritage familial et mon propre vécu sur Tahiti, j'ai noué années après années, une relation particulière avec la Polynésie.",
-              "Des années de passion, de lecture, de discussions et d'échanges, qui m'amènent aujourd'hui à vouloir partager une histoire. Celle d'un peuple, d'une nation, d'une île. L'occasion d'explorer au-delà du lagon, vers une histoire à comprendre et à vivre pleinement.",
-            ].map((para, i) => (
-              <p
-                key={i}
+            {/* Texte */}
+            <div style={{ flex: 1 }}>
+              <h1
                 style={{
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontSize: 'clamp(15px, 1.5vw, 17px)',
-                  color: i === 0 ? '#ffffff' : 'rgba(255,255,255,0.80)',
-                  lineHeight: 1.85,
-                  marginBottom: i < 2 ? '28px' : '0',
-                  fontWeight: i === 0 ? 500 : 400,
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: 'clamp(42px, 5vw, 72px)',
+                  fontWeight: 400, fontStyle: 'italic',
+                  color: '#ffffff', lineHeight: 1.05,
+                  letterSpacing: '0.02em',
+                  marginBottom: '36px',
                 }}
               >
-                {para}
-              </p>
-            ))}
+                Laure-Eline
+              </h1>
+              {[
+                "Je m'appelle Laure-Eline et à travers TEVAITI VAN TOURS, je souhaite vous faire découvrir Rangiroa autrement.",
+                "Après 10 ans à osciller entre mon île de cœur et ma Bretagne natale, j'ai finalement rejoint mon mari sur l'atoll en 2023. Porté par un héritage familial et mon propre vécu sur Tahiti, j'ai noué années après années, une relation particulière avec la Polynésie.",
+                "Des années de passion, de lecture, de discussions et d'échanges, qui m'amènent aujourd'hui à vouloir partager une histoire. Celle d'un peuple, d'une nation, d'une île. L'occasion d'explorer au-delà du lagon, vers une histoire à comprendre et à vivre pleinement.",
+              ].map((para, i) => (
+                <p
+                  key={i}
+                  style={{
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontSize: 'clamp(15px, 1.4vw, 17px)',
+                    color: i === 0 ? '#ffffff' : 'rgba(255,255,255,0.80)',
+                    lineHeight: 1.85,
+                    marginBottom: i < 2 ? '28px' : '0',
+                    fontWeight: i === 0 ? 500 : 400,
+                  }}
+                >
+                  {para}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       </section>

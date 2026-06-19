@@ -48,17 +48,21 @@ const stops = [
 
 type Stop = typeof stops[0]
 
-function StopCard({ s, idx, visible }: { s: Stop; idx: number; visible: boolean }) {
-  const delay = idx * 280
+// Durée totale d'une carte : 500ms card + 100ms délai photo + 600ms photo = 700ms
+// Chaque carte démarre exactement quand la précédente est terminée
+const CARD_DURATION = 500
+const PHOTO_DELAY  = 100
+const PHOTO_DURATION = 600
+const STEP_INTERVAL = CARD_DURATION + PHOTO_DELAY + PHOTO_DURATION // 700ms
 
+function StopCard({ s, visible }: { s: Stop; visible: boolean }) {
   return (
     <div
       className="card-dark overflow-hidden"
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(40px)',
-        transition: 'opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)',
-        transitionDelay: `${delay}ms`,
+        transform: visible ? 'translateY(0)' : 'translateY(32px)',
+        transition: `opacity ${CARD_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${CARD_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1)`,
       }}
     >
       {s.img && (
@@ -74,9 +78,10 @@ function StopCard({ s, idx, visible }: { s: Stop; idx: number; visible: boolean 
               objectFit: 'cover',
               objectPosition: 'center',
               display: 'block',
-              transform: visible ? 'translateX(0)' : 'translateX(110%)',
-              transition: 'transform 0.85s cubic-bezier(0.22, 1, 0.36, 1)',
-              transitionDelay: `${delay + 120}ms`,
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateX(0)' : 'translateX(90px)',
+              transition: `opacity ${PHOTO_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${PHOTO_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1)`,
+              transitionDelay: visible ? `${PHOTO_DELAY}ms` : '0ms',
             }}
           />
         </div>
@@ -110,18 +115,36 @@ function StopCard({ s, idx, visible }: { s: Stop; idx: number; visible: boolean 
 }
 
 export default function Stops() {
+  const [revealedCount, setRevealedCount] = useState(0)
   const gridRef = useRef<HTMLDivElement>(null)
-  const [gridVisible, setGridVisible] = useState(false)
 
   useEffect(() => {
     const el = gridRef.current
     if (!el) return
+
+    const timers: ReturnType<typeof setTimeout>[] = []
+
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setGridVisible(true); obs.disconnect() } },
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        obs.disconnect()
+        // Chaque carte démarre exactement quand la précédente est terminée
+        stops.forEach((_, i) => {
+          const t = setTimeout(
+            () => setRevealedCount(i + 1),
+            300 + i * STEP_INTERVAL
+          )
+          timers.push(t)
+        })
+      },
       { threshold: 0.05 }
     )
     obs.observe(el)
-    return () => obs.disconnect()
+
+    return () => {
+      obs.disconnect()
+      timers.forEach(clearTimeout)
+    }
   }, [])
 
   return (
@@ -191,10 +214,10 @@ export default function Stops() {
           </div>
         </div>
 
-        {/* 6 stop cards — apparition 1 par 1, photo de droite à gauche */}
+        {/* 6 stop cards — révélation strictement séquentielle 1 → 6 */}
         <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {stops.map((s, idx) => (
-            <StopCard key={s.num} s={s} idx={idx} visible={gridVisible} />
+            <StopCard key={s.num} s={s} visible={idx < revealedCount} />
           ))}
         </div>
 

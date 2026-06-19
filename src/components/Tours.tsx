@@ -25,8 +25,8 @@ export default function Tours() {
       <div id="visite" style={{ position: 'relative', top: '-80px' }} />
       <div className="max-w-7xl mx-auto px-6">
         {/* Headline */}
-        <div className="mb-12">
-          <div data-reveal className="flex mb-6">
+        <div className="mb-12 text-center">
+          <div data-reveal className="flex justify-center mb-6">
             <span style={{
               display: 'inline-block',
               padding: '8px 20px',
@@ -52,7 +52,7 @@ export default function Tours() {
           </h2>
           <WordReveal
             delay={180}
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7 }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7, textAlign: 'center' }}
           >
             La promesse d'une immersion et d'une découverte inédite de Rangiroa.
           </WordReveal>

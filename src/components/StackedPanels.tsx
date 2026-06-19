@@ -108,7 +108,13 @@ function Panel({ panel, index }: { panel: typeof panels[0]; index: number }) {
 
 export default function StackedPanels() {
   return (
-    <div style={{ borderTop: '1px solid rgba(111,79,40,0.18)', borderBottom: '1px solid rgba(111,79,40,0.18)' }}>
+    <div style={{
+      border: '1.5px solid rgba(255,255,255,0.55)',
+      borderRadius: '20px',
+      overflow: 'hidden',
+      maxWidth: '900px',
+      margin: '0 auto',
+    }}>
       {panels.map((panel, i) => (
         <Panel key={panel.to} panel={panel} index={i} />
       ))}

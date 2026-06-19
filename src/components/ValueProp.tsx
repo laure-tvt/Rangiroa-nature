@@ -148,7 +148,7 @@ export default function ValueProp() {
         <div>
           <h2
             data-reveal
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(18px, 2.2vw, 26px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15, letterSpacing: '0.04em', marginBottom: '32px' }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(34px, 4.2vw, 54px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15, letterSpacing: '0.04em', marginBottom: '40px' }}
           >
             Une immersion authentique —{' '}
             <span style={{ color: '#6F4F28' }}>au cœur de Rangiroa.</span>
@@ -157,19 +157,19 @@ export default function ValueProp() {
             {stats.map((s, i) => (
               <div
                 key={i}
-                className="card-dark p-4 text-center"
+                className="card-dark p-6 text-center"
                 data-reveal="scale"
                 data-delay={String(i * 120)}
               >
                 <div
-                  className="flex items-center justify-center w-7 h-7 rounded-lg mx-auto mb-2"
+                  className="flex items-center justify-center w-9 h-9 rounded-xl mx-auto mb-3"
                   style={{ backgroundColor: 'rgba(111,79,40,0.22)', border: '1px solid rgba(111,79,40,0.55)', boxShadow: '0 0 10px rgba(111,79,40,0.45)' }}
                 >
-                  <s.icon size={13} style={{ color: '#C8894A' }} />
+                  <s.icon size={16} style={{ color: '#C8894A' }} />
                 </div>
-                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '20px', fontWeight: 700, color: '#C8894A', lineHeight: 1.1, letterSpacing: '0.04em' }}>{s.value}</div>
-                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 700, color: '#ffffff', marginTop: '2px' }}>{s.label}</div>
-                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 400, color: 'rgba(255,255,255,0.65)', marginTop: '4px', lineHeight: 1.5 }}>{s.desc}</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '32px', fontWeight: 700, color: '#C8894A', lineHeight: 1.1, letterSpacing: '0.04em' }}>{s.value}</div>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: '4px' }}>{s.label}</div>
+                <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.65)', marginTop: '6px', lineHeight: 1.5 }}>{s.desc}</div>
               </div>
             ))}
           </div>

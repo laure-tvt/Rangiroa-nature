@@ -48,67 +48,121 @@ const stops = [
 
 type Stop = typeof stops[0]
 
-// Durée totale d'une carte : 500ms card + 100ms délai photo + 600ms photo = 700ms
-// Chaque carte démarre exactement quand la précédente est terminée
 const CARD_DURATION = 500
-const PHOTO_DELAY  = 100
-const PHOTO_DURATION = 600
-const STEP_INTERVAL = CARD_DURATION + PHOTO_DELAY + PHOTO_DURATION // 700ms
+const STEP_INTERVAL = 600
 
 function StopCard({ s, visible }: { s: Stop; visible: boolean }) {
+  const [flipped, setFlipped] = useState(false)
+  const hasPhoto = !!s.img
+
   return (
     <div
-      className="card-dark overflow-hidden"
+      onClick={() => hasPhoto && setFlipped(f => !f)}
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(32px)',
         transition: `opacity ${CARD_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${CARD_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1)`,
+        perspective: '1000px',
+        height: '280px',
+        cursor: hasPhoto ? 'pointer' : 'default',
       }}
     >
-      {s.img && (
-        <div style={{ height: '190px', overflow: 'hidden', flexShrink: 0 }}>
-          <img
-            src={s.img}
-            alt={s.name}
-            loading="lazy"
-            decoding="async"
-            style={{
-              width: '100%',
-              height: '190px',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              display: 'block',
-              opacity: visible ? 1 : 0,
-              transform: visible ? 'translateX(0)' : 'translateX(90px)',
-              transition: `opacity ${PHOTO_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${PHOTO_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1)`,
-              transitionDelay: visible ? `${PHOTO_DELAY}ms` : '0ms',
-            }}
-          />
-        </div>
-      )}
-      <div className="p-7">
-        <div className="flex items-center justify-between mb-5">
-          <div
-            className="flex items-center justify-center w-11 h-11 rounded-2xl flex-shrink-0"
-            style={{ backgroundColor: 'rgba(111,79,40,0.22)', border: '1px solid rgba(111,79,40,0.55)', boxShadow: '0 0 14px rgba(111,79,40,0.45)' }}
-          >
-            <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '15px', color: '#C8894A' }}>
-              {s.num}
-            </span>
+      {/* Élément qui tourne */}
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        transformStyle: 'preserve-3d',
+        transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        transition: 'transform 0.65s cubic-bezier(0.4, 0, 0.2, 1)',
+      }}>
+
+        {/* RECTO — texte */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          backgroundColor: '#111111',
+          border: '1px solid rgba(111,79,40,0.12)',
+          borderRadius: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          padding: '28px',
+          overflow: 'hidden',
+        }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <div
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  width: '44px', height: '44px', borderRadius: '12px', flexShrink: 0,
+                  backgroundColor: 'rgba(111,79,40,0.22)', border: '1px solid rgba(111,79,40,0.55)',
+                  boxShadow: '0 0 14px rgba(111,79,40,0.45)',
+                }}
+              >
+                <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 900, fontSize: '15px', color: '#C8894A' }}>
+                  {s.num}
+                </span>
+              </div>
+              <span style={{
+                padding: '4px 12px', borderRadius: '999px', fontSize: '12px', fontWeight: 600, flexShrink: 0,
+                backgroundColor: 'rgba(111,79,40,0.12)', color: '#6F4F28', border: '1px solid rgba(111,79,40,0.3)',
+                fontFamily: 'Montserrat, sans-serif',
+              }}>
+                {s.theme}
+              </span>
+            </div>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: '20px', color: '#C8894A', lineHeight: 1.2, letterSpacing: '0.04em', marginBottom: '10px' }}>
+              {s.name}
+            </h3>
+            <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>
+              {s.desc}
+            </p>
           </div>
-          <span
-            className="px-3 py-1 rounded-full text-xs font-semibold"
-            style={{ backgroundColor: 'rgba(111,79,40,0.12)', color: '#6F4F28', border: '1px solid rgba(111,79,40,0.3)', flexShrink: 0 }}
-          >
-            {s.theme}
-          </span>
+
+          {hasPhoto && (
+            <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', color: 'rgba(200,137,74,0.55)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '12px' }}>
+              Appuyer pour voir la photo →
+            </p>
+          )}
         </div>
-        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: '20px', color: '#C8894A', lineHeight: 1.2, letterSpacing: '0.04em', marginBottom: '10px' }}>
-          {s.name}
-        </h3>
-        <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>
-          {s.desc}
-        </p>
+
+        {/* VERSO — photo */}
+        {hasPhoto && (
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            border: '1px solid rgba(111,79,40,0.25)',
+          }}>
+            <img
+              src={s.img!}
+              alt={s.name}
+              loading="lazy"
+              decoding="async"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+            />
+            {/* Gradient + nom en bas */}
+            <div style={{
+              position: 'absolute', bottom: 0, left: 0, right: 0,
+              padding: '20px 24px',
+              background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)',
+            }}>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '18px', fontWeight: 700, color: '#ffffff', margin: 0, letterSpacing: '0.04em' }}>
+                {s.name}
+              </p>
+              <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '4px' }}>
+                Appuyer pour retourner
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -129,15 +183,11 @@ export default function Stops() {
       ([entry]) => {
         if (!entry.isIntersecting) return
         obs.disconnect()
-        // Chaque carte démarre exactement quand la précédente est terminée
         stops.forEach((_, i) => {
-          const t = setTimeout(
-            () => setRevealedCount(i + 1),
-            300 + i * STEP_INTERVAL
-          )
+          const t = setTimeout(() => setRevealedCount(i + 1), 300 + i * STEP_INTERVAL)
           timers.push(t)
         })
-        const btnTimer = setTimeout(() => setButtonVisible(true), 4800)
+        const btnTimer = setTimeout(() => setButtonVisible(true), 300 + 5 * STEP_INTERVAL + CARD_DURATION + 200)
         timers.push(btnTimer)
       },
       { threshold: 0.05 }
@@ -151,23 +201,16 @@ export default function Stops() {
   }, [])
 
   return (
-    <section className="px-6" data-reveal="fade" style={{ backgroundColor: '#000000', paddingTop: '120px', paddingBottom: '96px' }}>
+    <section className="px-6" data-reveal="fade" style={{ backgroundColor: '#000000', paddingTop: '60px', paddingBottom: '96px' }}>
       <div className="max-w-7xl mx-auto">
 
-        {/* Headline */}
         <div className="mb-12">
           <div data-reveal className="flex mb-4">
             <span style={{
-              display: 'inline-block',
-              padding: '8px 20px',
-              borderRadius: '999px',
-              backgroundColor: '#ffffff',
-              color: '#6F4F28',
-              fontFamily: 'Montserrat, sans-serif',
-              fontSize: '11px',
-              fontWeight: 700,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
+              display: 'inline-block', padding: '8px 20px', borderRadius: '999px',
+              backgroundColor: '#ffffff', color: '#6F4F28',
+              fontFamily: 'Montserrat, sans-serif', fontSize: '11px', fontWeight: 700,
+              letterSpacing: '0.12em', textTransform: 'uppercase',
             }}>
               Le circuit
             </span>
@@ -184,11 +227,10 @@ export default function Stops() {
             data-delay="180"
             style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7 }}
           >
-            Découverte de l'atoll en 6 arrêts soigneusement choisis pour vous faire vivre Rangiroa sous toutes ses facettes.
+            Cliquez sur une carte pour découvrir la photo de l'arrêt.
           </p>
         </div>
 
-        {/* 6 stop cards — révélation strictement séquentielle 1 → 6 */}
         <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {stops.map((s, idx) => (
             <StopCard key={s.num} s={s} visible={idx < revealedCount} />

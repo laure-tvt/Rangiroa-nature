@@ -10,10 +10,10 @@ export default function Footer() {
   return (
     <footer style={{ backgroundColor: '#0A0A0A', borderTop: '1px solid rgba(111,79,40,0.12)' }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mb-12">
 
           {/* Brand */}
-          <div data-reveal>
+          <div data-reveal className="col-span-3 md:col-span-2 lg:col-span-1">
             <div className="flex items-baseline gap-1.5 mb-4">
               <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: '26px', color: '#C8894A', letterSpacing: '0.12em' }}>TVT</span>
               <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: '20px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.2em' }}>RANGIROA</span>

@@ -8,9 +8,10 @@ const stats = [
   { icon: Tag, value: 'Dès 42€', label: 'par adulte', desc: "5 000 XFP adulte · 2 500 XFP enfant (−11 ans) · Gratuit bébé (−3 ans)." },
 ]
 
-// Clip-path: premier chevron sans encoche à gauche, suivants avec encoche matchant la pointe droite
-const FIRST_PATH = 'polygon(0 0, 84% 0, 100% 50%, 84% 100%, 0 100%)'
-const OTHER_PATH = 'polygon(0 0, 84% 0, 100% 50%, 84% 100%, 0 100%, 16% 50%)'
+// Chaque chevron: point droit à 100% 50%, encoche gauche à 18% 50%
+// overlap = 18% × largeur individuelle = alignement parfait
+const FIRST = 'polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%)'
+const OTHER = 'polygon(0 0, 82% 0, 100% 50%, 82% 100%, 0 100%, 18% 50%)'
 
 function ChevronSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -21,53 +22,60 @@ function ChevronSection() {
     if (!el) return
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect() } },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     )
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
 
+  // W = 100 / (4 - 3*0.18) = 100 / 3.46 ≈ 28.9%  → overlap = 18% × 28.9% ≈ 5.2%
+  const W = '29%'
+  const OVERLAP = '-5.3%'
+
   return (
     <div ref={ref}>
-      {/* 4 grandes formes chevron */}
-      <div style={{
-        display: 'flex',
-        height: 'clamp(110px, 14vw, 168px)',
-        margin: '48px 0 0',
-        overflow: 'hidden',
-      }}>
+      {/* Rangée de 4 chevrons pleine largeur */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'stretch',
+          height: 'clamp(140px, 18vw, 240px)',
+          marginTop: '52px',
+          overflow: 'visible',
+        }}
+      >
         {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
             style={{
-              flex: '0 0 28%',
+              flex: `0 0 ${W}`,
               height: '100%',
-              marginLeft: i === 0 ? '0' : '-4.5%',
-              backgroundColor: 'rgba(255,255,255,0.18)',
-              clipPath: i === 0 ? FIRST_PATH : OTHER_PATH,
+              marginLeft: i === 0 ? '0' : OVERLAP,
+              backgroundColor: 'rgba(255,255,255,0.20)',
+              clipPath: i === 0 ? FIRST : OTHER,
               opacity: visible ? 1 : 0,
-              transform: visible ? 'translateX(0)' : 'translateX(-40px)',
-              transition: 'opacity 0.6s ease, transform 0.6s ease',
-              transitionDelay: `${i * 200}ms`,
+              transform: visible ? 'translateX(0)' : 'translateX(-50px)',
+              transition: 'opacity 0.55s ease, transform 0.55s ease',
+              transitionDelay: `${i * 220}ms`,
             }}
           />
         ))}
       </div>
 
-      {/* Texte qui apparaît après la dernière flèche */}
+      {/* Texte apparaît après la 4e flèche */}
       <p
         style={{
           fontFamily: 'Montserrat, sans-serif',
-          fontSize: '16px',
+          fontSize: 'clamp(14px, 1.4vw, 17px)',
           color: 'rgba(255,255,255,0.68)',
-          lineHeight: 1.85,
-          maxWidth: '580px',
+          lineHeight: 1.9,
+          maxWidth: '600px',
           margin: '44px auto 0',
           textAlign: 'center',
           opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(16px)',
+          transform: visible ? 'translateY(0)' : 'translateY(18px)',
           transition: 'opacity 0.6s ease, transform 0.6s ease',
-          transitionDelay: '900ms',
+          transitionDelay: '980ms',
         }}
       >
         C'est comprendre le cœur de Rangiroa, l'histoire de ses habitants,<br />
@@ -83,7 +91,7 @@ export default function ValueProp() {
       <div className="max-w-7xl mx-auto">
 
         {/* Statement plein largeur */}
-        <div className="text-center mb-24">
+        <div className="text-center mb-0">
           <div data-reveal className="flex justify-center mb-8">
             <span style={{
               display: 'inline-block',
@@ -121,7 +129,7 @@ export default function ValueProp() {
         </div>
 
         {/* Séparateur */}
-        <div style={{ height: '1px', backgroundColor: 'rgba(111,79,40,0.15)', marginBottom: '80px' }} />
+        <div style={{ height: '1px', backgroundColor: 'rgba(111,79,40,0.15)', margin: '80px 0' }} />
 
         {/* Layout sticky */}
         <div className="flex flex-col lg:flex-row gap-16 items-start">

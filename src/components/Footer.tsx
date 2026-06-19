@@ -10,26 +10,7 @@ export default function Footer() {
   return (
     <footer style={{ backgroundColor: '#0A0A0A', borderTop: '1px solid rgba(111,79,40,0.12)' }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mb-12">
-
-          {/* Brand */}
-          <div data-reveal className="col-span-3 md:col-span-2 lg:col-span-1">
-            <div className="flex items-baseline gap-1.5 mb-4">
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: '26px', color: '#C8894A', letterSpacing: '0.12em' }}>TVT</span>
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: '20px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.2em' }}>RANGIROA</span>
-            </div>
-            <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7, marginBottom: '20px' }}>
-              Visite guidée de l'atoll de Rangiroa en 6 arrêts. Une immersion authentique dans 900 ans d'histoire polynésienne.
-            </p>
-            <button
-              onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: '#6F4F28', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '50px', fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '12px', cursor: 'pointer', transition: 'background-color 0.2s' }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.backgroundColor = '#8B6535')}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.backgroundColor = '#6F4F28')}
-            >
-              Réserver
-            </button>
-          </div>
+        <div className="grid grid-cols-3 gap-6 mb-12">
 
           {/* Links */}
           {Object.entries(links).map(([cat, items], i) => (

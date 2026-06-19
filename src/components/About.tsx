@@ -41,11 +41,11 @@ export default function About() {
             data-delay="100"
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
               gap: '48px',
             }}
-            className="md:flex-row md:items-start md:gap-14"
           >
             {/* Photo avec halo */}
             <div style={{ flexShrink: 0, position: 'relative' }}>
@@ -93,7 +93,7 @@ export default function About() {
             </div>
 
             {/* Texte */}
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, minWidth: '280px' }}>
               {[
                 "Je m'appelle Laure-Eline et à travers TEVAITI VAN TOURS, je souhaite vous faire découvrir Rangiroa autrement.",
                 "Après 10 ans à osciller entre mon île de cœur et ma Bretagne natale, j'ai finalement rejoint mon mari sur l'atoll en 2023. Porté par un héritage familial et mon propre vécu sur Tahiti, j'ai noué années après années, une relation particulière avec la Polynésie.",

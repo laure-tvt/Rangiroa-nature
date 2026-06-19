@@ -43,8 +43,8 @@ function Panel({ panel, index }: { panel: typeof panels[0]; index: number }) {
         cursor: 'pointer',
       }}
     >
-      {/* Left: tag + description */}
-      <div style={{ maxWidth: '340px' }}>
+      {/* Left: tag */}
+      <div>
         <div style={{
           display: 'inline-block',
           padding: '4px 12px',
@@ -57,19 +57,9 @@ function Panel({ panel, index }: { panel: typeof panels[0]; index: number }) {
           color: '#C8894A',
           letterSpacing: '0.12em',
           textTransform: 'uppercase',
-          marginBottom: '10px',
         }}>
           {panel.tag}
         </div>
-        <p style={{
-          fontFamily: 'Montserrat, sans-serif',
-          fontSize: '13px',
-          color: 'rgba(255,255,255,0.65)',
-          lineHeight: 1.6,
-          margin: 0,
-        }}>
-          {panel.desc}
-        </p>
       </div>
 
       {/* Right: label + arrow */}

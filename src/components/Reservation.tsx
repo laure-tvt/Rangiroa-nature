@@ -26,12 +26,12 @@ export default function Reservation() {
   }
 
   return (
-    <section id="contact" className="py-24 px-6" style={{ backgroundColor: '#0D0D0D' }}>
+    <section id="contact" className="py-24 px-6" data-reveal="fade" style={{ backgroundColor: '#0D0D0D' }}>
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-14 items-start">
 
           {/* Left */}
-          <div className="lg:col-span-2" style={{ position: 'sticky', top: '90px', alignSelf: 'start' }}>
+          <div className="lg:col-span-2">
             <div data-reveal className="section-label">Réservation</div>
             <h2
               data-reveal

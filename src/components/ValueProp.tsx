@@ -8,10 +8,8 @@ const stats = [
   { icon: Tag, value: 'Dès 42€', label: 'par adulte', desc: "5 000 XFP adulte · 2 500 XFP enfant (−11 ans) · Gratuit bébé (−3 ans)." },
 ]
 
-// Flèches indépendantes — bord gauche droit pour la 1ère, V-encoche pour les suivantes
-// Séparées par un gap visible, PAS d'overlap
-const FIRST = 'polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%)'
-const OTHER = 'polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%, 22% 50%)'
+// Toutes les 4 flèches identiques : V-encoche gauche + pointe droite
+const CHEVRON = 'polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%, 22% 50%)'
 
 function ChevronSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -30,14 +28,14 @@ function ChevronSection() {
 
   return (
     <div ref={ref}>
-      {/* 4 flèches séparées, centrées, avec gap entre elles */}
+      {/* 4 flèches identiques, fines, centrées */}
       <div
         style={{
           display: 'flex',
-          gap: '12px',
-          height: 'clamp(130px, 15vw, 200px)',
-          marginTop: '52px',
-          maxWidth: '860px',
+          gap: '10px',
+          height: 'clamp(80px, 9vw, 120px)',
+          marginTop: '48px',
+          maxWidth: '820px',
           marginLeft: 'auto',
           marginRight: 'auto',
         }}
@@ -49,7 +47,7 @@ function ChevronSection() {
               flex: 1,
               height: '100%',
               backgroundColor: 'rgba(255,255,255,0.22)',
-              clipPath: i === 0 ? FIRST : OTHER,
+              clipPath: CHEVRON,
               opacity: visible ? 1 : 0,
               transform: visible ? 'translateX(0)' : 'translateX(-60px)',
               transition: 'opacity 0.75s ease, transform 0.75s ease',
@@ -59,25 +57,44 @@ function ChevronSection() {
         ))}
       </div>
 
-      {/* Texte qui apparaît après la 4e flèche */}
-      <p
+      {/* Halo doux + texte apparu après la 4e flèche */}
+      <div
         style={{
-          fontFamily: 'Montserrat, sans-serif',
-          fontSize: 'clamp(14px, 1.4vw, 17px)',
-          color: 'rgba(255,255,255,0.68)',
-          lineHeight: 1.9,
-          maxWidth: '600px',
-          margin: '44px auto 0',
-          textAlign: 'center',
+          position: 'relative',
+          maxWidth: '620px',
+          margin: '48px auto 0',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(18px)',
           transition: 'opacity 0.7s ease, transform 0.7s ease',
           transitionDelay: '1300ms',
         }}
       >
-        C'est comprendre le cœur de Rangiroa, l'histoire de ses habitants,<br />
-        et la richesse d'une culture millénaire.
-      </p>
+        {/* Halo radial ambré derrière le texte */}
+        <div style={{
+          position: 'absolute',
+          left: '50%', top: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '180%', height: '500%',
+          background: 'radial-gradient(ellipse at center, rgba(200,137,74,0.20) 0%, transparent 58%)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }} />
+        <p
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            fontFamily: 'Montserrat, sans-serif',
+            fontSize: 'clamp(14px, 1.4vw, 17px)',
+            color: 'rgba(255,255,255,0.75)',
+            lineHeight: 1.9,
+            textAlign: 'center',
+            margin: 0,
+          }}
+        >
+          C'est comprendre le cœur de Rangiroa, l'histoire de ses habitants,<br />
+          et la richesse d'une culture millénaire.
+        </p>
+      </div>
     </div>
   )
 }
@@ -128,39 +145,39 @@ export default function ValueProp() {
         {/* Séparateur */}
         <div style={{ height: '1px', backgroundColor: 'rgba(111,79,40,0.15)', margin: '80px 0' }} />
 
-        {/* Layout sticky */}
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
+        {/* Layout sticky — taille réduite */}
+        <div className="flex flex-col lg:flex-row gap-14 items-start">
 
-          {/* Left: sticky headline */}
-          <div className="w-full lg:w-80 lg:flex-shrink-0" style={{ position: 'sticky', top: '90px' }}>
+          {/* Left: sticky headline — plus compact */}
+          <div className="w-full lg:w-64 lg:flex-shrink-0" style={{ position: 'sticky', top: '90px' }}>
             <h2
               data-reveal
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.1, letterSpacing: '0.04em' }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(22px, 2.8vw, 34px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15, letterSpacing: '0.04em' }}
             >
               Une immersion<br />authentique<br />
               <span style={{ color: '#6F4F28' }}>au cœur de Rangiroa.</span>
             </h2>
           </div>
 
-          {/* Right: 2×2 grid */}
+          {/* Right: 2×2 grid — cartes plus petites */}
           <div style={{ flex: 1 }}>
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-2 gap-4">
               {stats.map((s, i) => (
                 <div
                   key={i}
-                  className="card-dark p-7 text-center"
+                  className="card-dark p-5 text-center"
                   data-reveal="scale"
                   data-delay={String(i * 120)}
                 >
                   <div
-                    className="flex items-center justify-center w-11 h-11 rounded-xl mx-auto mb-4"
+                    className="flex items-center justify-center w-9 h-9 rounded-xl mx-auto mb-3"
                     style={{ backgroundColor: 'rgba(111,79,40,0.22)', border: '1px solid rgba(111,79,40,0.55)', boxShadow: '0 0 14px rgba(111,79,40,0.45)' }}
                   >
-                    <s.icon size={20} style={{ color: '#C8894A' }} />
+                    <s.icon size={16} style={{ color: '#C8894A' }} />
                   </div>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '34px', fontWeight: 700, color: '#C8894A', lineHeight: 1.1, letterSpacing: '0.04em' }}>{s.value}</div>
-                  <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: '4px' }}>{s.label}</div>
-                  <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.72)', marginTop: '6px', lineHeight: 1.55 }}>{s.desc}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '26px', fontWeight: 700, color: '#C8894A', lineHeight: 1.1, letterSpacing: '0.04em' }}>{s.value}</div>
+                  <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', fontWeight: 700, color: '#ffffff', marginTop: '3px' }}>{s.label}</div>
+                  <div style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '11px', fontWeight: 400, color: 'rgba(255,255,255,0.65)', marginTop: '5px', lineHeight: 1.5 }}>{s.desc}</div>
                 </div>
               ))}
             </div>

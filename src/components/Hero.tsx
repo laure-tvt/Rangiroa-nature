@@ -90,7 +90,7 @@ export default function Hero() {
               letterSpacing: '0.06em',
               lineHeight: 1.05,
               textTransform: 'uppercase',
-              textShadow: '0 2px 32px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.35)',
+              textShadow: '0 0 30px rgba(223,164,90,0.9), 0 0 60px rgba(223,164,90,0.5), 0 0 100px rgba(223,164,90,0.25), 0 2px 32px rgba(0,0,0,0.55)',
               display: 'block',
               textAlign: 'center',
               padding: '0 24px',

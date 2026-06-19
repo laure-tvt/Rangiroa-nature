@@ -1,4 +1,4 @@
-import { MapPin, Clock, Globe, Tag, ChevronRight } from 'lucide-react'
+import { MapPin, Clock, Globe, Tag } from 'lucide-react'
 import { useRef, useEffect, useState } from 'react'
 
 const stats = [
@@ -8,7 +8,11 @@ const stats = [
   { icon: Tag, value: 'Dès 42€', label: 'par adulte', desc: "5 000 XFP adulte · 2 500 XFP enfant (−11 ans) · Gratuit bébé (−3 ans)." },
 ]
 
-function AnimatedArrows() {
+// Clip-path: premier chevron sans encoche à gauche, suivants avec encoche matchant la pointe droite
+const FIRST_PATH = 'polygon(0 0, 84% 0, 100% 50%, 84% 100%, 0 100%)'
+const OTHER_PATH = 'polygon(0 0, 84% 0, 100% 50%, 84% 100%, 0 100%, 16% 50%)'
+
+function ChevronSection() {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
@@ -17,28 +21,58 @@ function AnimatedArrows() {
     if (!el) return
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect() } },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     )
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
 
   return (
-    <div ref={ref} style={{ display: 'flex', gap: '2px', justifyContent: 'center', margin: '36px 0' }}>
-      {[0, 1, 2, 3].map((i) => (
-        <ChevronRight
-          key={i}
-          size={42}
-          strokeWidth={1.2}
-          style={{
-            color: 'rgba(255,255,255,0.30)',
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateX(0)' : 'translateX(-24px)',
-            transition: 'opacity 0.5s ease, transform 0.5s ease',
-            transitionDelay: `${i * 160}ms`,
-          }}
-        />
-      ))}
+    <div ref={ref}>
+      {/* 4 grandes formes chevron */}
+      <div style={{
+        display: 'flex',
+        height: 'clamp(110px, 14vw, 168px)',
+        margin: '48px 0 0',
+        overflow: 'hidden',
+      }}>
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            style={{
+              flex: '0 0 28%',
+              height: '100%',
+              marginLeft: i === 0 ? '0' : '-4.5%',
+              backgroundColor: 'rgba(255,255,255,0.18)',
+              clipPath: i === 0 ? FIRST_PATH : OTHER_PATH,
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'translateX(0)' : 'translateX(-40px)',
+              transition: 'opacity 0.6s ease, transform 0.6s ease',
+              transitionDelay: `${i * 200}ms`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Texte qui apparaît après la dernière flèche */}
+      <p
+        style={{
+          fontFamily: 'Montserrat, sans-serif',
+          fontSize: '16px',
+          color: 'rgba(255,255,255,0.68)',
+          lineHeight: 1.85,
+          maxWidth: '580px',
+          margin: '44px auto 0',
+          textAlign: 'center',
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(16px)',
+          transition: 'opacity 0.6s ease, transform 0.6s ease',
+          transitionDelay: '900ms',
+        }}
+      >
+        C'est comprendre le cœur de Rangiroa, l'histoire de ses habitants,<br />
+        et la richesse d'une culture millénaire.
+      </p>
     </div>
   )
 }
@@ -83,23 +117,7 @@ export default function ValueProp() {
             Ce n'est pas juste une visite guidée
           </p>
 
-          <AnimatedArrows />
-
-          <p
-            data-reveal
-            data-delay="500"
-            style={{
-              fontFamily: 'Montserrat, sans-serif',
-              fontSize: '16px',
-              color: 'rgba(255,255,255,0.68)',
-              lineHeight: 1.85,
-              maxWidth: '580px',
-              margin: '0 auto',
-            }}
-          >
-            C'est comprendre le cœur de Rangiroa, l'histoire de ses habitants,<br />
-            et la richesse d'une culture millénaire.
-          </p>
+          <ChevronSection />
         </div>
 
         {/* Séparateur */}

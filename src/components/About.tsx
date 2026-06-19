@@ -72,10 +72,10 @@ export default function About() {
                   alt="Laure-Eline, guide Tevaiti Van Tours"
                   style={{
                     width: '100%',
-                    height: '290px',
+                    height: '340px',
                     display: 'block',
                     objectFit: 'cover',
-                    objectPosition: 'center 30%',
+                    objectPosition: 'center 55%',
                   }}
                 />
               </div>

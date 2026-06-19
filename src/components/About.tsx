@@ -43,56 +43,57 @@ export default function About() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '56px',
+              gap: '48px',
             }}
-            className="md:flex-row md:items-start md:gap-16"
+            className="md:flex-row md:items-start md:gap-14"
           >
-            {/* Photo */}
-            <div style={{ flexShrink: 0, width: '100%', maxWidth: '340px' }}>
+            {/* Photo avec halo */}
+            <div style={{ flexShrink: 0, position: 'relative' }}>
+              {/* Halo ambré derrière la photo */}
               <div style={{
+                position: 'absolute',
+                inset: '-20px',
+                borderRadius: '28px',
+                background: 'radial-gradient(ellipse at center, rgba(200,137,74,0.28) 0%, transparent 70%)',
+                pointerEvents: 'none',
+                zIndex: 0,
+              }} />
+              <div style={{
+                position: 'relative',
+                zIndex: 1,
                 borderRadius: '20px',
                 overflow: 'hidden',
-                border: '1px solid rgba(200,137,74,0.25)',
-                boxShadow: '0 0 40px rgba(111,79,40,0.20)',
+                border: '1px solid rgba(200,137,74,0.35)',
+                boxShadow: '0 0 32px rgba(200,137,74,0.22), 0 0 80px rgba(111,79,40,0.18)',
+                width: '220px',
               }}>
                 <img
                   src="/guide-laure-eline.jpg"
                   alt="Laure-Eline, guide Tevaiti Van Tours"
                   style={{
                     width: '100%',
-                    height: 'auto',
+                    height: '290px',
                     display: 'block',
                     objectFit: 'cover',
+                    objectPosition: 'center top',
                   }}
                 />
               </div>
               <p style={{
                 fontFamily: 'Montserrat, sans-serif',
-                fontSize: '11px',
-                color: 'rgba(255,255,255,0.35)',
+                fontSize: '10px',
+                color: 'rgba(255,255,255,0.30)',
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
                 textAlign: 'center',
-                marginTop: '14px',
+                marginTop: '12px',
               }}>
-                Laure-Eline — Guide Tevaiti Van Tours
+                Guide Tevaiti Van Tours
               </p>
             </div>
 
             {/* Texte */}
             <div style={{ flex: 1 }}>
-              <h1
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: 'clamp(42px, 5vw, 72px)',
-                  fontWeight: 400, fontStyle: 'italic',
-                  color: '#ffffff', lineHeight: 1.05,
-                  letterSpacing: '0.02em',
-                  marginBottom: '36px',
-                }}
-              >
-                Laure-Eline
-              </h1>
               {[
                 "Je m'appelle Laure-Eline et à travers TEVAITI VAN TOURS, je souhaite vous faire découvrir Rangiroa autrement.",
                 "Après 10 ans à osciller entre mon île de cœur et ma Bretagne natale, j'ai finalement rejoint mon mari sur l'atoll en 2023. Porté par un héritage familial et mon propre vécu sur Tahiti, j'ai noué années après années, une relation particulière avec la Polynésie.",

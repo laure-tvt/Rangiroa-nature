@@ -204,8 +204,8 @@ export default function Stops() {
     <section className="px-6" data-reveal="fade" style={{ backgroundColor: '#000000', paddingTop: '60px', paddingBottom: '96px' }}>
       <div className="max-w-7xl mx-auto">
 
-        <div className="mb-12">
-          <div data-reveal className="flex mb-4">
+        <div className="mb-12 text-center">
+          <div data-reveal className="flex justify-center mb-4">
             <span style={{
               display: 'inline-block', padding: '8px 20px', borderRadius: '999px',
               backgroundColor: '#ffffff', color: '#6F4F28',
@@ -218,14 +218,14 @@ export default function Stops() {
           <h1
             data-reveal
             data-delay="100"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.1, letterSpacing: '0.05em', marginBottom: '16px' }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#ffffff', lineHeight: 1.1, letterSpacing: '0.05em', marginBottom: '16px', textAlign: 'center' }}
           >
             6 arrêts,<br /><span style={{ color: '#6F4F28' }}>900 ans d'histoire.</span>
           </h1>
           <p
             data-reveal
             data-delay="180"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7 }}
+            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.70)', lineHeight: 1.7, textAlign: 'center' }}
           >
             Cliquez sur une carte pour découvrir la photo de l'arrêt.
           </p>

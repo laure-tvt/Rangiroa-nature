@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 const navLinks = [
   { label: 'Le tour',      href: '/', hash: '#visite' },
-  { label: 'Les 6 arrêts', href: '/arrets', hash: '' },
+  { label: 'Le circuit', href: '/arrets', hash: '' },
   { label: 'À propos',     href: '/a-propos', hash: '' },
   { label: 'Tarifs',       href: '/tarifs', hash: '' },
 ]

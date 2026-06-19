@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react'
 
 const panels = [
   {
-    label: 'Les 6 arrêts',
+    label: 'Le circuit',
     tag: 'Le circuit complet',
     desc: "Quai, église, village, plage, récif et passe de Tiputa.",
     to: '/arrets',

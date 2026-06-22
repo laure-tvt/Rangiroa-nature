@@ -135,31 +135,69 @@ export default function About() {
             </span>
           </div>
 
-          <h2
+          {/* Photo + titre/features côte à côte */}
+          <div
             data-reveal
             data-delay="100"
             style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(32px, 4vw, 52px)',
-              fontWeight: 700, color: '#ffffff',
-              lineHeight: 1.1, letterSpacing: '0.04em',
-              textAlign: 'center', marginBottom: '16px',
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
+              gap: '48px',
+              marginBottom: '56px',
             }}
           >
-            Hyundai Staria <span style={{ color: '#6F4F28' }}>· 9 places</span>
-          </h2>
+            {/* Photo avec halo */}
+            <div style={{ flexShrink: 0, position: 'relative', margin: '0 auto' }}>
+              <div style={{
+                position: 'absolute', inset: '-20px', borderRadius: '28px',
+                background: 'radial-gradient(ellipse at center, rgba(200,137,74,0.28) 0%, transparent 70%)',
+                pointerEvents: 'none', zIndex: 0,
+              }} />
+              <div style={{
+                position: 'relative', zIndex: 1,
+                borderRadius: '20px', overflow: 'hidden',
+                border: '1px solid rgba(200,137,74,0.35)',
+                boxShadow: '0 0 32px rgba(200,137,74,0.22), 0 0 80px rgba(111,79,40,0.18)',
+                width: '220px',
+              }}>
+                <img
+                  src="/vehicle-hyundai-staria.jpg"
+                  alt="Hyundai Staria Tevaiti Van Tours"
+                  style={{ width: '100%', height: '290px', display: 'block', objectFit: 'cover', objectPosition: 'center' }}
+                />
+              </div>
+              <p style={{
+                fontFamily: 'Montserrat, sans-serif', fontSize: '10px',
+                color: 'rgba(255,255,255,0.30)', letterSpacing: '0.1em',
+                textTransform: 'uppercase', textAlign: 'center', marginTop: '12px',
+              }}>
+                Hyundai Staria · 9 places
+              </p>
+            </div>
 
-          <p
-            data-reveal
-            data-delay="160"
-            style={{
-              fontFamily: 'Montserrat, sans-serif', fontSize: '15px',
-              color: 'rgba(255,255,255,0.70)', lineHeight: 1.7,
-              textAlign: 'center', marginBottom: '56px',
-            }}
-          >
-            Chaque option a été pensée pour maximiser le confort des passagers tout au long de la visite.
-          </p>
+            {/* Titre + sous-titre */}
+            <div style={{ flex: 1, minWidth: '260px' }}>
+              <h2
+                style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: 'clamp(32px, 4vw, 52px)',
+                  fontWeight: 700, color: '#ffffff',
+                  lineHeight: 1.1, letterSpacing: '0.04em',
+                  marginBottom: '16px',
+                }}
+              >
+                Hyundai Staria <span style={{ color: '#6F4F28' }}>· 9 places</span>
+              </h2>
+              <p style={{
+                fontFamily: 'Montserrat, sans-serif', fontSize: '15px',
+                color: 'rgba(255,255,255,0.70)', lineHeight: 1.7,
+              }}>
+                Chaque option a été pensée pour maximiser le confort des passagers tout au long de la visite.
+              </p>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {vehicleFeatures.map((f, i) => (

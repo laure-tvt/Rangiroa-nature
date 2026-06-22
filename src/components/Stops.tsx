@@ -5,7 +5,7 @@ const stops = [
   {
     num: '01',
     name: "Le quai d'AVATORU",
-    desc: "Point de départ sur le lagon de Rangiroa. Découverte de la vie maritime de l'atoll et de son histoire portuaire.",
+    desc: "Point de départ du circuit. L'arrivée des premiers Polynésiens sur l'atoll de Rangiroa et les origines du peuplement des Tuamotu.",
     theme: 'Peuplement',
     img: '/stop-01-quai.jpg',
   },
@@ -19,14 +19,14 @@ const stops = [
   {
     num: '03',
     name: "Le village d'AVATORU",
-    desc: "Exploration de l'ancien village et du peuplement ancestral des Tuamotu. L'histoire vivante de l'atoll.",
+    desc: "Exploration du village et du peuplement ancestral des Tuamotu. L'histoire vivante de l'atoll.",
     theme: 'Village historique',
     img: '/stop-03-village.jpg',
   },
   {
     num: '04',
     name: 'La plage publique',
-    desc: 'Panorama sur le lagon turquoise, les motu et la faune marine. La beauté brute de Rangiroa à portée de regard.',
+    desc: "Panorama sur le lagon turquoise. Histoire des guerres avec les Parata et de l'exil de la population de Rangiroa sur Tahiti.",
     theme: 'Lagon & nature',
     img: '/stop-04-plage.jpg',
   },
@@ -40,7 +40,7 @@ const stops = [
   {
     num: '06',
     name: 'La passe de TIPUTA',
-    desc: "La mythique passe où nagent les dauphins. Histoires de guerres ancestrales et légendes locales de l'archipel.",
+    desc: "La mythique passe où nagent les dauphins. Légendes locales et récits de l'archipel des Tuamotu.",
     theme: 'Légendes & guerres',
     img: null,
   },
